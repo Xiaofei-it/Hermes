@@ -82,11 +82,13 @@ You can call Hermes.isConnected() to see whether the process you are communicati
 In Process A, classes to be accessed by Process B should be registered before being accessed. There are two APIs to register classes: Hermes.register(Class<?>) and Hermes.register(Object). Hermes.register(object) is equivalent to Hermes.register(object.getClass()).
 
 Registration is, however, not necessary if you do not add annotations on the classes. See Point 3 of Notice.
-Instance Creation
+
+###Instance Creation
 
 In Process B, there are three ways to create instances in Hermes: Hermes.newInstance(), Hermes.getInstance() and Hermes.getUtilityClass().
 
 1. Hermes.newInstance(Class<T>, Object...)
+
    This method creates an new instance of the specified class in Process A and returns the reference to the new instance. The second parameter will be passed into the corresponding constructor of the specified class.
    ```
    @ClassId(“LoadingTask”)
@@ -146,6 +148,7 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
    In process B, you create the instance by Hermes.getInstance(IBitmapWrapper.class, “files/image.png”) or Hermes.getInstance(IBitmapWrapper.class, 1001) to get the instance of BitmapWrapper.
 
 3. Hermes.getUtilityClass(Class<T>)
+
    This method provides a way to use the utility class in another process. (This is very useful when developing plugins.)
    ```
    @ClassId(“Maths”)
@@ -195,7 +198,7 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
 
 4. If you want to prevent a class or a method from being accessed from outside the process, add a WithinProcess annotation on it.
 
-5. The type of the parameters you pass into the method can be a subclass of the corresponding parameter type, but cannot be an anonymous class or a local class. But callback is supported. See Point 6 for more information.
+5. The type of the parameters you pass into the method can be a subclass of the corresponding parameter type, but cannot be an anonymous class or a local class. But callback is supported. See Point 7 for more information about callbacks.
    ```
    public class A {}
 
@@ -230,7 +233,7 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
    A a = foo.f(new A(){});
    ```
 
-6. If the parameter types and the return type of the invoked method are the primitive types or some common classes such as String, the above will work very well. However, if they are the classes you declare, as the example in Point 4 shows, and if the method invocation is between apps, then you must declare the classes in both App A and App B. What’s more, you should guarantee that the name of the class and its methods remain the same even after you use the ProGuard. Or you can add the ClassId annotation on the class and the MethodId annotation on the methods.
+6. If the parameter types and the return type of the invoked method are the primitive types or some common classes such as String, the above will work very well. However, if they are the classes you declare, as the example in Point 5 shows, and if the method invocation is between apps, then you must declare the classes in both App A and App B. What’s more, you should guarantee that the name of the class and its methods remain the same even after you use the ProGuard. Or you can add the ClassId annotation on the class and the MethodId annotation on the methods.
 
 7. If the invoked method has some callback parameters, then the parameter type must be an interface. It can NOT be an abstract class. Attention should be paid when it comes to the thread where the callback run.
 
