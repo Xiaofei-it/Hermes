@@ -261,24 +261,24 @@ public class TypeUtils {
         if (clazz.isAnnotationPresent(WithinProcess.class)) {
             throw new IllegalArgumentException(
                     "Error occurs when registering class " + clazz.getName()
-                            + ". Class with a WithinProcess annotation on it cannot be access"
+                            + ". Class with a WithinProcess annotation presented on it cannot be accessed"
                             + " from outside the process.");
         }
 
         if (clazz.isAnonymousClass()) {
             throw new IllegalArgumentException(
                     "Error occurs when registering class " + clazz.getName()
-                            +". Anonymous class cannot be access from outside the process.");
+                            +". Anonymous class cannot be accessed from outside the process.");
         }
         if (clazz.isLocalClass()) {
             throw new IllegalArgumentException(
                     "Error occurs when registering class " + clazz.getName()
-                            + ". Local class cannot be access from outside the process.");
+                            + ". Local class cannot be accessed from outside the process.");
         }
         if (Modifier.isAbstract(clazz.getModifiers())) {
             throw new IllegalArgumentException(
                     "Error occurs when registering class " + clazz.getName()
-                            + ". Abstract class cannot be access from outside the process.");
+                            + ". Abstract class cannot be accessed from outside the process.");
         }
     }
 
