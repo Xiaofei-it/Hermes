@@ -86,8 +86,10 @@ public interface IHermesService extends IInterface {
                 case TRANSACTION_register:
                     data.enforceInterface(DESCRIPTOR);
                     IHermesServiceCallback _arg1;
-                    _arg1 = IHermesServiceCallback.Stub.asInterface(data.readStrongBinder(), 1l);
-                    this.register(_arg1);
+                    IBinder iBinder = data.readStrongBinder();
+                    int pid = data.readInt();
+                    _arg1 = IHermesServiceCallback.Stub.asInterface(iBinder, pid);
+                    this.register(_arg1, pid);
                     reply.writeNoException();
                     return true;
             }
@@ -142,13 +144,14 @@ public interface IHermesService extends IInterface {
             }
 
             @Override
-            public void register(IHermesServiceCallback callback) throws RemoteException {
+            public void register(IHermesServiceCallback callback, int pid) throws RemoteException {
                 Log.v("eric zhao", "register");
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+                    _data.writeInt(pid);
                     mRemote.transact(Stub.TRANSACTION_register, _data, _reply, 0);
                     _reply.readException();
                 } finally {
@@ -165,5 +168,5 @@ public interface IHermesService extends IInterface {
 
     Reply send(Mail mail) throws RemoteException;
 
-    void register(IHermesServiceCallback callback) throws RemoteException;
+    void register(IHermesServiceCallback callback, int pid) throws RemoteException;
 }

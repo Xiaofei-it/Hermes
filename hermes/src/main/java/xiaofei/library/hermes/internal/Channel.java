@@ -25,6 +25,7 @@ import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Process;
 import android.os.RemoteException;
 import android.support.v4.util.Pair;
 import android.util.Log;
@@ -68,7 +69,7 @@ public class Channel {
 
     private static final TypeCenter TYPE_CENTER = TypeCenter.getInstance();
 
-    private IHermesServiceCallback mHermesServiceCallback = new IHermesServiceCallback.Stub(1l) {
+    private IHermesServiceCallback mHermesServiceCallback = new IHermesServiceCallback.Stub(Process.myPid()) {
 
         private Object[] getParameters(ParameterWrapper[] parameterWrappers) throws HermesException {
             if (parameterWrappers == null) {
@@ -192,7 +193,7 @@ public class Channel {
             mBinding = false;
             mHermesService = IHermesService.Stub.asInterface(service);
             try {
-                mHermesService.register(mHermesServiceCallback);
+                mHermesService.register(mHermesServiceCallback, Process.myPid());
             } catch (RemoteException e) {
                 e.printStackTrace();
                 Log.e(TAG, "Remote Exception: Check whether "

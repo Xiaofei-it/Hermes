@@ -52,7 +52,7 @@ public class HermesService extends Service {
         }
 
         @Override
-        public void register(IHermesServiceCallback callback) throws RemoteException {
+        public void register(IHermesServiceCallback callback, int pid) throws RemoteException {
             synchronized (HermesService.class) {
                 if (mCallback == null) {
                     mCallback = callback;
