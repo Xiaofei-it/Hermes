@@ -20,6 +20,7 @@ package xiaofei.library.hermes.internal;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Process;
 
 import xiaofei.library.hermes.wrapper.MethodWrapper;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
@@ -31,6 +32,8 @@ import xiaofei.library.hermes.wrapper.ParameterWrapper;
 public class Mail implements Parcelable {
 
     private long mTimeStamp;
+
+    private int mPid;
 
     private ObjectWrapper mObject;
 
@@ -58,6 +61,7 @@ public class Mail implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mTimeStamp);
+        parcel.writeInt(mPid);
         parcel.writeParcelable(mObject, flags);
         parcel.writeParcelable(mMethod, flags);
         parcel.writeParcelableArray(mParameters, flags);
@@ -65,6 +69,7 @@ public class Mail implements Parcelable {
 
     public void readFromParcel(Parcel in) {
         mTimeStamp = in.readLong();
+        mPid = in.readInt();
         ClassLoader classLoader = Mail.class.getClassLoader();
         mObject = in.readParcelable(classLoader);
         mMethod = in.readParcelable(classLoader);
@@ -87,9 +92,14 @@ public class Mail implements Parcelable {
 
     public Mail(long timeStamp, ObjectWrapper object, MethodWrapper method, ParameterWrapper[] parameters) {
         mTimeStamp = timeStamp;
+        mPid = Process.myPid();
         mObject = object;
         mMethod = method;
         mParameters = parameters;
+    }
+
+    public int getPid() {
+        return mPid;
     }
 
     public ParameterWrapper[] getParameters() {

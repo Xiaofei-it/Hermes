@@ -69,7 +69,7 @@ public class Channel {
 
     private static final TypeCenter TYPE_CENTER = TypeCenter.getInstance();
 
-    private IHermesServiceCallback mHermesServiceCallback = new IHermesServiceCallback.Stub(Process.myPid()) {
+    private IHermesServiceCallback mHermesServiceCallback = new IHermesServiceCallback.Stub() {
 
         private Object[] getParameters(ParameterWrapper[] parameterWrappers) throws HermesException {
             if (parameterWrappers == null) {

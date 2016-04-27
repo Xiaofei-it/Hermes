@@ -26,6 +26,8 @@ import android.os.Looper;
 import android.os.RemoteException;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 import xiaofei.library.hermes.IHermesService;
 import xiaofei.library.hermes.IHermesServiceCallback;
 import xiaofei.library.hermes.receiver.Receiver;
@@ -34,15 +36,17 @@ import xiaofei.library.hermes.util.HermesException;
 
 public class HermesService extends Service {
 
-    private IHermesServiceCallback mCallback;
+    private HashMap<Integer, IHermesServiceCallback> mCallbacks = new HashMap<Integer, IHermesServiceCallback>();
 
     private final IHermesService.Stub mBinder = new IHermesService.Stub() {
         @Override
         public Reply send(Mail mail) {
             try {
                 Receiver receiver = ReceiverDesignator.getReceiver(mail.getObject());
-                if (mCallback != null) {
-                    receiver.setHermesServiceCallback(mCallback);
+                int pid = mail.getPid();
+                IHermesServiceCallback callback = mCallbacks.get(pid);
+                if (callback != null) {
+                    receiver.setHermesServiceCallback(callback);
                 }
                 return receiver.action(mail.getTimeStamp(), mail.getMethod(), mail.getParameters());
             } catch (HermesException e) {
@@ -54,9 +58,7 @@ public class HermesService extends Service {
         @Override
         public void register(IHermesServiceCallback callback, int pid) throws RemoteException {
             synchronized (HermesService.class) {
-                if (mCallback == null) {
-                    mCallback = callback;
-                }
+                mCallbacks.put(pid, callback);
             }
         }
     };

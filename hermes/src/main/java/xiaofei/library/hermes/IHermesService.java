@@ -87,8 +87,8 @@ public interface IHermesService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     IHermesServiceCallback _arg1;
                     IBinder iBinder = data.readStrongBinder();
+                    _arg1 = IHermesServiceCallback.Stub.asInterface(iBinder);
                     int pid = data.readInt();
-                    _arg1 = IHermesServiceCallback.Stub.asInterface(iBinder, pid);
                     this.register(_arg1, pid);
                     reply.writeNoException();
                     return true;

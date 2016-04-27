@@ -35,26 +35,22 @@ public interface IHermesServiceCallback extends IInterface {
 
         private static final String DESCRIPTOR = "xiaofei.library.hermes.IHermesServiceCallback";
 
-        private int mPid;
-
-        public Stub(int pid) {
-            mPid = pid;
-            this.attachInterface(this, DESCRIPTOR + pid);
+        public Stub() {
+            this.attachInterface(this, DESCRIPTOR);
             Log.v("eric zhao", "callback Stub init");
         }
 
-        public static IHermesServiceCallback asInterface(IBinder obj, int pid) {
+        public static IHermesServiceCallback asInterface(IBinder obj) {
             if ((obj==null)) {
                 return null;
             }
-            Log.v("eric zhao","pid = " + pid);
-            IInterface iin = obj.queryLocalInterface(DESCRIPTOR + pid);
+            IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
             if (((iin!=null)&&(iin instanceof IHermesServiceCallback))) {
                 Log.v("eric zhao", "callback asInterface branch 1");
                 return ((IHermesServiceCallback)iin);
             }
             Log.v("eric zhao", "callback asInterface branch 2");
-            return new Proxy(obj, pid);
+            return new Proxy(obj);
         }
 
         @Override
@@ -67,11 +63,11 @@ public interface IHermesServiceCallback extends IInterface {
         public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
             switch (code) {
                 case INTERFACE_TRANSACTION:
-                    reply.writeString(DESCRIPTOR + mPid);
+                    reply.writeString(DESCRIPTOR);
                     return true;
                 case TRANSACTION_callback:
                     Log.v("eric zhao", "callback on transact callback");
-                    data.enforceInterface(DESCRIPTOR + mPid);
+                    data.enforceInterface(DESCRIPTOR);
                     CallbackMail _arg0;
                     if ((0!=data.readInt())) {
                         _arg0 = CallbackMail.CREATOR.createFromParcel(data);
@@ -95,10 +91,7 @@ public interface IHermesServiceCallback extends IInterface {
 
             private IBinder mRemote;
 
-            private int mPid;
-
-            Proxy(IBinder remote, int pid) {
-                mPid = pid;
+            Proxy(IBinder remote) {
                 Log.v("eric zhao", "callback Proxy init");
                 mRemote = remote;
             }
@@ -110,7 +103,7 @@ public interface IHermesServiceCallback extends IInterface {
             }
 
             public String getInterfaceDescriptor() {
-                return DESCRIPTOR + mPid;
+                return DESCRIPTOR;
             }
 
             @Override
@@ -120,7 +113,7 @@ public interface IHermesServiceCallback extends IInterface {
                 Parcel _reply = Parcel.obtain();
                 Reply _result;
                 try {
-                    _data.writeInterfaceToken(DESCRIPTOR + mPid);
+                    _data.writeInterfaceToken(DESCRIPTOR);
                     if ((mail!=null)) {
                         _data.writeInt(1);
                         mail.writeToParcel(_data, 0);
