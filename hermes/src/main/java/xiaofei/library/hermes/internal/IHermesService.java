@@ -16,7 +16,7 @@
  *
  */
 
-package xiaofei.library.hermes;
+package xiaofei.library.hermes.internal;
 
 import android.os.Binder;
 import android.os.IBinder;
@@ -26,36 +26,34 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
-import xiaofei.library.hermes.internal.CallbackMail;
-import xiaofei.library.hermes.internal.Reply;
+public interface IHermesService extends IInterface {
 
-public interface IHermesServiceCallback extends IInterface {
+    abstract class Stub extends Binder implements IHermesService {
 
-    abstract class Stub extends Binder implements IHermesServiceCallback {
-
-        private static final String DESCRIPTOR = "xiaofei.library.hermes.IHermesServiceCallback";
+        private static final String DESCRIPTOR = "xiaofei.library.hermes.internal.IHermesService";
 
         public Stub() {
             this.attachInterface(this, DESCRIPTOR);
-            Log.v("eric zhao", "callback Stub init");
+            Log.v("eric zhao", "Stub init");
         }
 
-        public static IHermesServiceCallback asInterface(IBinder obj) {
+        public static IHermesService asInterface(IBinder obj) {
+            Log.v("eric zhao", "asInterface");
             if ((obj==null)) {
                 return null;
             }
             IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-            if (((iin!=null)&&(iin instanceof IHermesServiceCallback))) {
-                Log.v("eric zhao", "callback asInterface branch 1");
-                return ((IHermesServiceCallback)iin);
+            if (((iin!=null)&&(iin instanceof IHermesService))) {
+                Log.v("eric zhao", "asInterface branch 1");
+                return ((IHermesService)iin);
             }
-            Log.v("eric zhao", "callback asInterface branch 2");
+            Log.v("eric zhao", "asInterface branch 2");
             return new Proxy(obj);
         }
 
         @Override
         public IBinder asBinder() {
-            Log.v("eric zhao", "callback asBinder");
+            Log.v("eric zhao", "asBinder");
             return this;
         }
 
@@ -65,16 +63,15 @@ public interface IHermesServiceCallback extends IInterface {
                 case INTERFACE_TRANSACTION:
                     reply.writeString(DESCRIPTOR);
                     return true;
-                case TRANSACTION_callback:
-                    Log.v("eric zhao", "callback on transact callback");
+                case TRANSACTION_send:
                     data.enforceInterface(DESCRIPTOR);
-                    CallbackMail _arg0;
+                    Mail _arg0;
                     if ((0!=data.readInt())) {
-                        _arg0 = CallbackMail.CREATOR.createFromParcel(data);
+                        _arg0 = Mail.CREATOR.createFromParcel(data);
                     } else {
                         _arg0 = null;
                     }
-                    Reply _result = this.callback(_arg0);
+                    Reply _result = this.send(_arg0);
                     reply.writeNoException();
                     if ((_result!=null)) {
                         reply.writeInt(1);
@@ -83,22 +80,31 @@ public interface IHermesServiceCallback extends IInterface {
                         reply.writeInt(0);
                     }
                     return true;
+                case TRANSACTION_register:
+                    data.enforceInterface(DESCRIPTOR);
+                    IHermesServiceCallback _arg1;
+                    IBinder iBinder = data.readStrongBinder();
+                    _arg1 = IHermesServiceCallback.Stub.asInterface(iBinder);
+                    int pid = data.readInt();
+                    this.register(_arg1, pid);
+                    reply.writeNoException();
+                    return true;
             }
             return super.onTransact(code, data, reply, flags);
         }
 
-        private static class Proxy implements IHermesServiceCallback {
+        private static class Proxy implements IHermesService {
 
             private IBinder mRemote;
 
             Proxy(IBinder remote) {
-                Log.v("eric zhao", "callback Proxy init");
+                Log.v("eric zhao", "Proxy init");
                 mRemote = remote;
             }
 
             @Override
             public IBinder asBinder() {
-                Log.v("eric zhao", "callback Proxy asBinder");
+                Log.v("eric zhao", "Proxy asBinder");
                 return mRemote;
             }
 
@@ -107,8 +113,8 @@ public interface IHermesServiceCallback extends IInterface {
             }
 
             @Override
-            public Reply callback(CallbackMail mail) throws RemoteException {
-                Log.v("eric zhao", "callback proxy callback");
+            public Reply send(Mail mail) throws RemoteException {
+                Log.v("eric zhao", "proxy send");
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 Reply _result;
@@ -120,7 +126,7 @@ public interface IHermesServiceCallback extends IInterface {
                     } else {
                         _data.writeInt(0);
                     }
-                    mRemote.transact(Stub.TRANSACTION_callback, _data, _reply, 0);
+                    mRemote.transact(Stub.TRANSACTION_send, _data, _reply, 0);
                     _reply.readException();
                     if ((0!=_reply.readInt())) {
                         _result = Reply.CREATOR.createFromParcel(_reply);
@@ -133,11 +139,31 @@ public interface IHermesServiceCallback extends IInterface {
                 }
                 return _result;
             }
+
+            @Override
+            public void register(IHermesServiceCallback callback, int pid) throws RemoteException {
+                Log.v("eric zhao", "register");
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+                    _data.writeInt(pid);
+                    mRemote.transact(Stub.TRANSACTION_register, _data, _reply, 0);
+                    _reply.readException();
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
         }
 
-        static final int TRANSACTION_callback = (IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_send = (IBinder.FIRST_CALL_TRANSACTION + 0);
+
+        static final int TRANSACTION_register = (IBinder.FIRST_CALL_TRANSACTION + 1);
     }
 
-    Reply callback(CallbackMail mail) throws RemoteException;
+    Reply send(Mail mail) throws RemoteException;
 
+    void register(IHermesServiceCallback callback, int pid) throws RemoteException;
 }

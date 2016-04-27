@@ -20,16 +20,11 @@ package xiaofei.library.hermes.internal;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.RemoteException;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
-import xiaofei.library.hermes.IHermesService;
-import xiaofei.library.hermes.IHermesServiceCallback;
 import xiaofei.library.hermes.receiver.Receiver;
 import xiaofei.library.hermes.receiver.ReceiverDesignator;
 import xiaofei.library.hermes.util.HermesException;

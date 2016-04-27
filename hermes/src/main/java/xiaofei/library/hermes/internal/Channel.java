@@ -33,14 +33,10 @@ import android.util.Log;
 import java.lang.reflect.Method;
 
 import xiaofei.library.hermes.HermesListener;
-import xiaofei.library.hermes.IHermesService;
-import xiaofei.library.hermes.IHermesServiceCallback;
 import xiaofei.library.hermes.util.CallbackManager;
 import xiaofei.library.hermes.util.CodeUtils;
 import xiaofei.library.hermes.util.ErrorCodes;
 import xiaofei.library.hermes.util.HermesException;
-import xiaofei.library.hermes.util.ObjectCenter;
-import xiaofei.library.hermes.util.TimeStampGenerator;
 import xiaofei.library.hermes.util.TypeCenter;
 import xiaofei.library.hermes.wrapper.ParameterWrapper;
 

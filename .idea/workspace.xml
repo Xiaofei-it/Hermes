@@ -11,13 +11,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbfde597-efa2-4f4a-b525-84b578b93886" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesService.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesService.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesServiceCallback.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesServiceCallback.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesService.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesServiceCallback.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesServiceCallback.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesService.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Mail.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Mail.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/receiver/Receiver.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/receiver/Receiver.java" />
     </list>
     <ignored path="Hermes.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,105 +45,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <file leaf-file-name="MethodWrapper.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/MethodWrapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.0">
-              <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.026548672">
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DemoActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/DemoActivity.java">
+      <file leaf-file-name="IHermesService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-              <folding>
-                <element signature="e#845#1054#0" expanded="true" />
-                <element signature="e#1053#1054#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IHermesService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.285714">
-              <caret line="90" column="45" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
+              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
               <folding>
                 <element signature="e#0#593#0" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#3959#3960#0" expanded="true" />
-                <element signature="e#4008#4009#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="IHermesServiceCallback.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesServiceCallback.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.703704">
-              <caret line="93" column="35" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#593#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="e#3666#3667#0" expanded="true" />
-                <element signature="e#3715#3716#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HermesService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesService.java">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesServiceCallback.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
-              <folding>
-                <element signature="e#1252#1285#0" expanded="true" />
-                <element signature="e#2373#2374#0" expanded="true" />
-                <element signature="e#2403#2404#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Mail.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Mail.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
-              <folding>
-                <element signature="e#2867#2868#0" expanded="true" />
-                <element signature="e#2894#2895#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Channel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.2222223">
-              <caret line="71" column="92" selection-start-line="71" selection-start-column="92" selection-end-line="71" selection-end-column="92" />
+              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
               <folding>
                 <element signature="e#0#593#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ParameterWrapper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/ParameterWrapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -2612,8 +2545,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/hermes/src/main/aidl/xiaofei/library/hermes/internal/CallbackMail.aidl" />
-        <option value="$PROJECT_DIR$/hermes/src/main/aidl/xiaofei/library/hermes/internal/Mail.aidl" />
         <option value="$PROJECT_DIR$/hermes/src/main/aidl/xiaofei/library/hermes/internal/Reply.aidl" />
         <option value="$PROJECT_DIR$/hermes/src/main/aidl/xiaofei/library/hermes/IHermesService.aidl" />
         <option value="$PROJECT_DIR$/hermes/src/main/aidl/xiaofei/library/hermes/IHermesServiceCallback.aidl" />
@@ -2663,6 +2594,8 @@
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesService.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesService.java" />
+        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesServiceCallback.java" />
       </list>
     </option>
   </component>
@@ -3573,6 +3506,7 @@
       <recent name="$PROJECT_DIR$/app/src/main" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="xiaofei.library.hermes.internal" />
       <recent name="xiaofei.library.hermestest.test" />
       <recent name="xiaofei.library.hermes" />
       <recent name="xiaofei.library.hermes.util" />
@@ -3897,7 +3831,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6694772" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6694772" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -4019,7 +3953,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java</url>
-          <line>99</line>
+          <line>95</line>
           <properties />
           <option name="timeStamp" value="80" />
         </line-breakpoint>
@@ -4364,16 +4298,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/MethodWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#593#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/ObjectWrapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4443,17 +4367,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/DemoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-          <folding>
-            <element signature="e#845#1054#0" expanded="true" />
-            <element signature="e#1053#1054#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Mail.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4470,22 +4383,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
           <folding>
-            <element signature="e#1252#1285#0" expanded="true" />
-            <element signature="e#2373#2374#0" expanded="true" />
-            <element signature="e#2403#2404#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesServiceCallback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.703704">
-          <caret line="93" column="35" selection-start-line="93" selection-start-column="35" selection-end-line="93" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#593#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="e#3666#3667#0" expanded="true" />
-            <element signature="e#3715#3716#0" expanded="true" />
+            <element signature="e#1070#1103#0" expanded="true" />
+            <element signature="e#2191#2192#0" expanded="true" />
+            <element signature="e#2221#2222#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4501,24 +4401,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/DemoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
+          <folding>
+            <element signature="e#845#1054#0" expanded="true" />
+            <element signature="e#1053#1054#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0">
+        <state vertical-scroll-proportion="0.7916667">
           <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/IHermesService.java">
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.285714">
-          <caret line="90" column="45" selection-start-line="90" selection-start-column="45" selection-end-line="90" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
           <folding>
             <element signature="e#0#593#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#3959#3960#0" expanded="true" />
-            <element signature="e#4008#4009#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/IHermesServiceCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#593#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/MethodWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.026548672">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

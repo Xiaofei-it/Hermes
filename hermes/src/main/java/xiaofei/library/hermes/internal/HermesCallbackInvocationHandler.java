@@ -24,7 +24,6 @@ import android.util.Log;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import xiaofei.library.hermes.IHermesServiceCallback;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.TypeUtils;
 import xiaofei.library.hermes.wrapper.MethodWrapper;

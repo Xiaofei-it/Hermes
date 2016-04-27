@@ -20,7 +20,7 @@ package xiaofei.library.hermes.receiver;
 
 import java.lang.reflect.Proxy;
 
-import xiaofei.library.hermes.IHermesServiceCallback;
+import xiaofei.library.hermes.internal.IHermesServiceCallback;
 import xiaofei.library.hermes.internal.HermesCallbackInvocationHandler;
 import xiaofei.library.hermes.internal.Reply;
 import xiaofei.library.hermes.util.CodeUtils;
