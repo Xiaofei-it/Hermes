@@ -26,7 +26,7 @@ public class LoadingTask implements ILoadingTask {
             int time = 0;
             @Override
             public void run() {
-                time += 2;
+                time += 50;
                 if (time > 100) {
                     time = 100;
                 }

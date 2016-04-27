@@ -39,6 +39,7 @@ import xiaofei.library.hermes.util.CodeUtils;
 import xiaofei.library.hermes.util.ErrorCodes;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.ObjectCenter;
+import xiaofei.library.hermes.util.TimeStampGenerator;
 import xiaofei.library.hermes.util.TypeCenter;
 import xiaofei.library.hermes.wrapper.ParameterWrapper;
 
@@ -67,7 +68,7 @@ public class Channel {
 
     private static final TypeCenter TYPE_CENTER = TypeCenter.getInstance();
 
-    private IHermesServiceCallback mHermesServiceCallback = new IHermesServiceCallback.Stub() {
+    private IHermesServiceCallback mHermesServiceCallback = new IHermesServiceCallback.Stub(1l) {
 
         private Object[] getParameters(ParameterWrapper[] parameterWrappers) throws HermesException {
             if (parameterWrappers == null) {
