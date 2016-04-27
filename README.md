@@ -5,7 +5,7 @@ Hermes is a smart, novel and easy-to-use framework for Android Inter-Process Com
 
 ##Principle
 
-Since the main purpose of IPC is to invoke methods in another process, Hermes make method invocation so easy that you can invoke methods in another process just like you invoke methods in a local process, and also, the statements of method invocation in another process are almost the same as the ones in a local process.
+Since the main purpose of IPC is to invoke methods in another process, Hermes makes method invocation so easy that you can invoke methods in another process just like you invoke methods in a local process, and also, the statements of method invocation in another process are almost the same as the ones in a local process.
 
 For example, the singleton pattern is always used in Android apps. Suppose an app contains two processes and they want to use a singleton. The singleton is as below:
 ```
@@ -90,98 +90,98 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
 1. Hermes.newInstance(Class<T>, Object...)
 
    This method creates an new instance of the specified class in Process A and returns the reference to the new instance. The second parameter will be passed into the corresponding constructor of the specified class.
-```
-@ClassId(“LoadingTask”)
-public class LoadingTask {
+   ```
+   @ClassId(“LoadingTask”)
+   public class LoadingTask {
 
-    public LoadingTask(String path, boolean showImmediately) {
-        //...
-    }
+       public LoadingTask(String path, boolean showImmediately) {
+           //...
+       }
 
-    @MethodId(“start”)
-    public void start() {
-        //...
-    }
-}
+       @MethodId(“start”)
+       public void start() {
+           //...
+       }
+   }
 
-@ClassId(“LoadingTask”)
-public class ILoadingTask {
-    @MethodId(“start”)
-    void start();
-}
-```
+   @ClassId(“LoadingTask”)
+   public class ILoadingTask {
+       @MethodId(“start”)
+       void start();
+   }
+   ```
    In Process B, you create the instance by Hermes.newInstance(ILoadingTask.class, “files/image.png”, true) to get the instance of LoadingTask.
 
 2. Hermes.getInstance(Class<T>, Object...)
 
    This method creates an new instance of the specified class through its static method named “getInstance” in Process A and returns the reference to the new instance. The second parameter will be passed into the corresponding static “getInstance” method of the specified class. This is useful when the specified class is a singleton.
-```
-@ClassId(“BitmapWrapper”)
-public class BitmapWrapper {
+   ```
+   @ClassId(“BitmapWrapper”)
+   public class BitmapWrapper {
 
-    @GetInstance
-    public static BitmapWrapper getInstance(String path) {
-        //...
-    }
+       @GetInstance
+       public static BitmapWrapper getInstance(String path) {
+           //...
+       }
 
-    @GetInstance
-    public static BitmapWrapper getInstance(int label) {
-        //...
-    }
+       @GetInstance
+       public static BitmapWrapper getInstance(int label) {
+           //...
+       }
 
-    @MethodId(“show”)
-    public void show() {
-        //...
-    }
+       @MethodId(“show”)
+       public void show() {
+           //...
+       }
 
-}
+   }
 
-@ClassId(“BitmapWrapper”)
-public class IBitmapWrapper {
+   @ClassId(“BitmapWrapper”)
+   public class IBitmapWrapper {
 
-    @MethodId(“show”)
-    void show();
+       @MethodId(“show”)
+       void show();
    
-}
-```
+   }
+   ```
    In Process B, you create the instance by Hermes.getInstance(IBitmapWrapper.class, “files/image.png”) or Hermes.getInstance(IBitmapWrapper.class, 1001) to get the instance of BitmapWrapper.
 
 3. Hermes.getUtilityClass(Class<T>)
 
    This method provides a way to use the utility class in another process. (This is very useful when developing plugins.)
-```
-@ClassId(“Maths”)
-public class Maths {
+   ```
+   @ClassId(“Maths”)
+   public class Maths {
 
-    @MethodId(“plus”)
-    public static int plus(int a, int b) {
-       //...
-    }
+       @MethodId(“plus”)
+       public static int plus(int a, int b) {
+          //...
+       }
 
-    @MethodId(“minus”)
-    public static int minus(int a, int b) {
-        //...
-    }
+       @MethodId(“minus”)
+       public static int minus(int a, int b) {
+           //...
+       }
 
-}
+   }
 
 
-@ClassId(“Maths”)
-public class IMaths {
+   @ClassId(“Maths”)
+   public class IMaths {
 
-    @MethodId(“plus”)
-    int plus(int a, int b);
+       @MethodId(“plus”)
+       int plus(int a, int b);
 
-    @MethodId(“minus”)
-    int minus(int a, int b);
-}
-```
+       @MethodId(“minus”)
+       int minus(int a, int b);
+   }
+   ```
    In Process B, you can do as the below:
-```
-IMaths maths = Hermes.getUtilityClass(IMaths.class);
-int sum = maths.plus(3, 5);
-int diff = maths.minus(3, 5);
-```
+   ```
+   IMaths maths = Hermes.getUtilityClass(IMaths.class);
+   int sum = maths.plus(3, 5);
+   int diff = maths.minus(3, 5);
+   ```
 
 ##Notice
 
@@ -198,39 +198,39 @@ int diff = maths.minus(3, 5);
 4. If you want to prevent a class or a method from being accessed from outside the process, add a WithinProcess annotation on it.
 
 5. The type of the parameters you pass into the method can be a subclass of the corresponding parameter type, but cannot be an anonymous class or a local class. But callback is supported. See Point 7 for more information about callbacks.
-```
-public class A {}
+   ```
+   public class A {}
 
-public class B extends A {}
-```
+   public class B extends A {}
+   ```
    In Process A, there is a class as below:
-```
-@ClassId(“Foo”)
-public class Foo {
+   ```
+   @ClassId(“Foo”)
+   public class Foo {
    
-    public static A f(A a) {
-    }
-}
-```
+       public static A f(A a) {
+       }
+   }
+   ```
    Then in Process B, the interface is as below:
-```
-@ClassId(“Foo”)
-public interface IFoo {
+   ```
+   @ClassId(“Foo”)
+   public interface IFoo {
 
-    A f(A a);
-}
-```
+       A f(A a);
+   }
+   ```
    In Process B, you can write the followings:
-```
-IFoo foo = Hermes.getUtilityClass(IFoo.class);
-B b = new B();
-A a = foo.f(b);
-```
+   ```
+   IFoo foo = Hermes.getUtilityClass(IFoo.class);
+   B b = new B();
+   A a = foo.f(b);
+   ```
 
    You can NOT write the following:
-```
-A a = foo.f(new A(){});
-```
+   ```
+   A a = foo.f(new A(){});
+   ```
 
 6. If the parameter types and the return type of the invoked method are the primitive types or some common classes such as String, the above will work very well. However, if they are the classes you declare, as the example in Point 5 shows, and if the method invocation is between apps, then you must declare the classes in both App A and App B. What’s more, you should guarantee that the name of the class and its methods remain the same even after you use the ProGuard. Or you can add the ClassId annotation on the class and the MethodId annotation on the methods.
 
@@ -243,25 +243,25 @@ A a = foo.f(new A(){});
    By default, Hermes holds a strong reference to the callback, which may cause the memory leak. You can add a WeakRef annotation before the corresponding callback parameter to let Hermes hold a weak reference to the callback. If the callback in a process has been reclaimed and it is called from the other process (A process does not know the callback in another process has been reclaimed), nothing happens and if the callback has a return value, the return value will be null.
 
    If you want to use the Background annotation and the WeakRef annotation, you should add them when you declare the interface. If you add them elsewhere, it will take no effect.
-```
-@ClassId(“Foo”)
-public class Foo {
+   ```
+   @ClassId(“Foo”)
+   public class Foo {
 
-    public static void f(int i, Callback callback) {
-    }
-}
+       public static void f(int i, Callback callback) {
+       }
+   }
 
-@ClassId(“callback”)
-public interface Callback {
-    void callback();
-}
+   @ClassId(“callback”)
+   public interface Callback {
+       void callback();
+   }
 
-@ClassId(“Foo”)
-public interface IFoo {
+   @ClassId(“Foo”)
+   public interface IFoo {
    
-    void f(int i, @WeakRef @Background Callback callback);
-}
-```
+       void f(int i, @WeakRef @Background Callback callback);
+   }
+   ```
 8. Data transmitting between processes is based on Json.
 
 9. If any error occurs, a error log will be printed by android.util.Log.e(). You can see the log for the detail of the error.
