@@ -18,6 +18,8 @@
 
 package xiaofei.library.hermes.sender;
 
+import android.content.Context;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
@@ -95,6 +97,8 @@ public abstract class Sender {
                                 TypeUtils.arrayContainsAnnotation(parameterAnnotations[i], WeakRef.class),
                                 !TypeUtils.arrayContainsAnnotation(parameterAnnotations[i], Background.class));
                     }
+                } else if (Context.class.isAssignableFrom(classes[i])) {
+                    parameterWrappers[i] = new ParameterWrapper(TypeUtils.getContextClass(classes[i]), null);
                 } else {
                     parameterWrappers[i] = new ParameterWrapper(parameters[i]);
                 }

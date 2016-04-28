@@ -18,22 +18,44 @@
 
 package xiaofei.library.hermes.util;
 
+import android.app.Activity;
+import android.app.Application;
+import android.app.IntentService;
+import android.app.Service;
+import android.content.Context;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashSet;
 
 import xiaofei.library.hermes.annotation.ClassId;
 import xiaofei.library.hermes.annotation.GetInstance;
 import xiaofei.library.hermes.annotation.MethodId;
 import xiaofei.library.hermes.annotation.WithinProcess;
-import xiaofei.library.hermes.internal.HermesInvocationHandler;
 import xiaofei.library.hermes.wrapper.ParameterWrapper;
 
 /**
  * Created by Xiaofei on 16/4/7.
  */
 public class TypeUtils {
+
+    private static final HashSet<Class<?>> CONTEXT_CLASSES = new HashSet<Class<?>>() {
+        {
+            add(Context.class);
+            add(ActionBarActivity.class);
+            add(Activity.class);
+            add(AppCompatActivity.class);
+            add(Application.class);
+            add(FragmentActivity.class);
+            add(IntentService.class);
+            add(Service.class);
+        }
+    };
 
     public static String getClassId(Class<?> clazz) {
         ClassId classId = clazz.getAnnotation(ClassId.class);
@@ -275,6 +297,9 @@ public class TypeUtils {
                     "Error occurs when registering class " + clazz.getName()
                             + ". Local class cannot be accessed from outside the process.");
         }
+        if (Context.class.isAssignableFrom(clazz)) {
+            return;
+        }
         if (Modifier.isAbstract(clazz.getModifiers())) {
             throw new IllegalArgumentException(
                     "Error occurs when registering class " + clazz.getName()
@@ -301,6 +326,15 @@ public class TypeUtils {
             }
         }
         return false;
+    }
+
+    public static Class<?> getContextClass(Class<?> clazz) {
+        for (Class<?> tmp = clazz; tmp != Object.class; tmp = tmp.getSuperclass()) {
+            if (CONTEXT_CLASSES.contains(tmp)) {
+                return tmp;
+            }
+        }
+        throw new IllegalArgumentException();
     }
 
     public static void validateAccessible(Class<?> clazz) throws HermesException {

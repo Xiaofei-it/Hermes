@@ -40,7 +40,8 @@ public class DemoActivity extends Activity {
         findViewById(R.id.get_screen).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                IFileUtils fileUtils = Hermes.getUtilityClass(IFileUtils.class);
+                Toast.makeText(getApplicationContext(), fileUtils.getExternalCacheDir(DemoActivity.this), Toast.LENGTH_SHORT).show();
             }
         });
     }

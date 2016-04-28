@@ -18,8 +18,11 @@
 
 package xiaofei.library.hermes.receiver;
 
+import android.content.Context;
+
 import java.lang.reflect.Proxy;
 
+import xiaofei.library.hermes.Hermes;
 import xiaofei.library.hermes.internal.IHermesServiceCallback;
 import xiaofei.library.hermes.internal.HermesCallbackInvocationHandler;
 import xiaofei.library.hermes.internal.Reply;
@@ -83,6 +86,8 @@ public abstract class Receiver {
                     Class<?> clazz = TYPE_CENTER.getClassType(parameterWrapper);
                     if (clazz != null && clazz.isInterface()) {
                         mParameters[i] = getProxy(clazz, i, methodInvocationTimeStamp);
+                    } else if (clazz != null && Context.class.isAssignableFrom(clazz)) {
+                        mParameters[i] = Hermes.getContext();
                     } else {
                         String data = parameterWrapper.getData();
                         if (data == null) {

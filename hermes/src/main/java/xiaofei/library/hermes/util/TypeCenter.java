@@ -156,7 +156,8 @@ public class TypeCenter {
             if (clazz == null) {
                 throw new HermesException(ErrorCodes.CLASS_NOT_FOUND,
                         "Cannot find class with ClassId annotation on it. ClassId = " + name
-                                + ". Please add the same annotation on the corresponding class in the remote process.");
+                                + ". Please add the same annotation on the corresponding class in the remote process"
+                                + " and register it. Have you forgotten to register the class?");
             }
             return clazz;
         }

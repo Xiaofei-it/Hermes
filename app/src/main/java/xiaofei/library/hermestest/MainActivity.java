@@ -22,6 +22,8 @@ public class MainActivity extends Activity {
         Hermes.register(C.class);
         Hermes.register(UserManager.class);
         Hermes.register(LoadingTask.class);
+        Hermes.register(FileUtils.class);
+        Hermes.setContext(this);
         findViewById(R.id.testing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

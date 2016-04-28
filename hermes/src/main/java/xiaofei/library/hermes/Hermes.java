@@ -18,6 +18,7 @@
 
 package xiaofei.library.hermes;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -45,12 +46,26 @@ public class Hermes {
 
     private static final Channel CHANNEL = Channel.getInstance();
 
+    private static volatile Context sContext = null;
+
     public static void register(Object object) {
         register(object.getClass());
     }
 
     public static void register(Class<?> clazz) {
         TYPE_CENTER.register(clazz);
+    }
+
+    public static Context getContext() {
+        return sContext;
+    }
+
+    public static void setContext(Context context) {
+        synchronized (Hermes.class) {
+            if (sContext == null) {
+                sContext = context.getApplicationContext();
+            }
+        }
     }
 
     private static <T> T getProxy(ObjectWrapper object) {
