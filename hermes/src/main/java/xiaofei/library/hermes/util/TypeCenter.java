@@ -114,7 +114,10 @@ public class TypeCenter {
             return null;
         }
         if (wrapper.isName()) {
-            Class<?> clazz = mRawClasses.get(name);
+            Class<?> clazz;
+            synchronized (mRawClasses) {
+                clazz = mRawClasses.get(name);
+            }
             if (clazz != null) {
                 return clazz;
             }
@@ -149,10 +152,15 @@ public class TypeCenter {
                 }
 
             }
-            mRawClasses.put(name, clazz);
+            synchronized (mRawClasses) {
+                mRawClasses.put(name, clazz);
+            }
             return clazz;
         } else {
-            Class<?> clazz = mAnnotatedClasses.get(name);
+            Class<?> clazz;
+            synchronized (mAnnotatedClasses) {
+                clazz = mAnnotatedClasses.get(name);
+            }
             if (clazz == null) {
                 throw new HermesException(ErrorCodes.CLASS_NOT_FOUND,
                         "Cannot find class with ClassId annotation on it. ClassId = " + name
@@ -175,10 +183,13 @@ public class TypeCenter {
         String name = methodWrapper.getName();
         if (methodWrapper.isName()) {
             Class<?> returnType = getClassType(methodWrapper.getReturnType());
-            if (!mRawMethods.containsKey(clazz)) {
-                mRawMethods.put(clazz, new HashMap<String, Method>());
+            Method method;
+            synchronized (mRawMethods) {
+                if (!mRawMethods.containsKey(clazz)) {
+                    mRawMethods.put(clazz, new HashMap<String, Method>());
+                }
+                method = mRawMethods.get(clazz).get(name);
             }
-            Method method = mRawMethods.get(clazz).get(name);
             if (method != null) {
                 Class<?> tmp = method.getReturnType();
                 if (TypeUtils.primitiveMatch(tmp, returnType)) {
@@ -201,7 +212,10 @@ public class TypeCenter {
             mRawMethods.get(clazz).put(name, method);
             return method;
         } else {
-            HashMap<String, Method> methods = mAnnotatedMethods.get(clazz);
+            HashMap<String, Method> methods;
+            synchronized (mAnnotatedMethods) {
+                methods = mAnnotatedMethods.get(clazz);
+            }
             //TODO
             Method method = methods.get(name);
             if (method != null) {

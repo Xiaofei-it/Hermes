@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:name=".DemoActivity"
-            android:process=":g"
+            android:process=":h"
             android:label="@string/title_activity_demo" >
         </activity>
     </application>

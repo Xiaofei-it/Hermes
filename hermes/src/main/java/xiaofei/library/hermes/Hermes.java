@@ -30,6 +30,7 @@ import xiaofei.library.hermes.internal.Reply;
 import xiaofei.library.hermes.sender.Sender;
 import xiaofei.library.hermes.sender.SenderDesignator;
 import xiaofei.library.hermes.util.HermesException;
+import xiaofei.library.hermes.util.HermesGc;
 import xiaofei.library.hermes.util.TypeCenter;
 import xiaofei.library.hermes.util.TypeUtils;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
@@ -45,6 +46,8 @@ public class Hermes {
     private static final TypeCenter TYPE_CENTER = TypeCenter.getInstance();
 
     private static final Channel CHANNEL = Channel.getInstance();
+
+    private static final HermesGc HERMES_GC = HermesGc.getInstance();
 
     private static volatile Context sContext = null;
 
@@ -70,9 +73,10 @@ public class Hermes {
 
     private static <T> T getProxy(ObjectWrapper object) {
         Class<?> clazz = object.getObjectClass();
-        return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz},
+        T proxy =  (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz},
                     new HermesInvocationHandler(object));
-
+        HERMES_GC.register(proxy, object.getTimeStamp());
+        return proxy;
     }
 
     public static <T> T newInstance(Class<T> clazz, Object... parameters) {
