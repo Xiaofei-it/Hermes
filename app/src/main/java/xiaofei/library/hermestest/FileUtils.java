@@ -7,7 +7,7 @@ import java.io.IOException;
 import xiaofei.library.hermes.annotation.ClassId;
 
 /**
- * Created by Eric on 16/4/28.
+ * Created by Xiaofei on 16/4/28.
  */
 @ClassId("FileUtils")
 public class FileUtils {
