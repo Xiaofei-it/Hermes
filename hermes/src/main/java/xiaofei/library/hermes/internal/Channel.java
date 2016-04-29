@@ -31,6 +31,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import xiaofei.library.hermes.HermesListener;
 import xiaofei.library.hermes.util.CallbackManager;
@@ -168,6 +169,14 @@ public class Channel {
         } catch (RemoteException e) {
             return new Reply(ErrorCodes.REMOTE_EXCEPTION, "Remote Exception: Check whether "
                     + "the process you are communicating with is still alive.");
+        }
+    }
+
+    public void gc(List<Long> timeStamps) {
+        try {
+            mHermesService.gc(timeStamps);
+        } catch (RemoteException e) {
+
         }
     }
 

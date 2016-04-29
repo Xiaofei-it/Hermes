@@ -26,6 +26,8 @@ import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
+import java.util.List;
+
 public interface IHermesService extends IInterface {
 
     abstract class Stub extends Binder implements IHermesService {
@@ -66,14 +68,14 @@ public interface IHermesService extends IInterface {
                 case TRANSACTION_send:
                     data.enforceInterface(DESCRIPTOR);
                     Mail _arg0;
-                    if ((0!=data.readInt())) {
+                    if ((0 != data.readInt())) {
                         _arg0 = Mail.CREATOR.createFromParcel(data);
                     } else {
                         _arg0 = null;
                     }
                     Reply _result = this.send(_arg0);
                     reply.writeNoException();
-                    if ((_result!=null)) {
+                    if ((_result != null)) {
                         reply.writeInt(1);
                         _result.writeToParcel(reply, Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
                     } else {
@@ -87,6 +89,14 @@ public interface IHermesService extends IInterface {
                     _arg1 = IHermesServiceCallback.Stub.asInterface(iBinder);
                     int pid = data.readInt();
                     this.register(_arg1, pid);
+                    reply.writeNoException();
+                    return true;
+                case TRANSACTION_gc:
+                    data.enforceInterface(DESCRIPTOR);
+                    List list;
+                    ClassLoader cl = this.getClass().getClassLoader();
+                    list = data.readArrayList(cl);
+                    this.gc(list);
                     reply.writeNoException();
                     return true;
             }
@@ -156,14 +166,34 @@ public interface IHermesService extends IInterface {
                     _data.recycle();
                 }
             }
+
+            @Override
+            public void gc(List<Long> timeStamps) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeList(timeStamps);
+                    mRemote.transact(Stub.TRANSACTION_gc, _data, _reply, 0);
+                    _reply.readException();
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
         }
 
-        static final int TRANSACTION_send = (IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_send = IBinder.FIRST_CALL_TRANSACTION + 0;
 
-        static final int TRANSACTION_register = (IBinder.FIRST_CALL_TRANSACTION + 1);
+        static final int TRANSACTION_register = IBinder.FIRST_CALL_TRANSACTION + 1;
+
+        static final int TRANSACTION_gc = IBinder.FIRST_CALL_TRANSACTION + 2;
     }
 
     Reply send(Mail mail) throws RemoteException;
 
     void register(IHermesServiceCallback callback, int pid) throws RemoteException;
+
+    void gc(List<Long> timeStamps) throws RemoteException;
 }

@@ -19,6 +19,7 @@
 package xiaofei.library.hermes.util;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Xiaofei on 16/4/8.
@@ -41,10 +42,22 @@ public class ObjectCenter {
     }
 
     public Object getObject(Long timeStamp) {
-        return mObjects.get(timeStamp);
+        synchronized (mObjects) {
+            return mObjects.get(timeStamp);
+        }
     }
 
     public void putObject(long timeStamp, Object object) {
-        mObjects.put(timeStamp, object);
+        synchronized (mObjects) {
+            mObjects.put(timeStamp, object);
+        }
+    }
+
+    public void deleteObjects(List<Long> timeStamps) {
+        synchronized (mObjects) {
+            for (Long timeStamp : timeStamps) {
+                mObjects.remove(timeStamp);
+            }
+        }
     }
 }

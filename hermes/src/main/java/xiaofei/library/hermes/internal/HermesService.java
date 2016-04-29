@@ -24,12 +24,16 @@ import android.os.IBinder;
 import android.os.RemoteException;
 
 import java.util.HashMap;
+import java.util.List;
 
 import xiaofei.library.hermes.receiver.Receiver;
 import xiaofei.library.hermes.receiver.ReceiverDesignator;
 import xiaofei.library.hermes.util.HermesException;
+import xiaofei.library.hermes.util.ObjectCenter;
 
 public class HermesService extends Service {
+
+    private static final ObjectCenter OBJECT_CENTER = ObjectCenter.getInstance();
 
     private HashMap<Integer, IHermesServiceCallback> mCallbacks = new HashMap<Integer, IHermesServiceCallback>();
 
@@ -55,6 +59,11 @@ public class HermesService extends Service {
             synchronized (HermesService.class) {
                 mCallbacks.put(pid, callback);
             }
+        }
+
+        @Override
+        public void gc(List<Long> timeStamps) throws RemoteException {
+            OBJECT_CENTER.deleteObjects(timeStamps);
         }
     };
 
