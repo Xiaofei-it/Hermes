@@ -3,6 +3,17 @@ A smart, novel and easy-to-use framework for Android Inter-Process Communication
 
 Hermes is a smart, novel and easy-to-use framework for Android Inter-Process Communication (IPC). In this framework, you can use IPC even if you do not understand the underneath principle of Android IPC.
 
+##Features
+
+1. Make method invocations over IPC so easy just like method invocations in a local process. The statements of method invocations are almost the same.
+
+2. Easy to use classes, singletons, utilities in another process.
+
+3. Support callbacks over IPC. You do not need to worry about the memory leak caused by callbacks.
+
+4. Support GC over IPC.
+
+
 ##Principle
 
 Since the main purpose of IPC is to invoke methods in another process, Hermes makes method invocation so easy that you can invoke methods in another process just like you invoke methods in a local process, and also, the statements of method invocation in another process are almost the same as the ones in a local process.
@@ -262,7 +273,9 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
        void f(int i, @WeakRef @Background Callback callback);
    }
    ```
-8. Data transmitting between processes is based on Json.
+8. Any context passed into the invoked method as the parameter will be replaced by the application context of the remote process.
 
-9. If any error occurs, a error log will be printed by android.util.Log.e(). You can see the log for the detail of the error.
+9. Data transmitting between processes is based on Json.
+
+10. If any error occurs, a error log will be printed by android.util.Log.e(). You can see the log for the detail of the error.
 
