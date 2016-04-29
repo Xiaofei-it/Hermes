@@ -39,7 +39,7 @@ public class HermesGc {
             Long timeStamp;
             ArrayList<Long> timeStamps = new ArrayList<Long>();
             while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
-                timeStamp = mMap.get(reference);
+                timeStamp = mMap.remove(reference);
                 if (timeStamp != null) {
                     timeStamps.add(timeStamp);
                 }
@@ -49,8 +49,7 @@ public class HermesGc {
             }
         }
     }
-
-    //proxy
+    
     public void register(Object object, Long timeStamp) {
         gc();
         synchronized (mMap) {
