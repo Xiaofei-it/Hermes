@@ -56,8 +56,12 @@ public class HermesGc {
             Reference<Object> reference;
             Long timeStamp;
             ArrayList<Long> timeStamps = new ArrayList<Long>();
+            //TODO Is the following class casting right?
             while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
-                timeStamp = mMap.remove(reference);
+                //TODO How about ConcurrentHashMap?
+                synchronized (mMap) {
+                    timeStamp = mMap.remove(reference);
+                }
                 if (timeStamp != null) {
                     timeStamps.add(timeStamp);
                 }
