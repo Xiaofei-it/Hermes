@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import xiaofei.library.hermes.Hermes;
+import xiaofei.library.hermes.service.HermesService;
 import xiaofei.library.hermestest.R;
 
 
@@ -15,7 +16,7 @@ public class TestingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        Hermes.init(getApplicationContext());
+        Hermes.init(getApplicationContext(), HermesService.HermesService0.class);
 
         findViewById(R.id.getInt).setOnClickListener(new View.OnClickListener() {
             @Override

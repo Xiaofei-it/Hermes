@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import xiaofei.library.hermes.Hermes;
+import xiaofei.library.hermes.service.HermesService;
 
 
 public class DemoActivity extends Activity {
@@ -15,7 +16,7 @@ public class DemoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
-        Hermes.init(getApplicationContext());
+        Hermes.init(getApplicationContext(), HermesService.HermesService0.class);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         findViewById(R.id.download).setOnClickListener(new View.OnClickListener() {

@@ -16,7 +16,7 @@
  *
  */
 
-package xiaofei.library.hermes.internal;
+package xiaofei.library.hermes.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -26,12 +26,17 @@ import android.os.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 
+import xiaofei.library.hermes.Hermes;
+import xiaofei.library.hermes.internal.IHermesService;
+import xiaofei.library.hermes.internal.IHermesServiceCallback;
+import xiaofei.library.hermes.internal.Mail;
+import xiaofei.library.hermes.internal.Reply;
 import xiaofei.library.hermes.receiver.Receiver;
 import xiaofei.library.hermes.receiver.ReceiverDesignator;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.ObjectCenter;
 
-public class HermesService extends Service {
+public abstract class HermesService extends Service {
 
     private static final ObjectCenter OBJECT_CENTER = ObjectCenter.getInstance();
 
@@ -74,5 +79,25 @@ public class HermesService extends Service {
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
+
+    public static class HermesService0 extends HermesService {}
+
+    public static class HermesService1 extends HermesService {}
+
+    public static class HermesService2 extends HermesService {}
+
+    public static class HermesService3 extends HermesService {}
+
+    public static class HermesService4 extends HermesService {}
+
+    public static class HermesService5 extends HermesService {}
+
+    public static class HermesService6 extends HermesService {}
+
+    public static class HermesService7 extends HermesService {}
+
+    public static class HermesService8 extends HermesService {}
+
+    public static class HermesService9 extends HermesService {}
 
 }

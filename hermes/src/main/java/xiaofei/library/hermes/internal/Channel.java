@@ -34,6 +34,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import xiaofei.library.hermes.HermesListener;
+import xiaofei.library.hermes.service.HermesService;
 import xiaofei.library.hermes.util.CallbackManager;
 import xiaofei.library.hermes.util.CodeUtils;
 import xiaofei.library.hermes.util.ErrorCodes;
@@ -142,14 +143,14 @@ public class Channel {
         return sInstance;
     }
 
-    public void bind(Context context) {
+    public void bind(Context context, Class<? extends HermesService> service) {
         Log.v("eric zhao", "bind");
         if (mBinding || mBound) {
             return;
         }
         mBinding = true;
         mHermesServiceConnection = new HermesServiceConnection();
-        Intent intent = new Intent(context, HermesService.class);
+        Intent intent = new Intent(context, service);
         context.bindService(intent, mHermesServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
