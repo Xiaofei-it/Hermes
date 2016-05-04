@@ -149,11 +149,11 @@ public class Hermes {
         return getProxy(object);
     }
 
-    public static void init(Context context, Class<? extends HermesService> service) {
+    public static void connect(Context context, Class<? extends HermesService> service) {
         CHANNEL.bind(context, service);
     }
 
-    public static void destroy(Context context) {
+    public static void disconnect(Context context) {
         CHANNEL.unbind(context);
     }
 

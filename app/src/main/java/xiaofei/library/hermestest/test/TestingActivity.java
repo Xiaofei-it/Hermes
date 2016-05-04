@@ -16,7 +16,7 @@ public class TestingActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        Hermes.init(getApplicationContext(), HermesService.HermesService0.class);
+        Hermes.connect(getApplicationContext(), HermesService.HermesService0.class);
 
         findViewById(R.id.getInt).setOnClickListener(new View.OnClickListener() {
             @Override
