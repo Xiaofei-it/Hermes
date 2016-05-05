@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import xiaofei.library.hermes.Hermes;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 
 
 public class DemoActivity extends Activity {

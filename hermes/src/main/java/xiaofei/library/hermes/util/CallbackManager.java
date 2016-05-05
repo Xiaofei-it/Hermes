@@ -19,7 +19,6 @@
 package xiaofei.library.hermes.util;
 
 import android.support.v4.util.Pair;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -50,7 +49,6 @@ public class CallbackManager {
 
     public void addCallback(long timeStamp, int index, Object callback, boolean isWeakRef, boolean uiThread) {
         synchronized (mCallbackWrappers) {
-            Log.v("eric zhao", "put timeStamp = " + timeStamp + " index = " + index);
             long key = getKey(timeStamp, index);
             mCallbackWrappers.put(key, new CallbackWrapper(isWeakRef, callback, uiThread));
         }

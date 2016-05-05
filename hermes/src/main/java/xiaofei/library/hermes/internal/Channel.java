@@ -31,10 +31,11 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 
 import xiaofei.library.hermes.HermesListener;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.util.CallbackManager;
 import xiaofei.library.hermes.util.CodeUtils;
 import xiaofei.library.hermes.util.ErrorCodes;
@@ -51,13 +52,13 @@ public class Channel {
 
     private static Channel sInstance = null;
 
-    private IHermesService mHermesService = null;
+    private HashMap<Class<? extends HermesService>, IHermesService> mHermesServices = new HashMap<Class<? extends HermesService>, IHermesService>();
 
-    private HermesServiceConnection mHermesServiceConnection = null;
+    private HashMap<Class<? extends HermesService>, HermesServiceConnection> mHermesServiceConnections = new HashMap<Class<? extends HermesService>, HermesServiceConnection>();
 
-    private volatile boolean mBinding = false;
+    private HashMap<Class<? extends HermesService>, Boolean> mBindings = new HashMap<Class<? extends HermesService>, Boolean>();
 
-    private volatile boolean mBound = false;
+    private HashMap<Class<? extends HermesService>, Boolean> mBounds = new HashMap<Class<? extends HermesService>, Boolean>();
 
     private HermesListener mListener = null;
 
@@ -145,37 +146,62 @@ public class Channel {
 
     public void bind(Context context, Class<? extends HermesService> service) {
         Log.v("eric zhao", "bind");
-        if (mBinding || mBound) {
-            return;
+        synchronized (mBounds) {
+            if (mBounds.get(service)) {
+                return;
+            }
         }
-        mBinding = true;
-        mHermesServiceConnection = new HermesServiceConnection();
+        synchronized (mBindings) {
+            if (mBindings.get(service)) {
+                return;
+            }
+            mBindings.put(service, true);
+        }
+        HermesServiceConnection connection = new HermesServiceConnection(service);
+        synchronized (mHermesServiceConnections) {
+            mHermesServiceConnections.put(service, connection);
+        }
         Intent intent = new Intent(context, service);
-        context.bindService(intent, mHermesServiceConnection, Context.BIND_AUTO_CREATE);
+        context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 
-    public void unbind(Context context) {
-        if (mBound) {
-            context.unbindService(mHermesServiceConnection);
+    public void unbind(Context context, Class<? extends HermesService> service) {
+        synchronized (mBounds) {
+            if (mBounds.get(service)) {
+                synchronized (mHermesServiceConnections) {
+                    HermesServiceConnection connection = mHermesServiceConnections.get(service);
+                    if (connection != null) {
+                        context.unbindService(connection);
+                    }
+                }
+            }
         }
     }
 
-    public Reply send(Mail mail) {
+    public Reply send(Class<? extends HermesService> service, Mail mail) {
+        IHermesService hermesService;
+        synchronized (mHermesServices) {
+            hermesService = mHermesServices.get(service);
+        }
         try {
-            if (mHermesService == null) {
+            if (hermesService == null) {
                 return new Reply(ErrorCodes.SERVICE_UNAVAILABLE,
                         "Service Unavailable: Check whether you have init Hermes.");
             }
-            return mHermesService.send(mail);
+            return hermesService.send(mail);
         } catch (RemoteException e) {
             return new Reply(ErrorCodes.REMOTE_EXCEPTION, "Remote Exception: Check whether "
                     + "the process you are communicating with is still alive.");
         }
     }
 
-    public void gc(List<Long> timeStamps) {
+    public void gc(Class<? extends HermesService> service, List<Long> timeStamps) {
+        IHermesService hermesService;
+        synchronized (mHermesServices) {
+            hermesService = mHermesServices.get(service);
+        }
         try {
-            mHermesService.gc(timeStamps);
+            hermesService.gc(timeStamps);
         } catch (RemoteException e) {
 
         }
@@ -185,21 +211,39 @@ public class Channel {
         mListener = listener;
     }
 
-    public boolean isConnected() {
-        if (mHermesService == null) {
+    public boolean isConnected(Class<? extends HermesService> service) {
+        IHermesService hermesService;
+        synchronized (mHermesServices) {
+            hermesService = mHermesServices.get(service);
+        }
+        if (hermesService == null) {
             return false;
         }
-        return mHermesService.asBinder().pingBinder();
+        return hermesService.asBinder().pingBinder();
     }
 
     private class HermesServiceConnection implements ServiceConnection {
+
+        private Class<? extends HermesService> mClass;
+
+        HermesServiceConnection(Class<? extends HermesService> service) {
+            mClass = service;
+        }
+
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.v("eric zhao", "onServiceConnected");
-            mBound = true;
-            mBinding = false;
-            mHermesService = IHermesService.Stub.asInterface(service);
+            synchronized (mBounds) {
+                mBounds.put(mClass, true);
+            }
+            synchronized (mBindings) {
+                mBindings.put(mClass, false);
+            }
+            IHermesService hermesService = IHermesService.Stub.asInterface(service);;
+            synchronized (mHermesServices) {
+                mHermesServices.put(mClass, hermesService);
+            }
             try {
-                mHermesService.register(mHermesServiceCallback, Process.myPid());
+                hermesService.register(mHermesServiceCallback, Process.myPid());
             } catch (RemoteException e) {
                 e.printStackTrace();
                 Log.e(TAG, "Remote Exception: Check whether "
@@ -207,16 +251,20 @@ public class Channel {
                 return;
             }
             if (mListener != null) {
-                mListener.onInitSuccess();
+                mListener.onInitSuccess(mClass);
             }
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            mHermesService = null;
-            mBound = false;
-            mBinding = false;
+            mHermesServices = null;
+            synchronized (mBounds) {
+                mBounds.put(mClass, false);
+            }
+            synchronized (mBindings) {
+                mBindings.put(mClass, false);
+            }
             if (mListener != null) {
-                mListener.onDisconnected();
+                mListener.onDisconnected(mClass);
             }
         }
     }

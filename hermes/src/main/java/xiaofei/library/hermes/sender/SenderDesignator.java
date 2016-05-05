@@ -18,6 +18,7 @@
 
 package xiaofei.library.hermes.sender;
 
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
 
 /**
@@ -33,16 +34,16 @@ public class SenderDesignator {
 
     public static final int TYPE_INVOKE_METHOD = 3;
 
-    public static Sender getPostOffice(int type, ObjectWrapper object) {
+    public static Sender getPostOffice(Class<? extends HermesService> service, int type, ObjectWrapper object) {
         switch (type) {
             case TYPE_NEW_INSTANCE:
-                return new InstanceCreatingSender(object);
+                return new InstanceCreatingSender(service, object);
             case TYPE_GET_INSTANCE:
-                return new InstanceGettingSender(object);
+                return new InstanceGettingSender(service, object);
             case TYPE_GET_UTILITY_CLASS:
-                return new UtilityGettingSender(object);
+                return new UtilityGettingSender(service, object);
             case TYPE_INVOKE_METHOD:
-                return new ObjectSender(object);
+                return new ObjectSender(service, object);
             default:
                 throw new IllegalArgumentException("Type " + type + " is not supported.");
         }

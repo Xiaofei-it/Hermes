@@ -34,7 +34,7 @@ import xiaofei.library.hermes.wrapper.ParameterWrapper;
  */
 public class HermesCallbackInvocationHandler implements InvocationHandler {
 
-    private static final String TAG = "HERMES";
+    private static final String TAG = "HERMES_CALLBACK";
 
     private long mTimeStamp;
 

@@ -23,11 +23,10 @@ import android.util.Log;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import xiaofei.library.hermes.Hermes;
 import xiaofei.library.hermes.sender.Sender;
 import xiaofei.library.hermes.sender.SenderDesignator;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.util.HermesException;
-import xiaofei.library.hermes.util.TypeUtils;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
 
 /**
@@ -35,12 +34,12 @@ import xiaofei.library.hermes.wrapper.ObjectWrapper;
  */
 public class HermesInvocationHandler implements InvocationHandler {
 
-    private static final String TAG = "HERMES";
+    private static final String TAG = "HERMES_INVOCATION";
 
     private Sender mSender;
 
-    public HermesInvocationHandler(ObjectWrapper object) {
-        mSender = SenderDesignator.getPostOffice(SenderDesignator.TYPE_INVOKE_METHOD, object);
+    public HermesInvocationHandler(Class<? extends HermesService> service, ObjectWrapper object) {
+        mSender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_INVOKE_METHOD, object);
     }
 
     @Override

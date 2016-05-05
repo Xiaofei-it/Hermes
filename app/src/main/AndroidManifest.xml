@@ -23,7 +23,7 @@
         </activity>
 
         <service
-            android:name="xiaofei.library.hermes.service.HermesService$HermesService0"
+            android:name="xiaofei.library.hermes.HermesService$HermesService0"
             android:enabled="true"
             android:exported="true" >
         </service>
