@@ -70,7 +70,7 @@ public class HermesGc {
                     timeStamp = mTimeStamps.remove(reference);
                 }
                 if (timeStamp != null) {
-                    Class<? extends HermesService> clazz = mServices.get(timeStamp);
+                    Class<? extends HermesService> clazz = mServices.remove(timeStamp);
                     if (clazz != null) {
                         ArrayList<Long> tmp = timeStamps.get(timeStamp);
                         if (tmp == null) {
