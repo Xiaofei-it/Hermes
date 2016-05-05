@@ -18,13 +18,27 @@
 
 package xiaofei.library.hermes;
 
+import xiaofei.library.hermes.service.HermesService;
+
 /**
  * Created by Xiaofei on 16/4/11.
  */
-public interface HermesListener {
+public class HermesListener {
 
-    void onInitSuccess();
+    public void onInitSuccess() {
+        onInitSuccess(HermesService.HermesService0.class);
+    }
 
-    void onDisconnected();
+    public void onInitSuccess(Class<? extends HermesService> service) {
+
+    }
+
+    public void onDisconnected() {
+        onDisconnected(HermesService.HermesService0.class);
+    }
+
+    public void onDisconnected(Class<? extends HermesService> service) {
+
+    }
 
 }

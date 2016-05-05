@@ -56,9 +56,9 @@ public class Channel {
 
     private HashMap<Class<? extends HermesService>, HermesServiceConnection> mHermesServiceConnections = new HashMap<Class<? extends HermesService>, HermesServiceConnection>();
 
-    private volatile HashMap<Class<? extends HermesService>, Boolean> mBindings = new HashMap<Class<? extends HermesService>, Boolean>();
+    private HashMap<Class<? extends HermesService>, Boolean> mBindings = new HashMap<Class<? extends HermesService>, Boolean>();
 
-    private volatile HashMap<Class<? extends HermesService>, Boolean> mBounds = new HashMap<Class<? extends HermesService>, Boolean>();
+    private HashMap<Class<? extends HermesService>, Boolean> mBounds = new HashMap<Class<? extends HermesService>, Boolean>();
 
     private HermesListener mListener = null;
 
@@ -251,7 +251,7 @@ public class Channel {
                 return;
             }
             if (mListener != null) {
-                mListener.onInitSuccess();
+                mListener.onInitSuccess(mClass);
             }
         }
 
@@ -264,7 +264,7 @@ public class Channel {
                 mBindings.put(mClass, false);
             }
             if (mListener != null) {
-                mListener.onDisconnected();
+                mListener.onDisconnected(mClass);
             }
         }
     }
