@@ -28,7 +28,7 @@ import xiaofei.library.hermes.annotation.WeakRef;
 import xiaofei.library.hermes.internal.Channel;
 import xiaofei.library.hermes.internal.Mail;
 import xiaofei.library.hermes.internal.Reply;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.util.CallbackManager;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.TimeStampGenerator;

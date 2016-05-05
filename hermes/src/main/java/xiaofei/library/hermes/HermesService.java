@@ -16,7 +16,7 @@
  *
  */
 
-package xiaofei.library.hermes.service;
+package xiaofei.library.hermes;
 
 import android.app.Service;
 import android.content.Intent;
@@ -26,7 +26,6 @@ import android.os.RemoteException;
 import java.util.HashMap;
 import java.util.List;
 
-import xiaofei.library.hermes.Hermes;
 import xiaofei.library.hermes.internal.IHermesService;
 import xiaofei.library.hermes.internal.IHermesServiceCallback;
 import xiaofei.library.hermes.internal.Mail;

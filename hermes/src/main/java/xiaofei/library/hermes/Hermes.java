@@ -28,7 +28,6 @@ import xiaofei.library.hermes.internal.HermesInvocationHandler;
 import xiaofei.library.hermes.internal.Reply;
 import xiaofei.library.hermes.sender.Sender;
 import xiaofei.library.hermes.sender.SenderDesignator;
-import xiaofei.library.hermes.service.HermesService;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.HermesGc;
 import xiaofei.library.hermes.util.TypeCenter;

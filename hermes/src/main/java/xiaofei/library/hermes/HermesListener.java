@@ -18,8 +18,6 @@
 
 package xiaofei.library.hermes;
 
-import xiaofei.library.hermes.service.HermesService;
-
 /**
  * Created by Xiaofei on 16/4/11.
  */

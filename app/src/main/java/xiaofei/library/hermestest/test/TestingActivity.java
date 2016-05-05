@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import xiaofei.library.hermes.Hermes;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermestest.R;
 
 

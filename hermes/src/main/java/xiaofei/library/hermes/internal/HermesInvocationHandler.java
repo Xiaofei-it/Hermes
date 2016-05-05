@@ -23,12 +23,10 @@ import android.util.Log;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import xiaofei.library.hermes.Hermes;
 import xiaofei.library.hermes.sender.Sender;
 import xiaofei.library.hermes.sender.SenderDesignator;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.util.HermesException;
-import xiaofei.library.hermes.util.TypeUtils;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
 
 /**

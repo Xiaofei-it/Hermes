@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Set;
 
 import xiaofei.library.hermes.internal.Channel;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 
 /**
  * Created by Xiaofei on 16/4/29.

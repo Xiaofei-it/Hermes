@@ -18,7 +18,7 @@
 
 package xiaofei.library.hermes.sender;
 
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
 
 /**

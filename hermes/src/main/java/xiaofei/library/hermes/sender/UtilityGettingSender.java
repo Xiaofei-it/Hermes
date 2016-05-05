@@ -20,7 +20,7 @@ package xiaofei.library.hermes.sender;
 
 import java.lang.reflect.Method;
 
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.wrapper.MethodWrapper;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
 import xiaofei.library.hermes.wrapper.ParameterWrapper;

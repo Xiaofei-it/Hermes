@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import xiaofei.library.hermes.HermesListener;
-import xiaofei.library.hermes.service.HermesService;
+import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.util.CallbackManager;
 import xiaofei.library.hermes.util.CodeUtils;
 import xiaofei.library.hermes.util.ErrorCodes;
