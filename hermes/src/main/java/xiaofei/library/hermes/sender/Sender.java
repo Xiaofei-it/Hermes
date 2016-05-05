@@ -28,6 +28,7 @@ import xiaofei.library.hermes.annotation.WeakRef;
 import xiaofei.library.hermes.internal.Channel;
 import xiaofei.library.hermes.internal.Mail;
 import xiaofei.library.hermes.internal.Reply;
+import xiaofei.library.hermes.service.HermesService;
 import xiaofei.library.hermes.util.CallbackManager;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.TimeStampGenerator;
@@ -56,7 +57,10 @@ public abstract class Sender {
 
     private ParameterWrapper[] mParameters;
 
-    public Sender(ObjectWrapper object) {
+    private Class<? extends HermesService> mService;
+
+    public Sender(Class<? extends HermesService> service, ObjectWrapper object) {
+        mService = service;
         mObject = object;
     }
 
@@ -122,7 +126,7 @@ public abstract class Sender {
         registerClass(method);
         setParameterWrappers(parameterWrappers);
         Mail mail = new Mail(mTimeStamp, mObject, mMethod, mParameters);
-        return CHANNEL.send(mail);
+        return CHANNEL.send(mService, mail);
     }
 
     public ObjectWrapper getObject() {

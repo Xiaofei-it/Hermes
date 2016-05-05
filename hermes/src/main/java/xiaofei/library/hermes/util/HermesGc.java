@@ -23,8 +23,11 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import xiaofei.library.hermes.internal.Channel;
+import xiaofei.library.hermes.service.HermesService;
 
 /**
  * Created by Xiaofei on 16/4/29.
@@ -37,11 +40,14 @@ public class HermesGc {
 
     private static final Channel CHANNEL = Channel.getInstance();
 
-    private HashMap<PhantomReference<Object>, Long> mMap;
+    private HashMap<PhantomReference<Object>, Long> mTimeStamps;
+
+    private HashMap<Long, Class<? extends HermesService>> mServices;
 
     private HermesGc() {
         mReferenceQueue = new ReferenceQueue<Object>();
-        mMap = new HashMap<PhantomReference<Object>, Long>();
+        mTimeStamps = new HashMap<PhantomReference<Object>, Long>();
+        mServices = new HashMap<Long, Class<? extends HermesService>>();
     }
 
     public static synchronized HermesGc getInstance() {
@@ -55,27 +61,43 @@ public class HermesGc {
         synchronized (mReferenceQueue) {
             Reference<Object> reference;
             Long timeStamp;
-            ArrayList<Long> timeStamps = new ArrayList<Long>();
+            HashMap<Class<? extends HermesService>, ArrayList<Long>> timeStamps
+                    = new HashMap<Class<? extends HermesService>, ArrayList<Long>>();
             //TODO Is the following class casting right?
             while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
                 //TODO How about ConcurrentHashMap?
-                synchronized (mMap) {
-                    timeStamp = mMap.remove(reference);
+                synchronized (mTimeStamps) {
+                    timeStamp = mTimeStamps.remove(reference);
                 }
                 if (timeStamp != null) {
-                    timeStamps.add(timeStamp);
+                    Class<? extends HermesService> clazz = mServices.get(timeStamp);
+                    if (clazz != null) {
+                        ArrayList<Long> tmp = timeStamps.get(timeStamp);
+                        if (tmp == null) {
+                            tmp = new ArrayList<Long>();
+                            timeStamps.put(clazz, tmp);
+                        }
+                        tmp.add(timeStamp);
+                    }
                 }
             }
-            if (!timeStamps.isEmpty()) {
-                CHANNEL.gc(timeStamps);
+            Set<Map.Entry<Class<? extends HermesService>, ArrayList<Long>>> set = timeStamps.entrySet();
+            for (Map.Entry<Class<? extends HermesService>, ArrayList<Long>> entry : set) {
+                ArrayList<Long> values = entry.getValue();
+                if (!values.isEmpty()) {
+                    CHANNEL.gc(entry.getKey(), values);
+                }
             }
         }
     }
 
-    public void register(Object object, Long timeStamp) {
+    public void register(Class<? extends HermesService> service, Object object, Long timeStamp) {
         gc();
-        synchronized (mMap) {
-            mMap.put(new PhantomReference<Object>(object, mReferenceQueue), timeStamp);
+        synchronized (mTimeStamps) {
+            mTimeStamps.put(new PhantomReference<Object>(object, mReferenceQueue), timeStamp);
+        }
+        synchronized (mServices) {
+            mServices.put(timeStamp, service);
         }
     }
 }

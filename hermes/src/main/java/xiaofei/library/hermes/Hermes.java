@@ -71,18 +71,22 @@ public class Hermes {
         }
     }
 
-    private static <T> T getProxy(ObjectWrapper object) {
+    private static <T> T getProxy(Class<? extends HermesService> service, ObjectWrapper object) {
         Class<?> clazz = object.getObjectClass();
         T proxy =  (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz},
-                    new HermesInvocationHandler(object));
-        HERMES_GC.register(proxy, object.getTimeStamp());
+                    new HermesInvocationHandler(service, object));
+        HERMES_GC.register(service, proxy, object.getTimeStamp());
         return proxy;
     }
 
     public static <T> T newInstance(Class<T> clazz, Object... parameters) {
+        return newInstance(HermesService.HermesService0.class, clazz, parameters);
+    }
+
+    public static <T> T newInstance(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
         TypeUtils.validateServiceInterface(clazz);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_OBJECT_TO_NEW);
-        Sender sender = SenderDesignator.getPostOffice(SenderDesignator.TYPE_NEW_INSTANCE, object);
+        Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_NEW_INSTANCE, object);
         try {
             Reply reply = sender.send(null, parameters);
             if (reply != null && !reply.success()) {
@@ -95,17 +99,25 @@ public class Hermes {
             return null;
         }
         object.setType(ObjectWrapper.TYPE_OBJECT);
-        return getProxy(object);
+        return getProxy(service, object);
+    }
+
+    public static <T> T getInstance(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
+        return getInstanceWithMethodName(service, clazz, "", parameters);
     }
 
     public static <T> T getInstance(Class<T> clazz, Object... parameters) {
-        return getInstanceWithMethodName(clazz, "", parameters);
+        return getInstance(HermesService.HermesService0.class, clazz, parameters);
     }
 
     public static <T> T getInstanceWithMethodName(Class<T> clazz, String methodName, Object... parameters) {
+        return getInstanceWithMethodName(HermesService.HermesService0.class, clazz, methodName, parameters);
+    }
+
+    public static <T> T getInstanceWithMethodName(Class<? extends HermesService> service, Class<T> clazz, String methodName, Object... parameters) {
         TypeUtils.validateServiceInterface(clazz);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_OBJECT_TO_GET);
-        Sender sender = SenderDesignator.getPostOffice(SenderDesignator.TYPE_GET_INSTANCE, object);
+        Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_GET_INSTANCE, object);
         if (parameters == null) {
             parameters = new Object[0];
         }
@@ -127,13 +139,17 @@ public class Hermes {
             return null;
         }
         object.setType(ObjectWrapper.TYPE_OBJECT);
-        return getProxy(object);
+        return getProxy(service, object);
     }
 
     public static <T> T getUtilityClass(Class<T> clazz) {
+        return getUtilityClass(HermesService.HermesService0.class, clazz);
+    }
+
+    public static <T> T getUtilityClass(Class<? extends HermesService> service, Class<T> clazz) {
         TypeUtils.validateServiceInterface(clazz);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_CLASS_TO_GET);
-        Sender sender = SenderDesignator.getPostOffice(SenderDesignator.TYPE_GET_UTILITY_CLASS, object);
+        Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_GET_UTILITY_CLASS, object);
         try {
             Reply reply = sender.send(null, null);
             if (reply != null && !reply.success()) {
@@ -146,7 +162,11 @@ public class Hermes {
             return null;
         }
         object.setType(ObjectWrapper.TYPE_CLASS);
-        return getProxy(object);
+        return getProxy(service, object);
+    }
+
+    public static void connect(Context context) {
+        connect(context, HermesService.HermesService0.class);
     }
 
     public static void connect(Context context, Class<? extends HermesService> service) {
@@ -154,11 +174,19 @@ public class Hermes {
     }
 
     public static void disconnect(Context context) {
-        CHANNEL.unbind(context);
+        disconnect(context, HermesService.HermesService0.class);
+    }
+
+    public static void disconnect(Context context, Class<? extends HermesService> service) {
+        CHANNEL.unbind(context, service);
     }
 
     public static boolean isConnected() {
-        return CHANNEL.isConnected();
+        return isConnected(HermesService.HermesService0.class);
+    }
+
+    public static boolean isConnected(Class<? extends HermesService> service) {
+        return CHANNEL.isConnected(service);
     }
 
     public static void setHermesListener(HermesListener listener) {

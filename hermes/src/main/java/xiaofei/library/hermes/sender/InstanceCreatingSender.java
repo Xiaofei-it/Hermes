@@ -20,6 +20,7 @@ package xiaofei.library.hermes.sender;
 
 import java.lang.reflect.Method;
 
+import xiaofei.library.hermes.service.HermesService;
 import xiaofei.library.hermes.wrapper.MethodWrapper;
 import xiaofei.library.hermes.wrapper.ObjectWrapper;
 import xiaofei.library.hermes.wrapper.ParameterWrapper;
@@ -31,8 +32,8 @@ public class InstanceCreatingSender extends Sender {
 
     private Class<?>[] mConstructorParameterTypes;
 
-    public InstanceCreatingSender(ObjectWrapper object) {
-        super(object);
+    public InstanceCreatingSender(Class<? extends HermesService> service, ObjectWrapper object) {
+        super(service, object);
     }
 
     @Override
