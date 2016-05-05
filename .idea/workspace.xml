@@ -11,21 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbfde597-efa2-4f4a-b525-84b578b93886" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/service/HermesService.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/DemoActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/DemoActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/test/TestingActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/xiaofei/library/hermestest/test/TestingActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/Hermes.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/Hermes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesListener.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/InstanceCreatingSender.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/InstanceCreatingSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/InstanceGettingSender.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/InstanceGettingSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/ObjectSender.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/ObjectSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/Sender.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/Sender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/SenderDesignator.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/SenderDesignator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/UtilityGettingSender.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/UtilityGettingSender.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesGc.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesGc.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CodeUtils.java" afterPath="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CodeUtils.java" />
     </list>
     <ignored path="Hermes.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,12 +42,110 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="HermesService.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesService.java">
+      <file leaf-file-name="HermesException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15929204">
-              <caret line="37" column="22" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ObjectCenter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/ObjectCenter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TimeStampGenerator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TimeStampGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TypeCenter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TypeCenter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TypeUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TypeUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="305" column="44" selection-start-line="305" selection-start-column="44" selection-end-line="305" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HermesInvocationHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="56" selection-start-line="36" selection-start-column="56" selection-end-line="36" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HermesCallbackInvocationHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Channel.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="5.3008847">
+              <caret line="266" column="47" selection-start-line="266" selection-start-column="47" selection-end-line="266" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1719#1767#0" expanded="true" />
+                <element signature="e#1888#1945#0" expanded="true" />
+                <element signature="e#2034#2075#0" expanded="true" />
+                <element signature="e#2162#2203#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UtilityGettingSender.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/UtilityGettingSender.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SenderDesignator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/SenderDesignator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="45" column="32" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2527,11 +2614,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/receiver/ReceiverDesignator.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/receiver/UtilityGettingReceiver.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/receiver/UtilityReceiver.java" />
-        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java" />
-        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CodeUtils.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/ErrorCodes.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesException.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TimeStampGenerator.java" />
@@ -2571,13 +2655,16 @@
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/UtilityGettingSender.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/ObjectSender.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/InstanceCreatingSender.java" />
-        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/Hermes.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesListener.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesGc.java" />
         <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesService.java" />
+        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CodeUtils.java" />
+        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java" />
+        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java" />
+        <option value="$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java" />
       </list>
     </option>
   </component>
@@ -2746,6 +2833,142 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wrapper" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sender" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hermes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="internal" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3267,7 +3490,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="709" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -3283,7 +3506,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21405493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21405493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6694772" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3385,7 +3608,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java</url>
-          <line>51</line>
+          <line>50</line>
           <properties />
           <option name="timeStamp" value="78" />
         </line-breakpoint>
@@ -3408,42 +3631,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/MethodWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23893805">
-          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/android-sdk-macosx/platforms/android-23/android.jar!/android/content/Context.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5555556">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Reply.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="61" selection-start-line="35" selection-start-column="61" selection-end-line="35" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/android-sdk-macosx/platforms/android-23/android.jar!/android/inputmethodservice/InputMethodService.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17612524">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Downloads/android-sdk-macosx/platforms/android-23/android.jar!/android/media/midi/MidiDeviceService.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17612524">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Downloads/android-sdk-macosx/platforms/android-23/android.jar!/android/content/MutableContextWrapper.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17612524">
@@ -3517,13 +3704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TypeUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="305" column="44" selection-start-line="305" selection-start-column="44" selection-end-line="305" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/receiver/UtilityGettingReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3562,28 +3742,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.91681415">
           <caret line="63" column="11" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TypeCenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="9.791667">
-          <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/ErrorCodes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -3680,29 +3838,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/UtilityGettingSender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/InstanceGettingSender.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37196764">
           <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/SenderDesignator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="32" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3722,45 +3862,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/ObjectCenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.04043127">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="128" column="38" selection-start-line="128" selection-start-column="38" selection-end-line="128" selection-end-column="38" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69330853">
-          <caret line="266" column="47" selection-start-line="266" selection-start-column="47" selection-end-line="266" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1719#1767#0" expanded="true" />
-            <element signature="e#1888#1945#0" expanded="true" />
-            <element signature="e#2034#2075#0" expanded="true" />
-            <element signature="e#2162#2203#0" expanded="true" />
-            <element signature="e#7695#7696#0" expanded="true" />
-            <element signature="e#7731#7732#0" expanded="true" />
-            <element signature="e#8290#8291#0" expanded="true" />
-            <element signature="e#8330#8331#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3793,16 +3899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesGc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2477876">
-          <caret line="72" column="76" selection-start-line="72" selection-start-column="76" selection-end-line="72" selection-end-column="76" />
-          <folding>
-            <element signature="e#1953#2002#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Hermes.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3821,8 +3917,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/Hermes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15044248">
-          <caret line="168" column="43" selection-start-line="168" selection-start-column="43" selection-end-line="168" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="168" column="5" selection-start-line="168" selection-start-column="5" selection-end-line="168" selection-end-column="5" />
           <folding>
             <element signature="e#0#593#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -3832,9 +3928,143 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/HermesService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15929204">
+        <state vertical-scroll-proportion="0.0">
           <caret line="37" column="22" selection-start-line="37" selection-start-column="22" selection-end-line="37" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/wrapper/BaseWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesGc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="72" column="76" selection-start-line="72" selection-start-column="76" selection-end-line="72" selection-end-column="76" />
+          <folding>
+            <element signature="e#1953#2002#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CallbackManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1274#1275#0" expanded="true" />
+            <element signature="e#1319#1320#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/CodeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="29" selection-start-line="59" selection-start-column="29" selection-end-line="59" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/ErrorCodes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/HermesException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/ObjectCenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TimeStampGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TypeCenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="190" column="16" selection-start-line="190" selection-start-column="16" selection-end-line="190" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/UtilityGettingSender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="23" selection-start-line="33" selection-start-column="23" selection-end-line="33" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/sender/SenderDesignator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="32" selection-start-line="45" selection-start-column="32" selection-end-line="45" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/util/TypeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="305" column="44" selection-start-line="305" selection-start-column="44" selection-end-line="305" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesInvocationHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="56" selection-start-line="36" selection-start-column="56" selection-end-line="36" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/HermesCallbackInvocationHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="54" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hermes/src/main/java/xiaofei/library/hermes/internal/Channel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.3008847">
+          <caret line="266" column="47" selection-start-line="266" selection-start-column="47" selection-end-line="266" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1719#1767#0" expanded="true" />
+            <element signature="e#1888#1945#0" expanded="true" />
+            <element signature="e#2034#2075#0" expanded="true" />
+            <element signature="e#2162#2203#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

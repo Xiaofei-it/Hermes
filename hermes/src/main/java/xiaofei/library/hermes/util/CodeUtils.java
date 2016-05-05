@@ -43,7 +43,7 @@ public class CodeUtils {
                 e.printStackTrace();
             }
             throw new HermesException(ErrorCodes.GSON_ENCODE_EXCEPTION,
-                    "Error happens when Gson encodes Object "
+                    "Error occurs when Gson encodes Object "
                     + object + " to Json.");
         }
     }
@@ -57,7 +57,7 @@ public class CodeUtils {
             e.printStackTrace();
         }
         throw new HermesException(ErrorCodes.GSON_DECODE_EXCEPTION,
-                "Error happens when Gson decodes data of the Class "
+                "Error occurs when Gson decodes data of the Class "
                 + clazz.getName());
 
     }

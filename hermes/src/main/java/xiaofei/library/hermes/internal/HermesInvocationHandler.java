@@ -34,7 +34,7 @@ import xiaofei.library.hermes.wrapper.ObjectWrapper;
  */
 public class HermesInvocationHandler implements InvocationHandler {
 
-    private static final String TAG = "HERMES";
+    private static final String TAG = "HERMES_INVOCATION";
 
     private Sender mSender;
 
