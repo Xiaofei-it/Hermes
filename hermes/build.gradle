@@ -1,5 +1,30 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'hermes'
+
+    publishedGroupId = 'xiaofei.library'
+    libraryName = 'Hermes'
+    artifact = 'hermes'
+
+    libraryDescription = 'A smart, novel and easy-to-use framework for Android Inter-Process Communication (IPC).'
+
+    siteUrl = 'https://github.com/Xiaofei-it/Hermes'
+    gitUrl = 'https://github.com/Xiaofei-it/Hermes.git'
+
+    libraryVersion = '0.1-beta'
+
+    developerId = 'Xiaofei-it'
+    developerName = 'Eric Zhao'
+    developerEmail = 'xiaofei.it@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -8,7 +33,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
     buildTypes {
         release {
@@ -24,3 +49,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.google.code.gson:gson:2.5'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
