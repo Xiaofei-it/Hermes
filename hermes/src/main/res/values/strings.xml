@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Hermes</string>
+    <string name="permission_label">Hermes Service Permission</string>
+    <string name="permission_description">This permission allows apps which have the same signature to access the Hermes service.</string>
 </resources>
