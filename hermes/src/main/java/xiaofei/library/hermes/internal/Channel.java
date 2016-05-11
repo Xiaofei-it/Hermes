@@ -147,12 +147,14 @@ public class Channel {
     public void bind(Context context, Class<? extends HermesService> service) {
         Log.v("eric zhao", "bind");
         synchronized (mBounds) {
-            if (mBounds.get(service)) {
+            Boolean bound = mBounds.get(service);
+            if (bound != null && bound) {
                 return;
             }
         }
         synchronized (mBindings) {
-            if (mBindings.get(service)) {
+            Boolean binding = mBindings.get(service);
+            if (binding != null && binding) {
                 return;
             }
             mBindings.put(service, true);
@@ -167,7 +169,8 @@ public class Channel {
 
     public void unbind(Context context, Class<? extends HermesService> service) {
         synchronized (mBounds) {
-            if (mBounds.get(service)) {
+            Boolean bound = mBounds.get(service);
+            if (bound != null && bound) {
                 synchronized (mHermesServiceConnections) {
                     HermesServiceConnection connection = mHermesServiceConnections.get(service);
                     if (connection != null) {
