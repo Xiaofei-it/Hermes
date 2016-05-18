@@ -103,7 +103,7 @@ dependencies {
 
 The following will tell you how to let the default process of the app to provide methods for other processes to invoke.
 
-Hermes also allows method invocation between arbitrary processes. For more information about how to do this, please see [HERE]().
+Hermes also allows method invocation between arbitrary processes. For more information about how to do this, please see [HERE](https://github.com/Xiaofei-it/Hermes/blob/master/AdvancedTutorial.md).
 
 ###AndroidManifest.xml
 
