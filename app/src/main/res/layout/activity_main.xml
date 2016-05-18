@@ -12,5 +12,10 @@
         android:text="Demo" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/another_process"
+        android:text="Another process" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

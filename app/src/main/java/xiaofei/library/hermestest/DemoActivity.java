@@ -17,12 +17,26 @@ public class DemoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
         Hermes.connect(getApplicationContext(), HermesService.HermesService0.class);
+        Hermes.connect(getApplicationContext(), HermesService.HermesService1.class);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         findViewById(R.id.download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ILoadingTask loadingTask = Hermes.newInstance(ILoadingTask.class, "pic.png");
+                loadingTask.start(new LoadingCallback() {
+                    @Override
+                    public void callback(int progress) {
+                        progressBar.setProgress(progress);
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.download2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ILoadingTask loadingTask = Hermes.newInstanceInService(HermesService.HermesService1.class, ILoadingTask.class, "pic.png");
                 loadingTask.start(new LoadingCallback() {
                     @Override
                     public void callback(int progress) {
@@ -38,10 +52,25 @@ public class DemoActivity extends Activity {
                 Toast.makeText(getApplicationContext(), userManager.getUser(), Toast.LENGTH_SHORT).show();
             }
         });
-        findViewById(R.id.get_screen).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.get_user2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IUserManager userManager = Hermes.getInstanceInService(HermesService.HermesService1.class, IUserManager.class);
+                Toast.makeText(getApplicationContext(), userManager.getUser(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.get_file).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IFileUtils fileUtils = Hermes.getUtilityClass(IFileUtils.class);
+                Toast.makeText(getApplicationContext(), fileUtils.getExternalCacheDir(DemoActivity.this), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        findViewById(R.id.get_file2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IFileUtils fileUtils = Hermes.getUtilityClassInService(HermesService.HermesService1.class, IFileUtils.class);
                 Toast.makeText(getApplicationContext(), fileUtils.getExternalCacheDir(DemoActivity.this), Toast.LENGTH_SHORT).show();
             }
         });

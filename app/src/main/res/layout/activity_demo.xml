@@ -3,6 +3,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create instance in another process to download:"/>
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@android:style/Widget.ProgressBar.Horizontal"
@@ -13,18 +17,44 @@
         android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download"/>
+        android:text="Download in a second process"/>
 
+    <Button
+        android:id="@+id/download2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download in a third process"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obtain singleton in another process to get user message:"/>
     <Button
         android:id="@+id/get_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get user"/>
+        android:text="Get user in a second process"/>
 
     <Button
-        android:id="@+id/get_screen"
+        android:id="@+id/get_user2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Obtain the screen height"/>
+        android:text="Get user in a third process"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obtain utility in another process:"/>
+    <Button
+        android:id="@+id/get_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obtain file path in a second process"/>
+
+    <Button
+        android:id="@+id/get_file2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Obtain file path in a third process"/>
 
 </LinearLayout>

@@ -39,6 +39,14 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        findViewById(R.id.another_process).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AnotherProcessActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

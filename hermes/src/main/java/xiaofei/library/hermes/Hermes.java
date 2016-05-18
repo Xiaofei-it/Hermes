@@ -79,10 +79,10 @@ public class Hermes {
     }
 
     public static <T> T newInstance(Class<T> clazz, Object... parameters) {
-        return newInstance(HermesService.HermesService0.class, clazz, parameters);
+        return newInstanceInService(HermesService.HermesService0.class, clazz, parameters);
     }
 
-    public static <T> T newInstance(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
+    public static <T> T newInstanceInService(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
         TypeUtils.validateServiceInterface(clazz);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_OBJECT_TO_NEW);
         Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_NEW_INSTANCE, object);
@@ -101,19 +101,19 @@ public class Hermes {
         return getProxy(service, object);
     }
 
-    public static <T> T getInstance(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
-        return getInstanceWithMethodName(service, clazz, "", parameters);
+    public static <T> T getInstanceInService(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
+        return getInstanceWithMethodNameInService(service, clazz, "", parameters);
     }
 
     public static <T> T getInstance(Class<T> clazz, Object... parameters) {
-        return getInstance(HermesService.HermesService0.class, clazz, parameters);
+        return getInstanceInService(HermesService.HermesService0.class, clazz, parameters);
     }
 
     public static <T> T getInstanceWithMethodName(Class<T> clazz, String methodName, Object... parameters) {
-        return getInstanceWithMethodName(HermesService.HermesService0.class, clazz, methodName, parameters);
+        return getInstanceWithMethodNameInService(HermesService.HermesService0.class, clazz, methodName, parameters);
     }
 
-    public static <T> T getInstanceWithMethodName(Class<? extends HermesService> service, Class<T> clazz, String methodName, Object... parameters) {
+    public static <T> T getInstanceWithMethodNameInService(Class<? extends HermesService> service, Class<T> clazz, String methodName, Object... parameters) {
         TypeUtils.validateServiceInterface(clazz);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_OBJECT_TO_GET);
         Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_GET_INSTANCE, object);
@@ -142,10 +142,10 @@ public class Hermes {
     }
 
     public static <T> T getUtilityClass(Class<T> clazz) {
-        return getUtilityClass(HermesService.HermesService0.class, clazz);
+        return getUtilityClassInService(HermesService.HermesService0.class, clazz);
     }
 
-    public static <T> T getUtilityClass(Class<? extends HermesService> service, Class<T> clazz) {
+    public static <T> T getUtilityClassInService(Class<? extends HermesService> service, Class<T> clazz) {
         TypeUtils.validateServiceInterface(clazz);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_CLASS_TO_GET);
         Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_GET_UTILITY_CLASS, object);
