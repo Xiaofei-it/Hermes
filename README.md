@@ -80,13 +80,57 @@ Specifically, you pass an interface into Hermes.getInstance() and Hermes.getInst
 
 Now, how to write the interface? So easy. For example, there is a class named Foo in Process A, and you want to access it from Process B. Then you write an interface named IFoo and add into the interface the signatures of the methods which you want to invoke on Foo. Then add the same ClassId annotation with the same value on IFoo and Foo, and add the same MethodId annotation with the same value on the corresponding methods. Done! At this time, you can use Hermes.getInstance(IFoo.class) in Process B to get the instance of Foo in Process A.
 
-##APIs
+##Gradle
+
+```
+dependencies {
+    compile 'xiaofei.library:hermes:0.2'
+}
+```
+
+##Maven
+
+```
+<dependency>
+  <groupId>xiaofei.library</groupId>
+  <artifactId>hermes</artifactId>
+  <version>0.2</version>
+  <type>pom</type>
+</dependency>
+```
+
+##Usage
+
+The following will tell you how to let the default process of the app to provide methods for other processes to invoke.
+
+Hermes also allows method invocation between arbitrary processes. For more information about how to do this, please see [HERE]().
+
+###AndroidManifest.xml
+
+```
+<service android:name="xiaofei.library.hermes.HermesService$HermesService0">
+</service>
+```
 
 ###Initialization
 
-The initialization of Hermes should be performed at the beginning. You can do this in Application.OnCreate() or Activity.OnCreate(). The Corresponding API is Hermes.init(Context). Before initialization, a HermesListener can be set to do some callbacks.
+Always, an app has a default process in which most components run. Name this default process Process A.
+
+Suppose there is another process, named Process B. Process B wants to invoke methods in Process A. Then Process B should initialize Hermes at the beginning.
+
+You can do this in Application.OnCreate() or Activity.OnCreate() in Process B. The Corresponding API is Hermes.connect(Context). Before initialization, a HermesListener can be set to do some callbacks.
+
+```
+Hermes.connect(getApplicationContext());
+```
 
 You can call Hermes.isConnected() to see whether the process you are communicating with is still alive.
+
+###Context Setting
+
+In the process which provides methods for other processes to invoke, you can use Hermes.setContext(Context) to set the context.
+
+The context will be used when the Context parameter is passed in from other processes. See Point 8 of Notice.
 
 ###Registration
 
