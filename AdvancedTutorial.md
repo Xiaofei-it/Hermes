@@ -34,11 +34,11 @@ If Process A wants to invoke methods in Process B, it should initialize Hermes a
 Hermes.connect(getApplicationContext(), HermesService.HermesService2.class);
 ```
 
-You can call Hermes.isConnected(HermesService.HermesService2) to see whether Process B is still alive.
+You can call Hermes.isConnected(HermesService.HermesService2.class) to see whether Process B is still alive.
 
 ###Instance Creation
 
-In Process A, there are three ways to create instances in Hermes: Hermes.newInstance(), Hermes.getInstance() and Hermes.getUtilityClass().
+In Process A, there are three ways to create instances in Hermes: Hermes.newInstanceInService(), Hermes.getInstanceInService() and Hermes.getUtilityClassInService().
 
 1. Hermes.newInstanceInService(Class<? extends HermesService>, Class<T>, Object...)
 
@@ -97,7 +97,7 @@ In Process A, there are three ways to create instances in Hermes: Hermes.newInst
    
    }
    ```
-   In Process A, you create the instance by Hermes.getInstanceInService(HermesService.HermesService2.class, IBitmapWrapper.class, “files/image.png”) or Hermes.getInstance(IBitmapWrapper.class, 1001) to get the instance of BitmapWrapper.
+   In Process A, you create the instance by Hermes.getInstanceInService(HermesService.HermesService2.class, IBitmapWrapper.class, “files/image.png”) or Hermes.getInstanceInService(HermesService.HermesService2.class, IBitmapWrapper.class, 1001) to get the instance of BitmapWrapper.
 
 3. Hermes.getUtilityClassInService(Class<? extends HermesService>, Class<T>)
 
