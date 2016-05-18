@@ -24,7 +24,6 @@ import android.os.IInterface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
-import android.util.Log;
 
 import java.util.List;
 
@@ -36,26 +35,21 @@ public interface IHermesService extends IInterface {
 
         public Stub() {
             this.attachInterface(this, DESCRIPTOR);
-            Log.v("eric zhao", "Stub init");
         }
 
         public static IHermesService asInterface(IBinder obj) {
-            Log.v("eric zhao", "asInterface");
             if ((obj==null)) {
                 return null;
             }
             IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
             if (((iin!=null)&&(iin instanceof IHermesService))) {
-                Log.v("eric zhao", "asInterface branch 1");
                 return ((IHermesService)iin);
             }
-            Log.v("eric zhao", "asInterface branch 2");
             return new Proxy(obj);
         }
 
         @Override
         public IBinder asBinder() {
-            Log.v("eric zhao", "asBinder");
             return this;
         }
 
@@ -108,13 +102,11 @@ public interface IHermesService extends IInterface {
             private IBinder mRemote;
 
             Proxy(IBinder remote) {
-                Log.v("eric zhao", "Proxy init");
                 mRemote = remote;
             }
 
             @Override
             public IBinder asBinder() {
-                Log.v("eric zhao", "Proxy asBinder");
                 return mRemote;
             }
 
@@ -124,7 +116,6 @@ public interface IHermesService extends IInterface {
 
             @Override
             public Reply send(Mail mail) throws RemoteException {
-                Log.v("eric zhao", "proxy send");
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 Reply _result;
@@ -152,7 +143,6 @@ public interface IHermesService extends IInterface {
 
             @Override
             public void register(IHermesServiceCallback callback, int pid) throws RemoteException {
-                Log.v("eric zhao", "register");
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 try {

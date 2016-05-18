@@ -24,7 +24,6 @@ import android.os.IInterface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
-import android.util.Log;
 
 public interface IHermesServiceCallback extends IInterface {
 
@@ -34,7 +33,6 @@ public interface IHermesServiceCallback extends IInterface {
 
         public Stub() {
             this.attachInterface(this, DESCRIPTOR);
-            Log.v("eric zhao", "callback Stub init");
         }
 
         public static IHermesServiceCallback asInterface(IBinder obj) {
@@ -43,16 +41,13 @@ public interface IHermesServiceCallback extends IInterface {
             }
             IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
             if (((iin!=null)&&(iin instanceof IHermesServiceCallback))) {
-                Log.v("eric zhao", "callback asInterface branch 1");
                 return ((IHermesServiceCallback)iin);
             }
-            Log.v("eric zhao", "callback asInterface branch 2");
             return new Proxy(obj);
         }
 
         @Override
         public IBinder asBinder() {
-            Log.v("eric zhao", "callback asBinder");
             return this;
         }
 
@@ -63,7 +58,6 @@ public interface IHermesServiceCallback extends IInterface {
                     reply.writeString(DESCRIPTOR);
                     return true;
                 case TRANSACTION_callback:
-                    Log.v("eric zhao", "callback on transact callback");
                     data.enforceInterface(DESCRIPTOR);
                     CallbackMail _arg0;
                     if ((0!=data.readInt())) {
@@ -89,13 +83,11 @@ public interface IHermesServiceCallback extends IInterface {
             private IBinder mRemote;
 
             Proxy(IBinder remote) {
-                Log.v("eric zhao", "callback Proxy init");
                 mRemote = remote;
             }
 
             @Override
             public IBinder asBinder() {
-                Log.v("eric zhao", "callback Proxy asBinder");
                 return mRemote;
             }
 
@@ -105,7 +97,6 @@ public interface IHermesServiceCallback extends IInterface {
 
             @Override
             public Reply callback(CallbackMail mail) throws RemoteException {
-                Log.v("eric zhao", "callback proxy callback");
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 Reply _result;

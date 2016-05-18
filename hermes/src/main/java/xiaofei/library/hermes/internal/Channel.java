@@ -95,7 +95,6 @@ public class Channel {
         }
 
         public Reply callback(CallbackMail mail) {
-            Log.v("eric zhao", "callback");
             final Pair<Boolean, Object> pair = CALLBACK_MANAGER.getCallback(mail.getTimeStamp(), mail.getIndex());
             if (pair == null) {
                 return null;
@@ -145,7 +144,6 @@ public class Channel {
     }
 
     public void bind(Context context, Class<? extends HermesService> service) {
-        Log.v("eric zhao", "bind");
         synchronized (mBounds) {
             Boolean bound = mBounds.get(service);
             if (bound != null && bound) {
@@ -234,7 +232,6 @@ public class Channel {
         }
 
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.v("eric zhao", "onServiceConnected");
             synchronized (mBounds) {
                 mBounds.put(mClass, true);
             }
