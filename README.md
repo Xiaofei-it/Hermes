@@ -295,7 +295,7 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
 
    If Process A invokes a method in Process B, and passes some callbacks as the parameters of the method to let Process B perform some callback operations in Process A, the callback will run, by default, in the main thread, also known as the UI thread, of Process A. If you want to let the callback run in the background, you can add the @Background annotation before the corresponding parameter when you declare the interface.
 
-   If the callback has an return value, it should run in the background. If it runs in the main thread, the return value will always be null.
+   If the callback has an return value, you should let it run in the background. If it runs in the main thread, the return value will always be null.
 
    By default, Hermes holds a strong reference to the callback, which may cause the memory leak. You can add a @WeakRef annotation before the corresponding callback parameter to let Hermes hold a weak reference to the callback. If the callback in a process has been reclaimed and it is called from the other process (A process does not know the callback in another process has been reclaimed), nothing happens and if the callback has a return value, the return value will be null.
 

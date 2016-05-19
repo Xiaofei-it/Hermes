@@ -254,11 +254,11 @@ Hermes.connect(getApplicationContext());
 
 ##注意事项
 
-1. 事实上，如果两个进程属于两个不同的app（分别叫App A和App B），App A想访问App B的一个类，并且App A的接口和App B的对应类有相同的包名和类名，那么就没有必要在类和接口上加@ClassId注解。但是要注意使用ProGuard后类名和包名人要保持一致。
+1. 事实上，如果两个进程属于两个不同的app（分别叫App A和App B），App A想访问App B的一个类，并且App A的接口和App B的对应类有相同的包名和类名，那么就没有必要在类和接口上加@ClassId注解。但是要注意使用ProGuard后类名和包名仍要保持一致。
 
 2. 如果接口和类里面对应的方法的名字相同，那么也没有必要在方法上加上@MethodId注解，同样注意ProGuard的使用后接口内的方法名字必须仍然和类内的对应方法名字相同。
 
-3. 如果进程A的一个类上面有一个@ClassId注解，这个类在进程B中对应的接口上有一个相同的@ClassId注解，那么进程A在进程B访问这个类之前必须注册这个类。否则进程B使用Hermes.newInstance()、Hermes.getInstance()或Hermes.getUtilityClass()，Hermes在进程A中找不到匹配的类。类可以在构造器或者Application.OnCreate()中注册。
+3. 如果进程A的一个类上面有一个@ClassId注解，这个类在进程B中对应的接口上有一个相同的@ClassId注解，那么进程A在进程B访问这个类之前必须注册这个类。否则进程B使用Hermes.newInstance()、Hermes.getInstance()或Hermes.getUtilityClass()时，Hermes在进程A中找不到匹配的类。类可以在构造器或者Application.OnCreate()中注册。
 
    但是，如果类和对应的接口上面没有@ClassId注解，但有相同的包名和类名，那么就不需要注册类。Hermes通过包名和类名匹配类和接口。
 
@@ -266,13 +266,13 @@ Hermes.connect(getApplicationContext());
 
 4. 如果你不想让一个类或者函数被其他进程访问，可以在上面加上@WithinProcess注解。
 
-5. 适用Hermes跨进程调用函数的时候，传入参数的类型可以是原参数类型的子类，但不可以是匿名类和局部类。但是回调函数例外，关于回调函数详见“注意事项”的第7点。
+5. 使用Hermes跨进程调用函数的时候，传入参数的类型可以是原参数类型的子类，但不可以是匿名类和局部类。但是回调函数例外，关于回调函数详见“注意事项”的第7点。
    ```
    public class A {}
 
    public class B extends A {}
    ```
-   In Process A, there is a class as below:
+   进程A中有下面这个类：
    ```
    @ClassId(“Foo”)
    public class Foo {
@@ -307,7 +307,7 @@ Hermes.connect(getApplicationContext());
 
    如果进程A调用进程B的函数，并且传入一个回调函数供进程B在进程A进行回调操作，那么默认这个回调函数将运行在进程A的主线程（UI线程）。如果你不想让回调函数运行在主线程，那么在接口声明的函数的对应的回调参数之前加上@Background注解。
 
-   如果回调函数有返回值，那么它应该运行在后台线程。如果运行在主线程，那么返回值始终为null。
+   如果回调函数有返回值，那么你应该让它运行在后台线程。如果运行在主线程，那么返回值始终为null。
 
    默认情况下，Hermes框架持有回调函数的强引用，这个可能会导致内存泄漏。你可以在接口声明的对应回调参数前加上@WeakRef注解，这样Hermes持有的就是回调函数的弱引用。如果进程的回调函数被回收了，而对方进程还在调用这个函数（对方进程并不会知道回调函数被回收），这个不会有任何影响，也不会造成崩溃。如果回调函数有返回值，那么就返回null。
 
@@ -335,5 +335,5 @@ Hermes.connect(getApplicationContext());
 
 9. 数据传输是基于Json的。
 
-10. 适用Hermes框架的时候，有任何的错误，都会使用android.util.Log.e()打出错误日志。你可以通过日志定位问题。
+10. 使用Hermes框架的时候，有任何的错误，都会使用android.util.Log.e()打出错误日志。你可以通过日志定位问题。
 
