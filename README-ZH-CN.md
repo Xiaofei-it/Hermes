@@ -3,6 +3,8 @@
 
 Hermes是一套新颖巧妙易用的Android进程间通信IPC框架。这个框架使得你不用了解IPC机制就可以进行进程间通信，像调用本地函数一样调用其他进程的函数。
 
+你们知道把英文文档翻译成中文有多么蛋疼吗？？？还不给我star一下 o(╥﹏╥)o
+
 ##特色
 
 1. 使得进程间通信像调用本地函数一样方便简单。
@@ -121,37 +123,37 @@ dependencies {
 
 ###初始化
 
-经常地，一个app有一个, an app has a default process in which most components run. Name this default process Process A.
+经常地，一个app有一个主进程。给这个主进程命名为进程A。
 
-Suppose there is another process, named Process B. Process B wants to invoke methods in Process A. Then Process B should initialize Hermes at the beginning.
+假设有一个进程B，想要调用进程A的函数。那么进程B应该初始化Hermes。
 
-You can do this in Application.OnCreate() or Activity.OnCreate() in Process B. The Corresponding API is Hermes.connect(Context). Before initialization, a HermesListener can be set to do some callbacks.
+你可以在进程B的Application.OnCreate()或者Activity.OnCreate()中对Hermes初始化。相应的API是Hermes.connect(Context)。
 
 ```
 Hermes.connect(getApplicationContext());
 ```
 
-You can call Hermes.isConnected() to see whether the process you are communicating with is still alive.
+你可以调用Hermes.isConnected()来查看通信的进程是否还活着。
 
-###Context Setting
+###设置Context
 
-In the process which provides methods for other processes to invoke, you can use Hermes.setContext(Context) to set the context.
+在给其他进程提供函数的进程中，可以使用Hermes.setContext(Context)来设置context。
 
-The context will be used when the Context parameter is passed in from other processes. See Point 8 of Notice.
+函数调用时，如果参数有Context，这个参数便会被转换成之前设置的Context。具体见“注意事项”的第8点。
 
-###Registration
+###注册
 
-In Process A, classes to be accessed by Process B should be registered before being accessed. There are two APIs to register classes: Hermes.register(Class<?>) and Hermes.register(Object). Hermes.register(object) is equivalent to Hermes.register(object.getClass()).
+进程A中，被进程B调用的类需要事先注册。有两种注册类的API：Hermes.register(Class<?>)和Hermes.register(Object)。Hermes.register(object)等价于Hermes.register(object.getClass())。
 
-Registration is, however, not necessary if you do not add annotations on the classes. See Point 3 of Notice.
+但是如果类上面没有加上注解，那么注册就不是必须的，Hermes会通过类名进行反射查找相应的类。详见“注意事项”的第3点。
 
-###Instance Creation
+###创建实例
 
-In Process B, there are three ways to create instances in Hermes: Hermes.newInstance(), Hermes.getInstance() and Hermes.getUtilityClass().
+进程B中，创建进程A中的实例有三种方法：Hermes.newInstance()、Hermes.getInstance()和Hermes.getUtilityClass()。
 
 1. Hermes.newInstance(Class<T>, Object...)
 
-   This method creates an new instance of the specified class in Process A and returns the reference to the new instance. The second parameter will be passed into the corresponding constructor of the specified class.
+   这个函数在进程A中创建指定类的实例，并将引用返回给进程B。函数的第二个参数将传给指定类的对应的构造器。
    ```
    @ClassId(“LoadingTask”)
    public class LoadingTask {
@@ -172,11 +174,14 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
        void start();
    }
    ```
-   In Process B, you create the instance by Hermes.newInstance(ILoadingTask.class, “files/image.png”, true) to get the instance of LoadingTask.
+   在进程B中，调用Hermes.newInstance(ILoadingTask.class, “files/image.png”, true)便得到了LoadingTask的实例。
 
 2. Hermes.getInstance(Class<T>, Object...)
 
-   This method creates an new instance of the specified class through its static method named “getInstance” in Process A and returns the reference to the new instance. The second parameter will be passed into the corresponding static “getInstance” method of the specified class. This is useful when the specified class is a singleton.
+   这个函数在进程A中通过指定类的getInstance方法创建实例，并将引用返回给进程B。第二个参数将传给对应的getInstance方法。
+
+   这个函数特别适合获取单例，这样进程A和进程B就使用同一个单例。
+
    ```
    @ClassId(“BitmapWrapper”)
    public class BitmapWrapper {
@@ -206,11 +211,13 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
    
    }
    ```
-   In Process B, you create the instance by Hermes.getInstance(IBitmapWrapper.class, “files/image.png”) or Hermes.getInstance(IBitmapWrapper.class, 1001) to get the instance of BitmapWrapper.
+   进程B中，调用Hermes.getInstance(IBitmapWrapper.class, “files/image.png”)或Hermes.getInstance(IBitmapWrapper.class, 1001)将得到BitmapWrapper的实例。
 
 3. Hermes.getUtilityClass(Class<T>)
 
-   This method provides a way to use the utility class in another process. (This is very useful when developing plugins.)
+   这个函数获取进程A的工具类。
+
+   这种做法在插件开发中很有用。插件开发的时候，通常主app和插件app存在不同的进程中。为了维护方便，应该使用统一的工具类。这时插件app可以通过这个方法获取主app的工具类。
    ```
    @ClassId(“Maths”)
    public class Maths {
@@ -238,28 +245,28 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
        int minus(int a, int b);
    }
    ```
-   In Process B, you can do as the below:
+   进程B中，使用下面代码使用进程A的工具类。
    ```
    IMaths maths = Hermes.getUtilityClass(IMaths.class);
    int sum = maths.plus(3, 5);
    int diff = maths.minus(3, 5);
    ```
 
-##Notice
+##注意事项
 
-1. Actually, if two processes are in separate apps, named App A and App B respectively, and App A wants to access a class in App B, and if the interface of App A and the corresponding class of App B has the same name and the same package name, then there is no need to add the ClassId annotation on them. But pay more attention when you use ProGuard, since the names of the corresponding classes will be different after obfuscating.
+1. 事实上，如果两个进程属于两个不同的app（分别叫App A和App B），App A想访问App B的一个类，并且App A的接口和App B的对应类有相同的包名和类名，那么就没有必要在类和接口上加@ClassId注解。但是要注意使用ProGuard后类名和包名人要保持一致。
 
-2. If the method in an interface and the method in the corresponding class have the same name, there is also no need to add the MethodId annotation on them.
+2. 如果接口和类里面对应的方法的名字相同，那么也没有必要在方法上加上@MethodId注解，同样注意ProGuard的使用后接口内的方法名字必须仍然和类内的对应方法名字相同。
 
-3. If a class in Process A has a ClassId annotation presented on it and its corresponding interface in Process B has also a ClassId annotation with the same value presented on it, the class should be registered before being accessed by Process B. Otherwise, when Process B uses Hermes.newInstance(), Hermes.getInstance() or Hermes.getUtilityClass(), Hermes will not find the matching class in Process A. A class can be registered in its constructor or in Application.OnCreate().
+3. 如果进程A的一个类上面有一个@ClassId注解，这个类在进程B中对应的接口上有一个相同的@ClassId注解，那么进程A在进程B访问这个类之前必须注册这个类。否则进程B使用Hermes.newInstance()、Hermes.getInstance()或Hermes.getUtilityClass()，Hermes在进程A中找不到匹配的类。类可以在构造器或者Application.OnCreate()中注册。
 
-   However, if the class and its corresponding interface do not have an annotation presented on them but have the same name and the same package name, then there is no need to register the class. Hermes finds the class according to the package and the name.
+   但是，如果类和对应的接口上面没有@ClassId注解，但有相同的包名和类名，那么就不需要注册类。Hermes通过包名和类名匹配类和接口。
 
-   The above also works when it comes to the method.
+   对于接口和类里面的函数，上面的说法仍然适用。
 
-4. If you want to prevent a class or a method from being accessed from outside the process, add a WithinProcess annotation on it.
+4. 如果你不想让一个类或者函数被其他进程访问，可以在上面加上@WithinProcess注解。
 
-5. The type of the parameters you pass into the method can be a subclass of the corresponding parameter type, but cannot be an anonymous class or a local class. But callback is supported. See Point 7 for more information about callbacks.
+5. 适用Hermes跨进程调用函数的时候，传入参数的类型可以是原参数类型的子类，但不可以是匿名类和局部类。但是回调函数例外，关于回调函数详见“注意事项”的第7点。
    ```
    public class A {}
 
@@ -274,7 +281,7 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
        }
    }
    ```
-   Then in Process B, the interface is as below:
+   进程B的对应接口如下：
    ```
    @ClassId(“Foo”)
    public interface IFoo {
@@ -282,29 +289,29 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
        A f(A a);
    }
    ```
-   In Process B, you can write the followings:
+   进程B中可以写如下代码：
    ```
    IFoo foo = Hermes.getUtilityClass(IFoo.class);
    B b = new B();
    A a = foo.f(b);
    ```
 
-   You can NOT write the following:
+   但你不能写如下代码：
    ```
    A a = foo.f(new A(){});
    ```
 
-6. If the parameter types and the return type of the invoked method are the primitive types or some common classes such as String, the above will work very well. However, if they are the classes you declare, as the example in Point 5 shows, and if the method invocation is between apps, then you must declare the classes in both App A and App B. What’s more, you should guarantee that the name of the class and its methods remain the same even after you use the ProGuard. Or you can add the ClassId annotation on the class and the MethodId annotation on the methods.
+6. 如果被调用的函数的参数类型和返回值类型是int、double等基本类型或者String这样的Java通用类型，上面的说法可以很好地解决问题。但如果类型是自定义的类，比如“注意事项”的第5点中的例子，并且两个进程分别属于两个不同app，那么你必须在两个app中都定义这个类，且必须保证代码混淆后，两个类仍然有相同的包名和类名。不过你可以适用@ClassId和@MethodId注解，这样包名和类名在混淆后不同也不要紧了。
 
-7. If the invoked method has some callback parameters, then the parameter type must be an interface. It can NOT be an abstract class. Attention should be paid when it comes to the thread where the callback run.
+7. 如果被调用的函数有回调参数，那么函数定义中这个参数必须是一个接口，不能是抽象类。请特别注意回调函数运行的线程。
 
-   If Process A invokes a method in Process B, and passes some callbacks as the parameters of the method to let Process B perform some callback operations in Process A, the callback will run, by default, in the main thread, also known as the UI thread. If you want to let the callback run in the background, you can add the Background annotation before the corresponding parameter when you declare the interface.
+   如果进程A调用进程B的函数，并且传入一个回调函数供进程B在进程A进行回调操作，那么默认这个回调函数将运行在进程A的主线程（UI线程）。如果你不想让回调函数运行在主线程，那么在接口声明的函数的对应的回调参数之前加上@Background注解。
 
-   If the callback has an return value, it should run in the background. If it runs in the main thread, the return value will always be null.
+   如果回调函数有返回值，那么它应该运行在后台线程。如果运行在主线程，那么返回值始终为null。
 
-   By default, Hermes holds a strong reference to the callback, which may cause the memory leak. You can add a WeakRef annotation before the corresponding callback parameter to let Hermes hold a weak reference to the callback. If the callback in a process has been reclaimed and it is called from the other process (A process does not know the callback in another process has been reclaimed), nothing happens and if the callback has a return value, the return value will be null.
+   默认情况下，Hermes框架持有回调函数的强引用，这个可能会导致内存泄漏。你可以在接口声明的对应回调参数前加上@WeakRef注解，这样Hermes持有的就是回调函数的弱引用。如果进程的回调函数被回收了，而对方进程还在调用这个函数（对方进程并不会知道回调函数被回收），这个不会有任何影响，也不会造成崩溃。如果回调函数有返回值，那么就返回null。
 
-   If you want to use the Background annotation and the WeakRef annotation, you should add them when you declare the interface. If you add them elsewhere, it will take no effect.
+   如果你使用了@Background和@WeakRef注解，你必须在接口中对应的函数参数前进行添加。如果加在其他地方，并不会有任何作用。
    ```
    @ClassId(“Foo”)
    public class Foo {
@@ -324,9 +331,9 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
        void f(int i, @WeakRef @Background Callback callback);
    }
    ```
-8. Any context passed into the invoked method as the parameter will be replaced by the application context of the remote process.
+8. 调用函数的时候，任何Context在另一个进程中都会变成对方进程的application context。
 
-9. Data transmitting between processes is based on Json.
+9. 数据传输是基于Json的。
 
-10. If any error occurs, a error log will be printed by android.util.Log.e(). You can see the log for the detail of the error.
+10. 适用Hermes框架的时候，有任何的错误，都会使用android.util.Log.e()打出错误日志。你可以通过日志定位问题。
 

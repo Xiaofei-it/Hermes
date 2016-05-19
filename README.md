@@ -1,6 +1,8 @@
 # Hermes
 A smart, novel and easy-to-use framework for Android Inter-Process Communication (IPC).
 
+[Chinese Readme 中文文档](https://github.com/Xiaofei-it/Hermes/blob/master/README-ZH-CN.md)
+
 Hermes is a smart, novel and easy-to-use framework for Android Inter-Process Communication (IPC). In this framework, you can use IPC even if you do not understand the underneath principle of Android IPC.
 
 ##Features
@@ -244,13 +246,13 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
 
 2. If the method in an interface and the method in the corresponding class have the same name, there is also no need to add the @MethodId annotation on them.
 
-3. If a class in Process A has a @ClassId annotation presented on it and its corresponding interface in Process B has also a @ClassId annotation with the same value presented on it, the class should be registered before being accessed by Process B. Otherwise, when Process B uses Hermes.newInstance(), Hermes.getInstance() or Hermes.getUtilityClass(), Hermes will not find the matching class in Process A. A class can be registered in its constructor or in Application.OnCreate().
+3. If a class in Process A has a @ClassId annotation presented on it and its corresponding interface in Process B has also a @ClassId annotation with the same value presented on it, the class should be registered in Process A before being accessed by Process B. Otherwise, when Process B uses Hermes.newInstance(), Hermes.getInstance() or Hermes.getUtilityClass(), Hermes will not find the matching class in Process A. A class can be registered in its constructor or in Application.OnCreate().
 
    However, if the class and its corresponding interface do not have an annotation presented on them but have the same name and the same package name, then there is no need to register the class. Hermes finds the class according to the package and the name.
 
    The above also works when it comes to the method.
 
-4. If you want to prevent a class or a method from being accessed from outside the process, add a WithinProcess annotation on it.
+4. If you want to prevent a class or a method from being accessed from outside the process, add a @WithinProcess annotation on it.
 
 5. The type of the parameters you pass into the method can be a subclass of the corresponding parameter type, but cannot be an anonymous class or a local class. But callback is supported. See Point 7 for more information about callbacks.
    ```
@@ -291,13 +293,13 @@ In Process B, there are three ways to create instances in Hermes: Hermes.newInst
 
 7. If the invoked method has some callback parameters, then the parameter type must be an interface. It can NOT be an abstract class. Attention should be paid when it comes to the thread where the callback run.
 
-   If Process A invokes a method in Process B, and passes some callbacks as the parameters of the method to let Process B perform some callback operations in Process A, the callback will run, by default, in the main thread, also known as the UI thread. If you want to let the callback run in the background, you can add the Background annotation before the corresponding parameter when you declare the interface.
+   If Process A invokes a method in Process B, and passes some callbacks as the parameters of the method to let Process B perform some callback operations in Process A, the callback will run, by default, in the main thread, also known as the UI thread, of Process A. If you want to let the callback run in the background, you can add the @Background annotation before the corresponding parameter when you declare the interface.
 
    If the callback has an return value, it should run in the background. If it runs in the main thread, the return value will always be null.
 
-   By default, Hermes holds a strong reference to the callback, which may cause the memory leak. You can add a WeakRef annotation before the corresponding callback parameter to let Hermes hold a weak reference to the callback. If the callback in a process has been reclaimed and it is called from the other process (A process does not know the callback in another process has been reclaimed), nothing happens and if the callback has a return value, the return value will be null.
+   By default, Hermes holds a strong reference to the callback, which may cause the memory leak. You can add a @WeakRef annotation before the corresponding callback parameter to let Hermes hold a weak reference to the callback. If the callback in a process has been reclaimed and it is called from the other process (A process does not know the callback in another process has been reclaimed), nothing happens and if the callback has a return value, the return value will be null.
 
-   If you want to use the Background annotation and the WeakRef annotation, you should add them when you declare the interface. If you add them elsewhere, it will take no effect.
+   If you want to use the @Background annotation and the @WeakRef annotation, you should add them when you declare the interface. If you add them elsewhere, it will take no effect.
    ```
    @ClassId(“Foo”)
    public class Foo {
