@@ -27,7 +27,9 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.util.Pair;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.reflect.Method;
@@ -63,6 +65,8 @@ public class Channel {
     private HermesListener mListener = null;
 
     private Handler mUiHandler = new Handler(Looper.getMainLooper());
+
+    private volatile String mPackageName = null;
 
     private static final CallbackManager CALLBACK_MANAGER = CallbackManager.getInstance();
 
@@ -143,6 +147,10 @@ public class Channel {
         return sInstance;
     }
 
+    public void setPackageName(String packageName) {
+        mPackageName = packageName;
+    }
+
     public void bind(Context context, Class<? extends HermesService> service) {
         synchronized (mBounds) {
             Boolean bound = mBounds.get(service);
@@ -161,7 +169,14 @@ public class Channel {
         synchronized (mHermesServiceConnections) {
             mHermesServiceConnections.put(service, connection);
         }
-        Intent intent = new Intent(context, service);
+        String packageName = mPackageName;
+        Intent intent;
+        if (TextUtils.isEmpty(packageName)) {
+            intent = new Intent(context, service);
+        } else {
+            intent = new Intent();
+            intent.setClassName(packageName, service.getName());
+        }
         context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 

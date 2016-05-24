@@ -70,6 +70,10 @@ public class Hermes {
         }
     }
 
+    public static void setPackageName(String packageName) {
+        CHANNEL.setPackageName(packageName);
+    }
+
     private static <T> T getProxy(Class<? extends HermesService> service, ObjectWrapper object) {
         Class<?> clazz = object.getObjectClass();
         T proxy =  (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz},
