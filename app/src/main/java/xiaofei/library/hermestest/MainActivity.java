@@ -18,12 +18,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Hermes.init(this);
         Hermes.register(NewInstance.class);
         Hermes.register(C.class);
         Hermes.register(UserManager.class);
         Hermes.register(LoadingTask.class);
         Hermes.register(FileUtils.class);
-        Hermes.setContext(this);
         findViewById(R.id.testing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,9 +49,4 @@ public class MainActivity extends Activity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.v("eric zhao", "destroy");
-    }
 }

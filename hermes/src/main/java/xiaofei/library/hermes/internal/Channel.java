@@ -49,7 +49,7 @@ import xiaofei.library.hermes.wrapper.ParameterWrapper;
  */
 public class Channel {
 
-    private static final String TAG = "Channel";
+    private static final String TAG = "CHANNEL";
 
     private static Channel sInstance = null;
 
@@ -64,8 +64,6 @@ public class Channel {
     private HermesListener mListener = null;
 
     private Handler mUiHandler = new Handler(Looper.getMainLooper());
-
-    private volatile String mPackageName = null;
 
     private static final CallbackManager CALLBACK_MANAGER = CallbackManager.getInstance();
 
@@ -146,11 +144,7 @@ public class Channel {
         return sInstance;
     }
 
-    public void setPackageName(String packageName) {
-        mPackageName = packageName;
-    }
-
-    public void bind(Context context, Class<? extends HermesService> service) {
+    public void bind(Context context, String packageName, Class<? extends HermesService> service) {
         synchronized (mBounds) {
             Boolean bound = mBounds.get(service);
             if (bound != null && bound) {
@@ -168,7 +162,6 @@ public class Channel {
         synchronized (mHermesServiceConnections) {
             mHermesServiceConnections.put(service, connection);
         }
-        String packageName = mPackageName;
         Intent intent;
         if (TextUtils.isEmpty(packageName)) {
             intent = new Intent(context, service);
@@ -201,7 +194,7 @@ public class Channel {
         try {
             if (hermesService == null) {
                 return new Reply(ErrorCodes.SERVICE_UNAVAILABLE,
-                        "Service Unavailable: Check whether you have init Hermes.");
+                        "Service Unavailable: Check whether you have connected Hermes.");
             }
             return hermesService.send(mail);
         } catch (RemoteException e) {
@@ -219,6 +212,13 @@ public class Channel {
             hermesService.gc(timeStamps);
         } catch (RemoteException e) {
 
+        }
+    }
+
+    public boolean getBound(Class<? extends HermesService> service) {
+        synchronized (mBounds) {
+            Boolean bound = mBounds.get(service);
+            return bound != null && bound;
         }
     }
 

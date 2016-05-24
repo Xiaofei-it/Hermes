@@ -48,13 +48,26 @@ public class Hermes {
 
     private static final HermesGc HERMES_GC = HermesGc.getInstance();
 
-    private static volatile Context sContext = null;
+    private static Context sContext = null;
 
     public static void register(Object object) {
         register(object.getClass());
     }
 
+    private static void checkInit() {
+        if (sContext == null) {
+            throw new IllegalStateException("Hermes has not been initialized.");
+        }
+    }
+
+    /**
+     * There is no need to register class in local process!
+     *
+     * But if the returned type of a method is not exactly the same with the return type of the method, it should be registered.
+     * @param clazz
+     */
     public static void register(Class<?> clazz) {
+        checkInit();
         TYPE_CENTER.register(clazz);
     }
 
@@ -62,16 +75,19 @@ public class Hermes {
         return sContext;
     }
 
-    public static void setContext(Context context) {
-        synchronized (Hermes.class) {
-            if (sContext == null) {
-                sContext = context.getApplicationContext();
-            }
+    public static void init(Context context) {
+        if (sContext != null) {
+            throw new IllegalStateException("Hermes has already been initialized before.");
         }
+        sContext = context.getApplicationContext();
     }
 
-    public static void setPackageName(String packageName) {
-        CHANNEL.setPackageName(packageName);
+    private static void checkBound(Class<? extends HermesService> service) {
+        if (!CHANNEL.getBound(service)) {
+            throw new IllegalStateException("Service Unavailable: You have not connected the service "
+                    + "or the connection is not completed. You can set HermesListener to receive a callback "
+                    + "when the connection is completed.");
+        }
     }
 
     private static <T> T getProxy(Class<? extends HermesService> service, ObjectWrapper object) {
@@ -88,6 +104,7 @@ public class Hermes {
 
     public static <T> T newInstanceInService(Class<? extends HermesService> service, Class<T> clazz, Object... parameters) {
         TypeUtils.validateServiceInterface(clazz);
+        checkBound(service);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_OBJECT_TO_NEW);
         Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_NEW_INSTANCE, object);
         try {
@@ -119,6 +136,7 @@ public class Hermes {
 
     public static <T> T getInstanceWithMethodNameInService(Class<? extends HermesService> service, Class<T> clazz, String methodName, Object... parameters) {
         TypeUtils.validateServiceInterface(clazz);
+        checkBound(service);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_OBJECT_TO_GET);
         Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_GET_INSTANCE, object);
         if (parameters == null) {
@@ -151,6 +169,7 @@ public class Hermes {
 
     public static <T> T getUtilityClassInService(Class<? extends HermesService> service, Class<T> clazz) {
         TypeUtils.validateServiceInterface(clazz);
+        checkBound(service);
         ObjectWrapper object = new ObjectWrapper(clazz, ObjectWrapper.TYPE_CLASS_TO_GET);
         Sender sender = SenderDesignator.getPostOffice(service, SenderDesignator.TYPE_GET_UTILITY_CLASS, object);
         try {
@@ -173,7 +192,15 @@ public class Hermes {
     }
 
     public static void connect(Context context, Class<? extends HermesService> service) {
-        CHANNEL.bind(context, service);
+        connectApp(context, null, service);
+    }
+
+    public static void connectApp(Context context, String packageName) {
+        connectApp(context, packageName, HermesService.HermesService0.class);
+    }
+
+    public static void connectApp(Context context, String packageName, Class<? extends HermesService> service) {
+        CHANNEL.bind(context, packageName, service);
     }
 
     public static void disconnect(Context context) {

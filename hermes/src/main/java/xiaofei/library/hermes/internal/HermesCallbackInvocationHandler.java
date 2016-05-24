@@ -59,6 +59,9 @@ public class HermesCallbackInvocationHandler implements InvocationHandler {
                 return null;
             }
             if (reply.success()) {
+                /**
+                 * Note that the returned type should be registered in the remote process.
+                 */
                 return reply.getResult();
             } else {
                 Log.e(TAG, "Error occurs: " + reply.getMessage());
