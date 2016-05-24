@@ -20,6 +20,7 @@ package xiaofei.library.hermes.receiver;
 
 import android.content.Context;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import xiaofei.library.hermes.Hermes;
@@ -72,7 +73,14 @@ public abstract class Receiver {
                 new HermesCallbackInvocationHandler(methodInvocationTimeStamp, index, mCallback));
     }
 
-    private final void setParameters(long methodInvocationTimeStamp, ParameterWrapper[] parameterWrappers) throws HermesException {
+    private static void registerCallbackReturnTypes(Class<?> clazz) {
+        Method[] methods = clazz.getMethods();
+        for (Method method : methods) {
+            TYPE_CENTER.register(method.getReturnType());
+        }
+    }
+
+    private void setParameters(long methodInvocationTimeStamp, ParameterWrapper[] parameterWrappers) throws HermesException {
         if (parameterWrappers == null) {
             mParameters = null;
         } else {
@@ -85,6 +93,7 @@ public abstract class Receiver {
                 } else {
                     Class<?> clazz = TYPE_CENTER.getClassType(parameterWrapper);
                     if (clazz != null && clazz.isInterface()) {
+                        registerCallbackReturnTypes(clazz); //****
                         mParameters[i] = getProxy(clazz, i, methodInvocationTimeStamp);
                     } else if (clazz != null && Context.class.isAssignableFrom(clazz)) {
                         mParameters[i] = Hermes.getContext();

@@ -70,15 +70,44 @@ public abstract class Sender {
         mParameters = parameterWrappers;
     }
 
+    /**
+     * constructor is like method.
+     *
+     * method: parameter --> no need to register, but should be registered in the remote process (* by hand, or user will forget to add annotation), especially when the type is subclass.
+     *                       should have the same class id and can be inverted by json.
+     *         callback parameter --> see below
+     *         return type --> should be registered (**)(esp subclass), no need to registered in the remote process.
+     *                         should have the same class id and can be inverted by json.
+     *
+     * callback: parameter --> should be registered (***)(esp subclass), no need to registered in the remote process.
+     *           return type --> no need to register, but should be registered in the remote process (****)(esp subclass).
+     *
+     * In Hermes, we can control the registration of classes, but the subclasses should be registered by users.
+     */
+
+
     private void registerClass(Method method) throws HermesException {
         if (method == null) {
             return;
         }
         Class<?>[] classes = method.getParameterTypes();
         for (Class<?> clazz : classes) {
-            TYPE_CENTER.register(clazz);
+            if (clazz.isInterface()) {
+                TYPE_CENTER.register(clazz);
+                registerCallbackMethodParameterTypes(clazz);
+            }
         }
-        TYPE_CENTER.register(method.getReturnType());
+        TYPE_CENTER.register(method.getReturnType()); //**
+    }
+
+    private void registerCallbackMethodParameterTypes(Class<?> clazz) {
+        Method[] methods = clazz.getMethods();
+        for (Method method : methods) {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            for (Class<?> parameterType : parameterTypes) {
+                TYPE_CENTER.register(parameterType); //***
+            }
+        }
     }
 
     private final ParameterWrapper[] getParameterWrappers(Method method, Object[] parameters) throws HermesException {
