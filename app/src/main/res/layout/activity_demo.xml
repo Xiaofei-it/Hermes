@@ -6,6 +6,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#AA0"
+        android:text="Warning: Please click the third button of MainActivity to start the third process. Otherwise, when you click the following button, the app may crash."/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Create instance in another process to download:"/>
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -14,7 +14,7 @@
 
     <Button
         android:id="@+id/another_process"
-        android:text="Another process" android:layout_width="wrap_content"
+        android:text="Open the third process" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
