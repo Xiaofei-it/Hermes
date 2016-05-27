@@ -266,7 +266,7 @@ public class Channel {
                 return;
             }
             if (mListener != null) {
-                mListener.onInitSuccess(mClass);
+                mListener.onHermesConnected(mClass);
             }
         }
 
@@ -279,7 +279,7 @@ public class Channel {
                 mBindings.put(mClass, false);
             }
             if (mListener != null) {
-                mListener.onDisconnected(mClass);
+                mListener.onHermesDisconnected(mClass);
             }
         }
     }

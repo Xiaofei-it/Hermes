@@ -21,21 +21,11 @@ package xiaofei.library.hermes;
 /**
  * Created by Xiaofei on 16/4/11.
  */
-public class HermesListener {
+public abstract class HermesListener {
 
-    public void onInitSuccess() {
-        onInitSuccess(HermesService.HermesService0.class);
-    }
+    public abstract void onHermesConnected(Class<? extends HermesService> service);
 
-    public void onInitSuccess(Class<? extends HermesService> service) {
-
-    }
-
-    public void onDisconnected() {
-        onDisconnected(HermesService.HermesService0.class);
-    }
-
-    public void onDisconnected(Class<? extends HermesService> service) {
+    public void onHermesDisconnected(Class<? extends HermesService> service) {
 
     }
 
