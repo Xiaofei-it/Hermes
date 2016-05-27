@@ -77,7 +77,7 @@ public class Hermes {
 
     public static void init(Context context) {
         if (sContext != null) {
-            throw new IllegalStateException("Hermes has already been initialized before.");
+            return;
         }
         sContext = context.getApplicationContext();
     }
@@ -200,7 +200,7 @@ public class Hermes {
     }
 
     public static void connectApp(Context context, String packageName, Class<? extends HermesService> service) {
-        CHANNEL.bind(context, packageName, service);
+        CHANNEL.bind(context.getApplicationContext(), packageName, service);
     }
 
     public static void disconnect(Context context) {
@@ -208,7 +208,7 @@ public class Hermes {
     }
 
     public static void disconnect(Context context, Class<? extends HermesService> service) {
-        CHANNEL.unbind(context, service);
+        CHANNEL.unbind(context.getApplicationContext(), service);
     }
 
     public static boolean isConnected() {

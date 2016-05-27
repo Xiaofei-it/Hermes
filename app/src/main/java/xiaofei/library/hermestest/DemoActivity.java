@@ -76,4 +76,10 @@ public class DemoActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Hermes.disconnect(getApplicationContext());
+        Hermes.disconnect(this, HermesService.HermesService1.class);
+    }
 }

@@ -131,4 +131,10 @@ public class TestingActivity extends Activity {
      *
      * parcel null
      */
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Hermes.disconnect(this);
+    }
 }

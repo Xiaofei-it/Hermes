@@ -182,6 +182,7 @@ public class Channel {
                         context.unbindService(connection);
                     }
                 }
+                mBounds.put(service, false);
             }
         }
     }
