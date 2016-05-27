@@ -93,7 +93,7 @@ Log.v(TAG, singleton.getData());
 
 ```
 dependencies {
-    compile 'xiaofei.library:hermes:0.3'
+    compile 'xiaofei.library:hermes:0.5.1'
 }
 ```
 
@@ -103,7 +103,7 @@ dependencies {
 <dependency>
   <groupId>xiaofei.library</groupId>
   <artifactId>hermes</artifactId>
-  <version>0.3</version>
+  <version>0.5.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -121,11 +121,15 @@ dependencies {
 </service>
 ```
 
-###初始化
+###主进程的初始化Hermes
+
+在给其他进程提供函数的进程中，使用Hermes.init(Context)初始化。
+
+###子进程的连接Hermes
 
 经常地，一个app有一个主进程。给这个主进程命名为进程A。
 
-假设有一个进程B，想要调用进程A的函数。那么进程B应该初始化Hermes。
+假设有一个进程B，想要调用进程A的函数。那么进程B应该连接Hermes。连接后才可以使用Hermes的服务。
 
 你可以在进程B的Application.OnCreate()或者Activity.OnCreate()中对Hermes初始化。相应的API是Hermes.connect(Context)。
 
@@ -134,12 +138,6 @@ Hermes.connect(getApplicationContext());
 ```
 
 你可以调用Hermes.isConnected()来查看通信的进程是否还活着。
-
-###设置Context
-
-在给其他进程提供函数的进程中，可以使用Hermes.setContext(Context)来设置context。
-
-函数调用时，如果参数有Context，这个参数便会被转换成之前设置的Context。具体见“注意事项”的第8点。
 
 ###注册
 
