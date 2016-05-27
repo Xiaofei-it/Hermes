@@ -121,11 +121,11 @@ dependencies {
 </service>
 ```
 
-###主进程的初始化Hermes
+###主进程初始化Hermes
 
 在给其他进程提供函数的进程中，使用Hermes.init(Context)初始化。
 
-###子进程的连接Hermes
+###子进程连接Hermes
 
 经常地，一个app有一个主进程。给这个主进程命名为进程A。
 
