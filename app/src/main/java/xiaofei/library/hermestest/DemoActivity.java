@@ -20,6 +20,16 @@ public class DemoActivity extends Activity {
         Hermes.connect(getApplicationContext(), HermesService.HermesService1.class);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
+        /**
+         * If access remote object here, it is useless.
+         *
+         * We can bind service in non-ui thread, but what to do next? It will cause the dead lock.
+         *
+         * If sleep here, it is useless.
+         *
+         * What if use invocation handler in non-ui thread?
+         */
+
         findViewById(R.id.download).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
