@@ -5,6 +5,8 @@ A smart, novel and easy-to-use framework for Android Inter-Process Communication
 
 Hermes is a smart, novel and easy-to-use framework for Android Inter-Process Communication (IPC). In this framework, you can use IPC even if you do not understand the underneath principle of Android IPC.
 
+Please click [HERE](https://github.com/Xiaofei-it/Hermes-IPC-Demo) to see the dome.
+
 ##Features
 
 1. Make method invocations over IPC so easy just like method invocations in a local process. The statements of method invocations are almost the same.

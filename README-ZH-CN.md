@@ -3,7 +3,7 @@
 
 Hermes是一套新颖巧妙易用的Android进程间通信IPC框架。这个框架使得你不用了解IPC机制就可以进行进程间通信，像调用本地函数一样调用其他进程的函数。
 
-你们知道把英文文档翻译成中文有多么蛋疼吗？？？还不给我star一下 o(╥﹏╥)o
+Hermes的demo请点击[https://github.com/Xiaofei-it/Hermes-IPC-Demo](https://github.com/Xiaofei-it/Hermes-IPC-Demo)
 
 ##特色
 
