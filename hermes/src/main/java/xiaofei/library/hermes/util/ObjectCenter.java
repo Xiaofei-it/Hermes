@@ -28,7 +28,7 @@ public class ObjectCenter {
 
     private static ObjectCenter sInstance = null;
 
-    private HashMap<Long, Object> mObjects;
+    private final HashMap<Long, Object> mObjects;
 
     private ObjectCenter() {
         mObjects = new HashMap<Long, Object>();

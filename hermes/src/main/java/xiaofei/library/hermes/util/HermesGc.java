@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import xiaofei.library.hermes.internal.Channel;
 import xiaofei.library.hermes.HermesService;
+import xiaofei.library.hermes.internal.Channel;
 
 /**
  * Created by Xiaofei on 16/4/29.
@@ -36,13 +36,13 @@ public class HermesGc {
 
     private static HermesGc sInstance = null;
 
-    private ReferenceQueue<Object> mReferenceQueue;
+    private final ReferenceQueue<Object> mReferenceQueue;
 
     private static final Channel CHANNEL = Channel.getInstance();
 
-    private HashMap<PhantomReference<Object>, Long> mTimeStamps;
+    private final HashMap<PhantomReference<Object>, Long> mTimeStamps;
 
-    private HashMap<Long, Class<? extends HermesService>> mServices;
+    private final HashMap<Long, Class<? extends HermesService>> mServices;
 
     private HermesGc() {
         mReferenceQueue = new ReferenceQueue<Object>();
@@ -72,7 +72,7 @@ public class HermesGc {
                 if (timeStamp != null) {
                     Class<? extends HermesService> clazz = mServices.remove(timeStamp);
                     if (clazz != null) {
-                        ArrayList<Long> tmp = timeStamps.get(timeStamp);
+                        ArrayList<Long> tmp = timeStamps.get(clazz);
                         if (tmp == null) {
                             tmp = new ArrayList<Long>();
                             timeStamps.put(clazz, tmp);

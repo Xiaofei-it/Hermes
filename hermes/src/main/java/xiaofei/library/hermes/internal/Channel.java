@@ -53,13 +53,13 @@ public class Channel {
 
     private static Channel sInstance = null;
 
-    private HashMap<Class<? extends HermesService>, IHermesService> mHermesServices = new HashMap<Class<? extends HermesService>, IHermesService>();
+    private final HashMap<Class<? extends HermesService>, IHermesService> mHermesServices = new HashMap<Class<? extends HermesService>, IHermesService>();
 
-    private HashMap<Class<? extends HermesService>, HermesServiceConnection> mHermesServiceConnections = new HashMap<Class<? extends HermesService>, HermesServiceConnection>();
+    private final HashMap<Class<? extends HermesService>, HermesServiceConnection> mHermesServiceConnections = new HashMap<Class<? extends HermesService>, HermesServiceConnection>();
 
-    private HashMap<Class<? extends HermesService>, Boolean> mBindings = new HashMap<Class<? extends HermesService>, Boolean>();
+    private final HashMap<Class<? extends HermesService>, Boolean> mBindings = new HashMap<Class<? extends HermesService>, Boolean>();
 
-    private HashMap<Class<? extends HermesService>, Boolean> mBounds = new HashMap<Class<? extends HermesService>, Boolean>();
+    private final HashMap<Class<? extends HermesService>, Boolean> mBounds = new HashMap<Class<? extends HermesService>, Boolean>();
 
     private HermesListener mListener = null;
 
@@ -212,7 +212,7 @@ public class Channel {
         try {
             hermesService.gc(timeStamps);
         } catch (RemoteException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -232,10 +232,7 @@ public class Channel {
         synchronized (mHermesServices) {
             hermesService = mHermesServices.get(service);
         }
-        if (hermesService == null) {
-            return false;
-        }
-        return hermesService.asBinder().pingBinder();
+        return hermesService != null && hermesService.asBinder().pingBinder();
     }
 
     private class HermesServiceConnection implements ServiceConnection {
@@ -271,7 +268,9 @@ public class Channel {
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            mHermesServices = null;
+            synchronized (mHermesServices) {
+                mHermesServices.remove(mClass);
+            }
             synchronized (mBounds) {
                 mBounds.put(mClass, false);
             }

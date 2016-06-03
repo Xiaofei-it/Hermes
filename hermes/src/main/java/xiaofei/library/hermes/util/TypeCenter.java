@@ -35,13 +35,13 @@ public class TypeCenter {
     
     private static TypeCenter sInstance = null;
 
-    private HashMap<String, Class<?>> mAnnotatedClasses;
+    private final HashMap<String, Class<?>> mAnnotatedClasses;
 
-    private HashMap<String, Class<?>> mRawClasses;
+    private final HashMap<String, Class<?>> mRawClasses;
 
-    private HashMap<Class<?>, HashMap<String, Method>> mAnnotatedMethods;
+    private final HashMap<Class<?>, HashMap<String, Method>> mAnnotatedMethods;
 
-    private HashMap<Class<?>, HashMap<String, Method>> mRawMethods;
+    private final HashMap<Class<?>, HashMap<String, Method>> mRawMethods;
 
     private TypeCenter() {
         mAnnotatedClasses = new HashMap<String, Class<?>>();

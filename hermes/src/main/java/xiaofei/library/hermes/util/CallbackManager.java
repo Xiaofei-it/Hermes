@@ -30,7 +30,7 @@ public class CallbackManager {
 
     private static CallbackManager sInstance = null;
 
-    private HashMap<Long, CallbackWrapper> mCallbackWrappers;
+    private final HashMap<Long, CallbackWrapper> mCallbackWrappers;
 
     private CallbackManager() {
         mCallbackWrappers = new HashMap<Long, CallbackWrapper>();
