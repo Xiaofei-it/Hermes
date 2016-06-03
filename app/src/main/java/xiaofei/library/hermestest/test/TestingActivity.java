@@ -122,6 +122,15 @@ public class TestingActivity extends Activity {
                 }), Toast.LENGTH_SHORT).show();
             }
         });
+        findViewById(R.id.test_gc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < 1000; ++i) {
+                    INewInstance iNewInstance = Hermes.newInstance(INewInstance.class);
+                }
+
+            }
+        });
     }
 
     /**
