@@ -73,6 +73,5 @@ public class HermesCallbackInvocationHandler implements InvocationHandler {
             e.printStackTrace();
         }
         return null;
-        //TODO 应该先注册
     }
 }

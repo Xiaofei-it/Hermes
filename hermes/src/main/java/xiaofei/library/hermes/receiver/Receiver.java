@@ -119,7 +119,6 @@ public abstract class Receiver {
         setMethod(methodWrapper, parameterWrappers);
         setParameters(methodInvocationTimeStamp, parameterWrappers);
         Object result = invokeMethod();
-        //TODO
         if (result == null) {
             return null;
         } else {

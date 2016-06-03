@@ -191,16 +191,7 @@ public class TypeCenter {
                 method = mRawMethods.get(clazz).get(name);
             }
             if (method != null) {
-                Class<?> tmp = method.getReturnType();
-                if (TypeUtils.primitiveMatch(tmp, returnType)) {
-                    return method;
-                }
-                if (tmp != returnType) {
-                    throw new HermesException(ErrorCodes.METHOD_NOT_FOUND,
-                            "The return type of methods do not match. "
-                                    + "Method " + method + " return type: " + tmp.getName()
-                                    + ". The required is " + returnType.getName());
-                }
+                TypeUtils.methodReturnTypeMatch(method, methodWrapper);
                 return method;
             }
             int pos = name.indexOf('(');
@@ -216,9 +207,9 @@ public class TypeCenter {
             synchronized (mAnnotatedMethods) {
                 methods = mAnnotatedMethods.get(clazz);
             }
-            //TODO
             Method method = methods.get(name);
             if (method != null) {
+                TypeUtils.methodMatch(method, methodWrapper);
                 return method;
             }
             throw new HermesException(ErrorCodes.METHOD_NOT_FOUND,

@@ -31,6 +31,7 @@ import android.support.v4.util.Pair;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +84,7 @@ public class Channel {
                     result[i] = null;
                 } else {
                     Class<?> clazz = TYPE_CENTER.getClassType(parameterWrapper);
-                    //TODO check
+
                     String data = parameterWrapper.getData();
                     if (data == null) {
                         result[i] = null;
@@ -121,15 +122,28 @@ public class Channel {
                     });
                     return null;
                 }
-                Object result = method.invoke(callback, parameters);
+                Object result = null;
+                Exception exception = null;
+                try {
+                    result = method.invoke(callback, parameters);
+                } catch (IllegalAccessException e) {
+                    exception = e;
+                } catch (InvocationTargetException e) {
+                    exception = e;
+                }
+                if (exception != null) {
+                    exception.printStackTrace();
+                    throw new HermesException(ErrorCodes.METHOD_INVOCATION_EXCEPTION,
+                            "Error occurs when invoking method " + method + " on " + callback, exception);
+                }
                 if (result == null) {
                     return null;
                 }
                 return new Reply(new ParameterWrapper(result));
-            } catch (Exception e) {
+            } catch (HermesException e) {
                 e.printStackTrace();
+                return new Reply(e.getErrorCode(), e.getErrorMessage());
             }
-            return null;
         }
     };
 

@@ -37,6 +37,7 @@ import xiaofei.library.hermes.annotation.ClassId;
 import xiaofei.library.hermes.annotation.GetInstance;
 import xiaofei.library.hermes.annotation.MethodId;
 import xiaofei.library.hermes.annotation.WithinProcess;
+import xiaofei.library.hermes.wrapper.MethodWrapper;
 import xiaofei.library.hermes.wrapper.ParameterWrapper;
 
 /**
@@ -147,7 +148,7 @@ public class TypeUtils {
         }
     }
 
-    public static boolean match(Class<?>[] classes1, Class<?>[] classes2) {
+    public static boolean classAssignable(Class<?>[] classes1, Class<?>[] classes2) {
         if (classes1.length != classes2.length) {
             return false;
         }
@@ -171,7 +172,7 @@ public class TypeUtils {
         Method result = null;
         Method[] methods = clazz.getMethods();
         for (Method method : methods) {
-            if (method.getName().equals(methodName) && match(method.getParameterTypes(), parameterTypes)) {
+            if (method.getName().equals(methodName) && classAssignable(method.getParameterTypes(), parameterTypes)) {
                 if (result == null) {
                     result = method;
                 } else {
@@ -186,7 +187,7 @@ public class TypeUtils {
             return result;
         }
         if (result.getReturnType() != returnType) {
-            throw new HermesException(ErrorCodes.METHOD_MATCHING_PARAMETER_TYPE_NOT_RETURN_TYPE,
+            throw new HermesException(ErrorCodes.METHOD_RETURN_TYPE_NOT_MATCHING,
                     "The method named " + methodName + " of the class " + clazz.getName()
                             + " matches the parameter types but not the return type. The return type is "
                             + result.getReturnType().getName() + " but the required type is "
@@ -204,7 +205,7 @@ public class TypeUtils {
             String tmpName = method.getName();
             if (methodName.equals("") && (tmpName.equals("getInstance") || method.isAnnotationPresent(GetInstance.class))
                     || !methodName.equals("") && tmpName.equals(methodName)) {
-                if (match(method.getParameterTypes(), parameterTypes)) {
+                if (classAssignable(method.getParameterTypes(), parameterTypes)) {
                     if (result == null) {
                         result = method;
                     } else {
@@ -235,7 +236,7 @@ public class TypeUtils {
         Constructor<?> result = null;
         Constructor<?>[] constructors = clazz.getConstructors();
         for (Constructor<?> constructor : constructors) {
-            if (match(constructor.getParameterTypes(), parameterTypes)) {
+            if (classAssignable(constructor.getParameterTypes(), parameterTypes)) {
                 if (result != null) {
                     throw new HermesException(ErrorCodes.TOO_MANY_MATCHING_CONSTRUCTORS_FOR_CREATING_INSTANCE,
                             "The class " + clazz.getName() + " has too many constructors whose "
@@ -362,4 +363,55 @@ public class TypeUtils {
                             + "outside the process.");
         }
     }
+
+    public static void methodParameterTypeMatch(Method method, MethodWrapper methodWrapper) throws HermesException {
+        Class<?>[] requiredParameterTypes = TypeCenter.getInstance().getClassTypes(methodWrapper.getParameterTypes());
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        if (requiredParameterTypes.length != parameterTypes.length) {
+            throw new HermesException(ErrorCodes.METHOD_PARAMETER_NOT_MATCHING,
+                    "The number of method parameters do not match. "
+                            + "Method " + method + " has " + parameterTypes.length + " parameters. "
+                            + "The required method has " + requiredParameterTypes.length + " parameters.");
+        }
+        int length = requiredParameterTypes.length;
+        for (int i = 0; i < length; ++i) {
+            if (requiredParameterTypes[i].isPrimitive() || parameterTypes[i].isPrimitive()) {
+                if (!primitiveMatch(requiredParameterTypes[i], parameterTypes[i])) {
+                    throw new HermesException(ErrorCodes.METHOD_PARAMETER_NOT_MATCHING,
+                            "The parameter type of method " + method + " do not match at index " + i + ".");
+                }
+            } else if (requiredParameterTypes[i] != parameterTypes[i]) {
+                if (!primitiveMatch(requiredParameterTypes[i], parameterTypes[i])) {
+                    throw new HermesException(ErrorCodes.METHOD_PARAMETER_NOT_MATCHING,
+                            "The parameter type of method " + method + " do not match at index " + i + ".");
+                }
+            }
+        }
+    }
+
+    public static void methodReturnTypeMatch(Method method, MethodWrapper methodWrapper) throws HermesException {
+        Class<?> returnType = method.getReturnType();
+        Class<?> requiredReturnType = TypeCenter.getInstance().getClassType(methodWrapper.getReturnType());
+        if (returnType.isPrimitive() || requiredReturnType.isPrimitive()) {
+            if (!TypeUtils.primitiveMatch(returnType, requiredReturnType)) {
+                throw new HermesException(ErrorCodes.METHOD_RETURN_TYPE_NOT_MATCHING,
+                        "The return type of methods do not match. "
+                                + "Method " + method + " return type: " + returnType.getName()
+                                + ". The required is " + requiredReturnType.getName());
+            }
+        } else if (requiredReturnType != returnType) {
+            if (!TypeUtils.primitiveMatch(returnType, requiredReturnType)) {
+                throw new HermesException(ErrorCodes.METHOD_RETURN_TYPE_NOT_MATCHING,
+                        "The return type of methods do not match. "
+                                + "Method " + method + " return type: " + returnType.getName()
+                                + ". The required is " + requiredReturnType.getName());
+            }
+        }
+    }
+
+    public static void methodMatch(Method method, MethodWrapper methodWrapper) throws HermesException {
+        methodParameterTypeMatch(method, methodWrapper);
+        methodReturnTypeMatch(method, methodWrapper);
+    }
+
 }
