@@ -109,27 +109,39 @@ public class Channel {
             try {
                 final Method method = TYPE_CENTER.getMethod(callback.getClass(), mail.getMethod());
                 final Object[] parameters = getParameters(mail.getParameters());
-                if (uiThread) {
-                    mUiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                method.invoke(callback, parameters);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    return null;
-                }
                 Object result = null;
                 Exception exception = null;
-                try {
-                    result = method.invoke(callback, parameters);
-                } catch (IllegalAccessException e) {
-                    exception = e;
-                } catch (InvocationTargetException e) {
-                    exception = e;
+                if (uiThread) {
+                    boolean isMainThread = Looper.getMainLooper() == Looper.myLooper();
+                    if (isMainThread) {
+                        try {
+                            result = method.invoke(callback, parameters);
+                        } catch (IllegalAccessException e) {
+                            exception = e;
+                        } catch (InvocationTargetException e) {
+                            exception = e;
+                        }
+                    } else {
+                        mUiHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    method.invoke(callback, parameters);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        return null;
+                    }
+                } else {
+                    try {
+                        result = method.invoke(callback, parameters);
+                    } catch (IllegalAccessException e) {
+                        exception = e;
+                    } catch (InvocationTargetException e) {
+                        exception = e;
+                    }
                 }
                 if (exception != null) {
                     exception.printStackTrace();
