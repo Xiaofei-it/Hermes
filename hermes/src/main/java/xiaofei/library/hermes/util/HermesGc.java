@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import xiaofei.library.hermes.HermesService;
 import xiaofei.library.hermes.internal.Channel;
@@ -34,25 +35,29 @@ import xiaofei.library.hermes.internal.Channel;
  */
 public class HermesGc {
 
-    private static HermesGc sInstance = null;
+    private static volatile HermesGc sInstance = null;
 
     private final ReferenceQueue<Object> mReferenceQueue;
 
     private static final Channel CHANNEL = Channel.getInstance();
 
-    private final HashMap<PhantomReference<Object>, Long> mTimeStamps;
+    private final ConcurrentHashMap<PhantomReference<Object>, Long> mTimeStamps;
 
-    private final HashMap<Long, Class<? extends HermesService>> mServices;
+    private final ConcurrentHashMap<Long, Class<? extends HermesService>> mServices;
 
     private HermesGc() {
         mReferenceQueue = new ReferenceQueue<Object>();
-        mTimeStamps = new HashMap<PhantomReference<Object>, Long>();
-        mServices = new HashMap<Long, Class<? extends HermesService>>();
+        mTimeStamps = new ConcurrentHashMap<PhantomReference<Object>, Long>();
+        mServices = new ConcurrentHashMap<Long, Class<? extends HermesService>>();
     }
 
-    public static synchronized HermesGc getInstance() {
+    public static HermesGc getInstance() {
         if (sInstance == null) {
-            sInstance = new HermesGc();
+            synchronized (HermesGc.class) {
+                if (sInstance == null) {
+                    sInstance = new HermesGc();
+                }
+            }
         }
         return sInstance;
     }
@@ -66,9 +71,7 @@ public class HermesGc {
             //TODO Is the following class casting right?
             while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
                 //TODO How about ConcurrentHashMap?
-                synchronized (mTimeStamps) {
-                    timeStamp = mTimeStamps.remove(reference);
-                }
+                timeStamp = mTimeStamps.remove(reference);
                 if (timeStamp != null) {
                     Class<? extends HermesService> clazz = mServices.remove(timeStamp);
                     if (clazz != null) {
@@ -93,11 +96,7 @@ public class HermesGc {
 
     public void register(Class<? extends HermesService> service, Object object, Long timeStamp) {
         gc();
-        synchronized (mTimeStamps) {
-            mTimeStamps.put(new PhantomReference<Object>(object, mReferenceQueue), timeStamp);
-        }
-        synchronized (mServices) {
-            mServices.put(timeStamp, service);
-        }
+        mTimeStamps.put(new PhantomReference<Object>(object, mReferenceQueue), timeStamp);
+        mServices.put(timeStamp, service);
     }
 }

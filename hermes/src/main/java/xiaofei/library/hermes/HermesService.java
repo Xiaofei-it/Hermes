@@ -23,8 +23,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import xiaofei.library.hermes.internal.IHermesService;
 import xiaofei.library.hermes.internal.IHermesServiceCallback;
@@ -39,7 +39,7 @@ public abstract class HermesService extends Service {
 
     private static final ObjectCenter OBJECT_CENTER = ObjectCenter.getInstance();
 
-    private HashMap<Integer, IHermesServiceCallback> mCallbacks = new HashMap<Integer, IHermesServiceCallback>();
+    private ConcurrentHashMap<Integer, IHermesServiceCallback> mCallbacks = new ConcurrentHashMap<Integer, IHermesServiceCallback>();
 
     private final IHermesService.Stub mBinder = new IHermesService.Stub() {
         @Override
@@ -60,9 +60,7 @@ public abstract class HermesService extends Service {
 
         @Override
         public void register(IHermesServiceCallback callback, int pid) throws RemoteException {
-            synchronized (HermesService.class) {
-                mCallbacks.put(pid, callback);
-            }
+            mCallbacks.put(pid, callback);
         }
 
         @Override

@@ -18,46 +18,44 @@
 
 package xiaofei.library.hermes.util;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Xiaofei on 16/4/8.
  */
 public class ObjectCenter {
 
-    private static ObjectCenter sInstance = null;
+    private static volatile ObjectCenter sInstance = null;
 
-    private final HashMap<Long, Object> mObjects;
+    private final ConcurrentHashMap<Long, Object> mObjects;
 
     private ObjectCenter() {
-        mObjects = new HashMap<Long, Object>();
+        mObjects = new ConcurrentHashMap<Long, Object>();
     }
 
-    public static synchronized ObjectCenter getInstance() {
+    public static ObjectCenter getInstance() {
         if (sInstance == null) {
-            sInstance = new ObjectCenter();
+            synchronized (ObjectCenter.class) {
+                if (sInstance == null) {
+                    sInstance = new ObjectCenter();
+                }
+            }
         }
         return sInstance;
     }
 
     public Object getObject(Long timeStamp) {
-        synchronized (mObjects) {
-            return mObjects.get(timeStamp);
-        }
+        return mObjects.get(timeStamp);
     }
 
     public void putObject(long timeStamp, Object object) {
-        synchronized (mObjects) {
-            mObjects.put(timeStamp, object);
-        }
+        mObjects.put(timeStamp, object);
     }
 
     public void deleteObjects(List<Long> timeStamps) {
-        synchronized (mObjects) {
-            for (Long timeStamp : timeStamps) {
-                mObjects.remove(timeStamp);
-            }
+        for (Long timeStamp : timeStamps) {
+            mObjects.remove(timeStamp);
         }
     }
 }

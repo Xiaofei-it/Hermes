@@ -21,7 +21,7 @@ package xiaofei.library.hermes.util;
 import android.text.TextUtils;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import xiaofei.library.hermes.annotation.ClassId;
 import xiaofei.library.hermes.annotation.MethodId;
@@ -33,26 +33,30 @@ import xiaofei.library.hermes.wrapper.MethodWrapper;
  */
 public class TypeCenter {
     
-    private static TypeCenter sInstance = null;
+    private static volatile TypeCenter sInstance = null;
 
-    private final HashMap<String, Class<?>> mAnnotatedClasses;
+    private final ConcurrentHashMap<String, Class<?>> mAnnotatedClasses;
 
-    private final HashMap<String, Class<?>> mRawClasses;
+    private final ConcurrentHashMap<String, Class<?>> mRawClasses;
 
-    private final HashMap<Class<?>, HashMap<String, Method>> mAnnotatedMethods;
+    private final ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>> mAnnotatedMethods;
 
-    private final HashMap<Class<?>, HashMap<String, Method>> mRawMethods;
+    private final ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>> mRawMethods;
 
     private TypeCenter() {
-        mAnnotatedClasses = new HashMap<String, Class<?>>();
-        mRawClasses = new HashMap<String, Class<?>>();
-        mAnnotatedMethods = new HashMap<Class<?>, HashMap<String, Method>>();
-        mRawMethods = new HashMap<Class<?>, HashMap<String, Method>>();
+        mAnnotatedClasses = new ConcurrentHashMap<String, Class<?>>();
+        mRawClasses = new ConcurrentHashMap<String, Class<?>>();
+        mAnnotatedMethods = new ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>>();
+        mRawMethods = new ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>>();
     }
 
-    public static synchronized TypeCenter getInstance() {
+    public static TypeCenter getInstance() {
         if (sInstance == null) {
-            sInstance = new TypeCenter();
+            synchronized (TypeCenter.class) {
+                if (sInstance == null) {
+                    sInstance = new TypeCenter();
+                }
+            }
         }
         return sInstance;
     }
@@ -60,19 +64,11 @@ public class TypeCenter {
     private void registerClass(Class<?> clazz) {
         ClassId classId = clazz.getAnnotation(ClassId.class);
         if (classId == null) {
-            synchronized (mRawClasses) {
-                String className = clazz.getName();
-                if (!mRawMethods.containsKey(className)) {
-                    mRawClasses.put(className, clazz);
-                }
-            }
+            String className = clazz.getName();
+            mRawClasses.putIfAbsent(className, clazz);
         } else {
-            synchronized (mAnnotatedClasses) {
-                String className = classId.value();
-                if (!mAnnotatedClasses.containsKey(className)) {
-                    mAnnotatedClasses.put(className, clazz);
-                }
-            }
+            String className = classId.value();
+            mAnnotatedClasses.putIfAbsent(className, clazz);
         }
     }
 
@@ -81,23 +77,15 @@ public class TypeCenter {
         for (Method method : methods) {
             MethodId methodId = method.getAnnotation(MethodId.class);
             if (methodId == null) {
-                synchronized (mRawMethods) {
-                    if (!mRawMethods.containsKey(clazz)) {
-                        mRawMethods.put(clazz, new HashMap<String, Method>());
-                    }
-                    HashMap<String, Method> map = mRawMethods.get(clazz);
-                    String key = TypeUtils.getMethodId(method);
-                    map.put(key, method);
-                }
+                mRawMethods.putIfAbsent(clazz, new ConcurrentHashMap<String, Method>());
+                ConcurrentHashMap<String, Method> map = mRawMethods.get(clazz);
+                String key = TypeUtils.getMethodId(method);
+                map.putIfAbsent(key, method);
             } else {
-                synchronized (mAnnotatedMethods) {
-                    if (!mAnnotatedMethods.containsKey(clazz)) {
-                        mAnnotatedMethods.put(clazz, new HashMap<String, Method>());
-                    }
-                    HashMap<String, Method> map = mAnnotatedMethods.get(clazz);
-                    String key = TypeUtils.getMethodId(method);
-                    map.put(key, method);
-                }
+                mAnnotatedMethods.putIfAbsent(clazz, new ConcurrentHashMap<String, Method>());
+                ConcurrentHashMap<String, Method> map = mAnnotatedMethods.get(clazz);
+                String key = TypeUtils.getMethodId(method);
+                map.putIfAbsent(key, method);
             }
         }
     }
@@ -114,10 +102,7 @@ public class TypeCenter {
             return null;
         }
         if (wrapper.isName()) {
-            Class<?> clazz;
-            synchronized (mRawClasses) {
-                clazz = mRawClasses.get(name);
-            }
+            Class<?> clazz = mRawClasses.get(name);
             if (clazz != null) {
                 return clazz;
             }
@@ -152,15 +137,10 @@ public class TypeCenter {
                 }
 
             }
-            synchronized (mRawClasses) {
-                mRawClasses.put(name, clazz);
-            }
+            mRawClasses.putIfAbsent(name, clazz);
             return clazz;
         } else {
-            Class<?> clazz;
-            synchronized (mAnnotatedClasses) {
-                clazz = mAnnotatedClasses.get(name);
-            }
+            Class<?> clazz = mAnnotatedClasses.get(name);
             if (clazz == null) {
                 throw new HermesException(ErrorCodes.CLASS_NOT_FOUND,
                         "Cannot find class with ClassId annotation on it. ClassId = " + name
@@ -182,14 +162,9 @@ public class TypeCenter {
     public Method getMethod(Class<?> clazz, MethodWrapper methodWrapper) throws HermesException {
         String name = methodWrapper.getName();
         if (methodWrapper.isName()) {
-            Class<?> returnType = getClassType(methodWrapper.getReturnType());
-            Method method;
-            synchronized (mRawMethods) {
-                if (!mRawMethods.containsKey(clazz)) {
-                    mRawMethods.put(clazz, new HashMap<String, Method>());
-                }
-                method = mRawMethods.get(clazz).get(name);
-            }
+            mRawMethods.putIfAbsent(clazz, new ConcurrentHashMap<String, Method>());
+            ConcurrentHashMap<String, Method> methods = mRawMethods.get(clazz);
+            Method method = methods.get(name);
             if (method != null) {
                 TypeUtils.methodReturnTypeMatch(method, methodWrapper);
                 return method;
@@ -200,13 +175,10 @@ public class TypeCenter {
                 throw new HermesException(ErrorCodes.METHOD_NOT_FOUND,
                         "Method not found: " + name + " in class " + clazz.getName());
             }
-            mRawMethods.get(clazz).put(name, method);
+            methods.put(name, method);
             return method;
         } else {
-            HashMap<String, Method> methods;
-            synchronized (mAnnotatedMethods) {
-                methods = mAnnotatedMethods.get(clazz);
-            }
+            ConcurrentHashMap<String, Method> methods = mAnnotatedMethods.get(clazz);
             Method method = methods.get(name);
             if (method != null) {
                 TypeUtils.methodMatch(method, methodWrapper);

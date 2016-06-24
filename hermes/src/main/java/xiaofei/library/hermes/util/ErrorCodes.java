@@ -23,6 +23,8 @@ package xiaofei.library.hermes.util;
  */
 public class ErrorCodes {
 
+    //TODO change the right value into integers before release!
+
     public static final int SUCCESS = 0;
 
     public static final int REMOTE_EXCEPTION = SUCCESS + 1;
