@@ -228,10 +228,10 @@ public class Hermes {
      * @return
      */
     public static String getVersion() {
-        return "0.5.2-alpha";
+        return "0.5.2-alpha2";
     }
 
     public static int getVersion2() {
-        return 2;
+        return 3;
     }
 }
