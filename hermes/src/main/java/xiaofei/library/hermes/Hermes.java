@@ -231,7 +231,4 @@ public class Hermes {
         return "0.5.2-alpha2";
     }
 
-    public static int getVersion2() {
-        return 3;
-    }
 }
