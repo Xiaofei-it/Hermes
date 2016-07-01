@@ -157,6 +157,14 @@ public class Channel {
                 return new Reply(e.getErrorCode(), e.getErrorMessage());
             }
         }
+
+        @Override
+        public void gc(List<Long> timeStamps, List<Integer> indexes) throws RemoteException {
+            int size = timeStamps.size();
+            for (int i = 0; i < size; ++i) {
+                CALLBACK_MANAGER.removeCallback(timeStamps.get(i), indexes.get(i));
+            }
+        }
     };
 
     private Channel() {

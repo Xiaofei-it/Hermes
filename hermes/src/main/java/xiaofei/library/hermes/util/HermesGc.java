@@ -32,6 +32,8 @@ import xiaofei.library.hermes.internal.Channel;
 
 /**
  * Created by Xiaofei on 16/4/29.
+ *
+ * This works in the remote process.
  */
 public class HermesGc {
 
@@ -70,7 +72,6 @@ public class HermesGc {
                     = new HashMap<Class<? extends HermesService>, ArrayList<Long>>();
             //TODO Is the following class casting right?
             while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
-                //TODO How about ConcurrentHashMap?
                 timeStamp = mTimeStamps.remove(reference);
                 if (timeStamp != null) {
                     Class<? extends HermesService> clazz = mServices.remove(timeStamp);

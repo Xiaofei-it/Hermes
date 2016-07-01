@@ -28,6 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CallbackManager {
 
+    private static final int MAX_INDEX = 10;
+
     private static volatile CallbackManager sInstance = null;
 
     private final ConcurrentHashMap<Long, CallbackWrapper> mCallbackWrappers;
@@ -48,7 +50,10 @@ public class CallbackManager {
     }
 
     private static long getKey(long timeStamp, int index) {
-        return timeStamp * 10 + index;
+        if (index >= MAX_INDEX) {
+            throw new IllegalArgumentException("Index should be less than " + MAX_INDEX);
+        }
+        return timeStamp * MAX_INDEX + index;
     }
 
     public void addCallback(long timeStamp, int index, Object callback, boolean isWeakRef, boolean uiThread) {
@@ -67,6 +72,11 @@ public class CallbackManager {
             mCallbackWrappers.remove(key);
         }
         return pair;
+    }
+
+    public void removeCallback(long timeStamp, int index) {
+        long key = getKey(timeStamp, index);
+        mCallbackWrappers.remove(key);
     }
 
     private static class CallbackWrapper {
