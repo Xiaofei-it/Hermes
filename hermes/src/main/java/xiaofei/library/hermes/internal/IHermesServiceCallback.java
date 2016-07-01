@@ -76,6 +76,15 @@ public interface IHermesServiceCallback extends IInterface {
                         reply.writeInt(0);
                     }
                     return true;
+                case TRANSACTION_gc:
+                    data.enforceInterface(DESCRIPTOR);
+                    List list1, list2;
+                    ClassLoader cl = this.getClass().getClassLoader();
+                    list1 = data.readArrayList(cl);
+                    list2 = data.readArrayList(cl);
+                    this.gc(list1, list2);
+                    reply.writeNoException();
+                    return true;
             }
             return super.onTransact(code, data, reply, flags);
         }

@@ -76,7 +76,9 @@ public class CallbackManager {
 
     public void removeCallback(long timeStamp, int index) {
         long key = getKey(timeStamp, index);
-        mCallbackWrappers.remove(key);
+        if (mCallbackWrappers.remove(key) == null) {
+            throw new IllegalStateException("An error occurred in the callback GC.");
+        }
     }
 
     private static class CallbackWrapper {

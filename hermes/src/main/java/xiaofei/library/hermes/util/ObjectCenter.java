@@ -55,7 +55,9 @@ public class ObjectCenter {
 
     public void deleteObjects(List<Long> timeStamps) {
         for (Long timeStamp : timeStamps) {
-            mObjects.remove(timeStamp);
+            if (mObjects.remove(timeStamp) == null) {
+                throw new IllegalStateException("An error occurred in the GC.");
+            }
         }
     }
 }
