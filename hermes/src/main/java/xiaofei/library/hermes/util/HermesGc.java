@@ -66,12 +66,12 @@ public class HermesGc {
 
     private void gc() {
         synchronized (mReferenceQueue) {
-            Reference<Object> reference;
+            PhantomReference<Object> reference;
             Long timeStamp;
             HashMap<Class<? extends HermesService>, ArrayList<Long>> timeStamps
                     = new HashMap<Class<? extends HermesService>, ArrayList<Long>>();
-            //TODO Is the following class casting right?
-            while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
+            while ((reference = (PhantomReference<Object>) mReferenceQueue.poll()) != null) {
+                //After a long time, the program can reach here.
                 timeStamp = mTimeStamps.remove(reference);
                 if (timeStamp != null) {
                     Class<? extends HermesService> clazz = mServices.remove(timeStamp);

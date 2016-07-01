@@ -63,12 +63,11 @@ public class HermesCallbackGc {
 
     private void gc() {
         synchronized (mReferenceQueue) {
-            Reference<Object> reference;
+            PhantomReference<Object> reference;
             Triple<IHermesServiceCallback, Long, Integer> triple;
             HashMap<IHermesServiceCallback, Pair<ArrayList<Long>, ArrayList<Integer>>> timeStamps
                     = new HashMap<IHermesServiceCallback, Pair<ArrayList<Long>, ArrayList<Integer>>>();
-            //TODO Is the following class casting right?
-            while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
+            while ((reference = (PhantomReference<Object>) mReferenceQueue.poll()) != null) {
                 triple = mTimeStamps.remove(reference);
                 if (triple != null) {
                     Pair<ArrayList<Long>, ArrayList<Integer>> tmp = timeStamps.get(triple.first);
