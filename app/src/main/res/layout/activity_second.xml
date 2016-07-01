@@ -5,27 +5,36 @@
 
     <Button
         android:id="@+id/getInt"
-        android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:text="getInt" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/getDouble"
-        android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:text="getDouble" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/getInstance"
-        android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:text="getInstance" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/callback"
-        android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:text="callback" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/null_test"
-        android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:text="null_test" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/test_gc"
+        android:text="test_gc" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/test_callback_gc"
+        android:text="test_callback_gc" android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

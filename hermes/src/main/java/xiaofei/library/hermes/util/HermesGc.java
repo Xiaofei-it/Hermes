@@ -25,54 +25,58 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
-import xiaofei.library.hermes.internal.Channel;
 import xiaofei.library.hermes.HermesService;
+import xiaofei.library.hermes.internal.Channel;
 
 /**
  * Created by Xiaofei on 16/4/29.
+ *
+ * This works in the remote process.
  */
 public class HermesGc {
 
-    private static HermesGc sInstance = null;
+    private static volatile HermesGc sInstance = null;
 
-    private ReferenceQueue<Object> mReferenceQueue;
+    private final ReferenceQueue<Object> mReferenceQueue;
 
     private static final Channel CHANNEL = Channel.getInstance();
 
-    private HashMap<PhantomReference<Object>, Long> mTimeStamps;
+    private final ConcurrentHashMap<PhantomReference<Object>, Long> mTimeStamps;
 
-    private HashMap<Long, Class<? extends HermesService>> mServices;
+    private final ConcurrentHashMap<Long, Class<? extends HermesService>> mServices;
 
     private HermesGc() {
         mReferenceQueue = new ReferenceQueue<Object>();
-        mTimeStamps = new HashMap<PhantomReference<Object>, Long>();
-        mServices = new HashMap<Long, Class<? extends HermesService>>();
+        mTimeStamps = new ConcurrentHashMap<PhantomReference<Object>, Long>();
+        mServices = new ConcurrentHashMap<Long, Class<? extends HermesService>>();
     }
 
-    public static synchronized HermesGc getInstance() {
+    public static HermesGc getInstance() {
         if (sInstance == null) {
-            sInstance = new HermesGc();
+            synchronized (HermesGc.class) {
+                if (sInstance == null) {
+                    sInstance = new HermesGc();
+                }
+            }
         }
         return sInstance;
     }
 
     private void gc() {
         synchronized (mReferenceQueue) {
-            Reference<Object> reference;
+            PhantomReference<Object> reference;
             Long timeStamp;
             HashMap<Class<? extends HermesService>, ArrayList<Long>> timeStamps
                     = new HashMap<Class<? extends HermesService>, ArrayList<Long>>();
-            //TODO Is the following class casting right?
-            while ((reference = (Reference<Object>) mReferenceQueue.poll()) != null) {
-                //TODO How about ConcurrentHashMap?
-                synchronized (mTimeStamps) {
-                    timeStamp = mTimeStamps.remove(reference);
-                }
+            while ((reference = (PhantomReference<Object>) mReferenceQueue.poll()) != null) {
+                //After a long time, the program can reach here.
+                timeStamp = mTimeStamps.remove(reference);
                 if (timeStamp != null) {
                     Class<? extends HermesService> clazz = mServices.remove(timeStamp);
                     if (clazz != null) {
-                        ArrayList<Long> tmp = timeStamps.get(timeStamp);
+                        ArrayList<Long> tmp = timeStamps.get(clazz);
                         if (tmp == null) {
                             tmp = new ArrayList<Long>();
                             timeStamps.put(clazz, tmp);
@@ -93,11 +97,7 @@ public class HermesGc {
 
     public void register(Class<? extends HermesService> service, Object object, Long timeStamp) {
         gc();
-        synchronized (mTimeStamps) {
-            mTimeStamps.put(new PhantomReference<Object>(object, mReferenceQueue), timeStamp);
-        }
-        synchronized (mServices) {
-            mServices.put(timeStamp, service);
-        }
+        mTimeStamps.put(new PhantomReference<Object>(object, mReferenceQueue), timeStamp);
+        mServices.put(timeStamp, service);
     }
 }

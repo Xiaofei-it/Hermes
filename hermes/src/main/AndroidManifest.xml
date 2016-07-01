@@ -2,12 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="xiaofei.library.hermes">
 
-    <permission android:name="xiaofei.library.hermes.IPC"
-        android:label="@string/permission_label"
-        android:description="@string/permission_description"
-        android:protectionLevel="signature" />
-
-
     <application
         android:allowBackup="true"
         android:label="@string/app_name"

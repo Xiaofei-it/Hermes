@@ -28,6 +28,7 @@ import xiaofei.library.hermes.internal.IHermesServiceCallback;
 import xiaofei.library.hermes.internal.HermesCallbackInvocationHandler;
 import xiaofei.library.hermes.internal.Reply;
 import xiaofei.library.hermes.util.CodeUtils;
+import xiaofei.library.hermes.util.HermesCallbackGc;
 import xiaofei.library.hermes.util.HermesException;
 import xiaofei.library.hermes.util.ObjectCenter;
 import xiaofei.library.hermes.util.TypeCenter;
@@ -43,6 +44,8 @@ public abstract class Receiver {
     protected static final ObjectCenter OBJECT_CENTER = ObjectCenter.getInstance();
 
     protected static final TypeCenter TYPE_CENTER = TypeCenter.getInstance();
+
+    protected static final HermesCallbackGc HERMES_CALLBACK_GC = HermesCallbackGc.getInstance();
 
     private long mObjectTimeStamp;
 
@@ -95,6 +98,7 @@ public abstract class Receiver {
                     if (clazz != null && clazz.isInterface()) {
                         registerCallbackReturnTypes(clazz); //****
                         mParameters[i] = getProxy(clazz, i, methodInvocationTimeStamp);
+                        HERMES_CALLBACK_GC.register(mCallback, mParameters[i], methodInvocationTimeStamp, i);
                     } else if (clazz != null && Context.class.isAssignableFrom(clazz)) {
                         mParameters[i] = Hermes.getContext();
                     } else {
@@ -119,7 +123,6 @@ public abstract class Receiver {
         setMethod(methodWrapper, parameterWrappers);
         setParameters(methodInvocationTimeStamp, parameterWrappers);
         Object result = invokeMethod();
-        //TODO
         if (result == null) {
             return null;
         } else {

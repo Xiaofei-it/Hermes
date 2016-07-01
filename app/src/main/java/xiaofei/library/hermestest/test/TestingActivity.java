@@ -122,6 +122,31 @@ public class TestingActivity extends Activity {
                 }), Toast.LENGTH_SHORT).show();
             }
         });
+        findViewById(R.id.test_gc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < 1000; ++i) {
+                    INewInstance iNewInstance = Hermes.newInstance(INewInstance.class);
+                }
+
+            }
+        });
+        findViewById(R.id.test_callback_gc).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IGetInstance iGetInstance = Hermes.getInstance(IGetInstance.class);
+                Call2 call = new Call2() {
+                    @Override
+                    public A g(A a) {
+                        return a;
+                    }
+                };
+                for (int i = 0; i < 1000; ++i) {
+                    iGetInstance.getInt3(new A(), call);
+                }
+
+            }
+        });
     }
 
     /**

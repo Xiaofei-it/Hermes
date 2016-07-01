@@ -8,7 +8,7 @@ import xiaofei.library.hermes.annotation.MethodId;
  */
 @ClassId("NewInstance")
 public interface INewInstance {
-    Integer getInt(B i, Integer j);
+    int getInt(B i, int j);
     @MethodId("getDouble")
     Double getDouble(B i, int j);
 }

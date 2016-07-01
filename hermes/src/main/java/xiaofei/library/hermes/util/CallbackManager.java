@@ -21,51 +21,63 @@ package xiaofei.library.hermes.util;
 import android.support.v4.util.Pair;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Xiaofei on 16/4/14.
  */
 public class CallbackManager {
 
-    private static CallbackManager sInstance = null;
+    private static final int MAX_INDEX = 10;
 
-    private HashMap<Long, CallbackWrapper> mCallbackWrappers;
+    private static volatile CallbackManager sInstance = null;
+
+    private final ConcurrentHashMap<Long, CallbackWrapper> mCallbackWrappers;
 
     private CallbackManager() {
-        mCallbackWrappers = new HashMap<Long, CallbackWrapper>();
+        mCallbackWrappers = new ConcurrentHashMap<Long, CallbackWrapper>();
     }
 
-    public static synchronized CallbackManager getInstance() {
+    public static CallbackManager getInstance() {
         if (sInstance == null) {
-            sInstance = new CallbackManager();
+            synchronized (CallbackManager.class) {
+                if (sInstance == null) {
+                    sInstance = new CallbackManager();
+                }
+            }
         }
         return sInstance;
     }
 
     private static long getKey(long timeStamp, int index) {
-        return timeStamp * 10 + index;
+        if (index >= MAX_INDEX) {
+            throw new IllegalArgumentException("Index should be less than " + MAX_INDEX);
+        }
+        return timeStamp * MAX_INDEX + index;
     }
 
     public void addCallback(long timeStamp, int index, Object callback, boolean isWeakRef, boolean uiThread) {
-        synchronized (mCallbackWrappers) {
-            long key = getKey(timeStamp, index);
-            mCallbackWrappers.put(key, new CallbackWrapper(isWeakRef, callback, uiThread));
-        }
+        long key = getKey(timeStamp, index);
+        mCallbackWrappers.put(key, new CallbackWrapper(isWeakRef, callback, uiThread));
     }
 
     public Pair<Boolean, Object> getCallback(long timeStamp, int index) {
-        synchronized (mCallbackWrappers) {
-            long key = getKey(timeStamp, index);
-            CallbackWrapper callbackWrapper = mCallbackWrappers.get(key);
-            if (callbackWrapper == null) {
-                return null;
-            }
-            Pair<Boolean, Object> pair = callbackWrapper.get();
-            if (pair.second == null) {
-                mCallbackWrappers.remove(key);
-            }
-            return pair;
+        long key = getKey(timeStamp, index);
+        CallbackWrapper callbackWrapper = mCallbackWrappers.get(key);
+        if (callbackWrapper == null) {
+            return null;
+        }
+        Pair<Boolean, Object> pair = callbackWrapper.get();
+        if (pair.second == null) {
+            mCallbackWrappers.remove(key);
+        }
+        return pair;
+    }
+
+    public void removeCallback(long timeStamp, int index) {
+        long key = getKey(timeStamp, index);
+        if (mCallbackWrappers.remove(key) == null) {
+            throw new IllegalStateException("An error occurred in the callback GC.");
         }
     }
 

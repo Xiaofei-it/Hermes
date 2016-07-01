@@ -25,6 +25,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
 
+import java.util.List;
+
 public interface IHermesServiceCallback extends IInterface {
 
     abstract class Stub extends Binder implements IHermesServiceCallback {
@@ -74,6 +76,15 @@ public interface IHermesServiceCallback extends IInterface {
                         reply.writeInt(0);
                     }
                     return true;
+                case TRANSACTION_gc:
+                    data.enforceInterface(DESCRIPTOR);
+                    List list1, list2;
+                    ClassLoader cl = this.getClass().getClassLoader();
+                    list1 = data.readArrayList(cl);
+                    list2 = data.readArrayList(cl);
+                    this.gc(list1, list2);
+                    reply.writeNoException();
+                    return true;
             }
             return super.onTransact(code, data, reply, flags);
         }
@@ -121,11 +132,37 @@ public interface IHermesServiceCallback extends IInterface {
                 }
                 return _result;
             }
+
+            @Override
+            public void gc(List<Long> timeStamps, List<Integer> indexes) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeList(timeStamps);
+                    _data.writeList(indexes);
+                    mRemote.transact(Stub.TRANSACTION_gc, _data, _reply, 0);
+                    _reply.readException();
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
         }
 
-        static final int TRANSACTION_callback = (IBinder.FIRST_CALL_TRANSACTION + 0);
+        static final int TRANSACTION_callback = IBinder.FIRST_CALL_TRANSACTION;
+
+        static final int TRANSACTION_gc = IBinder.FIRST_CALL_TRANSACTION + 1;
     }
 
     Reply callback(CallbackMail mail) throws RemoteException;
+
+    /**
+     * http://business.nasdaq.com/marketinsite/2016/Indexes-or-Indices-Whats-the-deal.html
+     *
+     * This article says something about the plural form of "index".
+     */
+    void gc(List<Long> timeStamps, List<Integer> indexes) throws RemoteException;
 
 }

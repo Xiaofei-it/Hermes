@@ -174,7 +174,7 @@ public interface IHermesService extends IInterface {
             }
         }
 
-        static final int TRANSACTION_send = IBinder.FIRST_CALL_TRANSACTION + 0;
+        static final int TRANSACTION_send = IBinder.FIRST_CALL_TRANSACTION;
 
         static final int TRANSACTION_register = IBinder.FIRST_CALL_TRANSACTION + 1;
 

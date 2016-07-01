@@ -23,6 +23,8 @@ package xiaofei.library.hermes.util;
  */
 public class ErrorCodes {
 
+    //TODO change the right value into integers before release!
+
     public static final int SUCCESS = 0;
 
     public static final int REMOTE_EXCEPTION = SUCCESS + 1;
@@ -41,9 +43,11 @@ public class ErrorCodes {
 
     public static final int TOO_MANY_MATCHING_METHODS = GSON_DECODE_EXCEPTION + 1;
 
-    public static final int METHOD_MATCHING_PARAMETER_TYPE_NOT_RETURN_TYPE = TOO_MANY_MATCHING_METHODS + 1;
+    public static final int METHOD_PARAMETER_NOT_MATCHING = TOO_MANY_MATCHING_METHODS + 1;
 
-    public static final int TOO_MANY_MATCHING_METHODS_FOR_GETTING_INSTANCE = METHOD_MATCHING_PARAMETER_TYPE_NOT_RETURN_TYPE + 1;
+    public static final int METHOD_RETURN_TYPE_NOT_MATCHING = METHOD_PARAMETER_NOT_MATCHING + 1;
+
+    public static final int TOO_MANY_MATCHING_METHODS_FOR_GETTING_INSTANCE = METHOD_RETURN_TYPE_NOT_MATCHING + 1;
 
     public static final int GETTING_INSTANCE_RETURN_TYPE_ERROR = TOO_MANY_MATCHING_METHODS_FOR_GETTING_INSTANCE + 1;
 
