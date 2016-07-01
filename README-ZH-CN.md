@@ -93,7 +93,7 @@ Log.v(TAG, singleton.getData());
 
 ```
 dependencies {
-    compile 'xiaofei.library:hermes:0.5.1'
+    compile 'xiaofei.library:hermes:0.6.0'
 }
 ```
 
@@ -103,7 +103,7 @@ dependencies {
 <dependency>
   <groupId>xiaofei.library</groupId>
   <artifactId>hermes</artifactId>
-  <version>0.5.1</version>
+  <version>0.6.0</version>
   <type>pom</type>
 </dependency>
 ```

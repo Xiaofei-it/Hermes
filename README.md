@@ -88,7 +88,7 @@ Now, how to write the interface? So easy. For example, there is a class named Fo
 
 ```
 dependencies {
-    compile 'xiaofei.library:hermes:0.5.1'
+    compile 'xiaofei.library:hermes:0.6.0'
 }
 ```
 
@@ -98,7 +98,7 @@ dependencies {
 <dependency>
   <groupId>xiaofei.library</groupId>
   <artifactId>hermes</artifactId>
-  <version>0.5.1</version>
+  <version>0.6.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -120,6 +120,14 @@ Hermes also allows method invocation between arbitrary processes. For more infor
 
 Always, an app has a default process in which most components run. Name this default process Process A.
 
+Process A should initialize Hermes in Application.OnCreate() or Activity.OnCreate(), as the following does:
+
+```
+Hermes.init(getApplicationContext());
+```
+
+###Connection
+
 Suppose there is another process, named Process B. Process B wants to invoke methods in Process A. Then Process B should initialize Hermes at the beginning.
 
 You can do this in Application.OnCreate() or Activity.OnCreate() in Process B. The Corresponding API is Hermes.connect(Context). Before initialization, a HermesListener can be set to do some callbacks.
@@ -129,12 +137,6 @@ Hermes.connect(getApplicationContext());
 ```
 
 You can call Hermes.isConnected() to see whether the process you are communicating with is still alive.
-
-###Context Setting
-
-In the process which provides methods for other processes to invoke, you can use Hermes.setContext(Context) to set the context.
-
-The context will be used when the Context parameter is passed in from other processes. See Point 8 of Notice.
 
 ###Registration
 
