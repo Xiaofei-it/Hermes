@@ -7,6 +7,9 @@ Hermes is a smart, novel and easy-to-use framework for Android Inter-Process Com
 
 Please click [HERE](https://github.com/Xiaofei-it/Hermes-IPC-Demo) to see the demo.
 
+Also, [HermesEventBus](https://github.com/eleme/HermesEventBus) is a Hermes-and-EventBus-based library
+which posts events between processes.
+
 ##Features
 
 1. Make method invocations over IPC so easy just like method invocations in a local process. The statements of method invocations are almost the same.

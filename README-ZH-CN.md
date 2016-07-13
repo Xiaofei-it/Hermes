@@ -5,6 +5,8 @@ Hermes是一套新颖巧妙易用的Android进程间通信IPC框架。这个框�
 
 Hermes的demo请点击[https://github.com/Xiaofei-it/Hermes-IPC-Demo](https://github.com/Xiaofei-it/Hermes-IPC-Demo)
 
+另外，[HermesEventBus](https://github.com/eleme/HermesEventBus)是基于Hermes和EventBus开发的进程间传递事件的库。
+
 ##特色
 
 1. 使得进程间通信像调用本地函数一样方便简单。
