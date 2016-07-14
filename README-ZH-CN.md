@@ -7,6 +7,8 @@ Hermes的demo请点击[https://github.com/Xiaofei-it/Hermes-IPC-Demo](https://gi
 
 另外，[HermesEventBus](https://github.com/eleme/HermesEventBus)是基于Hermes和EventBus开发的进程间传递事件的库。
 
+可能读者会觉得Hermes还是有点难用。我已经完成了基本功能并且做了许多性能优化。我下一步会简化使用步骤，使Hermes变得更简单可用，到时候发布0.7.0版。
+
 ##特色
 
 1. 使得进程间通信像调用本地函数一样方便简单。
@@ -15,7 +17,7 @@ Hermes的demo请点击[https://github.com/Xiaofei-it/Hermes-IPC-Demo](https://gi
 
 3. 支持进程间函数回调，调用其他进程函数的时候可以传入回调函数，让其他进程回调本进程的方法。
 
-4. 自带内存优化，并且支持跨进程垃圾回收。
+4. 自带内存优化。Hermes内置两个垃圾回收器，本地进程在远端进程创建的实例和本地进程传给远端进程的回调接口会被自动回收。（为什么用中文说得这么啰嗦？？？）
 
 
 ##基本原理

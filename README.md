@@ -10,15 +10,19 @@ Please click [HERE](https://github.com/Xiaofei-it/Hermes-IPC-Demo) to see the de
 Also, [HermesEventBus](https://github.com/eleme/HermesEventBus) is a Hermes-and-EventBus-based library
 which posts events between processes.
 
+Note that maybe you will find that Hermes is still a little difficult to use. I have finished this
+library and promoted the performance. What to do for my next step is to simplify the usage, which
+will be released in version 0.7.0.
+
 ##Features
 
 1. Make method invocations over IPC so easy just like method invocations in a local process. The statements of method invocations are almost the same.
 
 2. Easy to use classes, singletons, utilities in another process.
 
-3. Support callbacks over IPC. You do not need to worry about the memory leak caused by callbacks.
+3. Support callbacks over IPC. You can provide the remote process with a callback to perform operations in the local process.
 
-4. Support GC over IPC.
+4. Support GC over IPC. Hermes contains two garbage collectors to reclaim the instances created in the remote process and the local callbacks for remote processes.
 
 
 ##Principle
