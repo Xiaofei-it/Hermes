@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/Xiaofei-it/Hermes'
     gitUrl = 'https://github.com/Xiaofei-it/Hermes.git'
 
-    libraryVersion = '0.6.1'
+    libraryVersion = '0.6.0'
 
     developerId = 'Xiaofei-it'
     developerName = 'Eric Zhao'
@@ -32,8 +32,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 23
-        versionCode 6
-        versionName "0.6.1"
+        versionCode 5
+        versionName "0.6.0"
     }
     buildTypes {
         release {
