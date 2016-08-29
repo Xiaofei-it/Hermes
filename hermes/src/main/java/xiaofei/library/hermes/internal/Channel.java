@@ -107,6 +107,7 @@ public class Channel {
             }
             boolean uiThread = pair.first;
             try {
+                // TODO Currently, the callback should not be annotated!
                 final Method method = TYPE_CENTER.getMethod(callback.getClass(), mail.getMethod());
                 final Object[] parameters = getParameters(mail.getParameters());
                 Object result = null;
