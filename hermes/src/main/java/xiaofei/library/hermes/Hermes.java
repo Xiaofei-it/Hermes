@@ -188,10 +188,12 @@ public class Hermes {
     }
 
     public static void connect(Context context) {
-        connect(context, HermesService.HermesService0.class);
+        connectApp(context, null, HermesService.HermesService0.class);
     }
 
     public static void connect(Context context, Class<? extends HermesService> service) {
+        // TODO callbacks should be handled as an exception.
+        // It seems that callbacks may not be registered.
         connectApp(context, null, service);
     }
 
@@ -200,6 +202,7 @@ public class Hermes {
     }
 
     public static void connectApp(Context context, String packageName, Class<? extends HermesService> service) {
+        init(context);
         CHANNEL.bind(context.getApplicationContext(), packageName, service);
     }
 
