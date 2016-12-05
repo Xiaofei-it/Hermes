@@ -68,9 +68,9 @@ public class HermesCallbackInvocationHandler implements InvocationHandler {
                 return null;
             }
         } catch (HermesException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error occurs but does not crash the app.", e);
         } catch (RemoteException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error occurs but does not crash the app.", e);
         }
         return null;
     }
