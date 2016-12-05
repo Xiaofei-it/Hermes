@@ -236,10 +236,14 @@ public class Channel {
 
     public void gc(Class<? extends HermesService> service, List<Long> timeStamps) {
         IHermesService hermesService = mHermesServices.get(service);
-        try {
-            hermesService.gc(timeStamps);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        if (hermesService == null) {
+            Log.e(TAG, "Service Unavailable: Check whether you have disconnected the service before a process dies.");
+        } else {
+            try {
+                hermesService.gc(timeStamps);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
     }
 

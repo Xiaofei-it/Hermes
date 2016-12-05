@@ -19,6 +19,7 @@
 package xiaofei.library.hermes.util;
 
 import android.support.v4.util.Pair;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Xiaofei on 16/4/14.
  */
 public class CallbackManager {
+
+    private static final String TAG = "CallbackManager";
 
     private static final int MAX_INDEX = 10;
 
@@ -77,7 +80,7 @@ public class CallbackManager {
     public void removeCallback(long timeStamp, int index) {
         long key = getKey(timeStamp, index);
         if (mCallbackWrappers.remove(key) == null) {
-            throw new IllegalStateException("An error occurred in the callback GC.");
+            Log.e(TAG, "An error occurs in the callback GC.");
         }
     }
 

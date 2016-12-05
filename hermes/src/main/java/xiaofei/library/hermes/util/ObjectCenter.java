@@ -18,6 +18,8 @@
 
 package xiaofei.library.hermes.util;
 
+import android.util.Log;
+
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,6 +27,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Xiaofei on 16/4/8.
  */
 public class ObjectCenter {
+
+    private static final String TAG = "ObjectCenter";
 
     private static volatile ObjectCenter sInstance = null;
 
@@ -56,7 +60,7 @@ public class ObjectCenter {
     public void deleteObjects(List<Long> timeStamps) {
         for (Long timeStamp : timeStamps) {
             if (mObjects.remove(timeStamp) == null) {
-                throw new IllegalStateException("An error occurred in the GC.");
+                Log.e(TAG, "An error occurs in the GC.");
             }
         }
     }
