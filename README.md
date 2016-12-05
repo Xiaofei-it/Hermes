@@ -95,7 +95,7 @@ Now, how to write the interface? So easy. For example, there is a class named Fo
 
 ```
 dependencies {
-    compile 'xiaofei.library:hermes:0.6.1'
+    compile 'xiaofei.library:hermes:0.7.0'
 }
 ```
 
@@ -105,7 +105,7 @@ dependencies {
 <dependency>
   <groupId>xiaofei.library</groupId>
   <artifactId>hermes</artifactId>
-  <version>0.6.1</version>
+  <version>0.7.0</version>
   <type>pom</type>
 </dependency>
 ```
