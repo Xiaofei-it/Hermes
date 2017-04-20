@@ -145,16 +145,17 @@ public abstract class Sender {
     }
 
 
-    public final Reply send(Method method, Object[] parameters) throws HermesException {
+    public synchronized final Reply send(Method method, Object[] parameters) throws HermesException {
         mTimeStamp = TimeStampGenerator.getTimeStamp();
         if (parameters == null) {
             parameters = new Object[0];
         }
         ParameterWrapper[] parameterWrappers = getParameterWrappers(method, parameters);
-        mMethod = getMethodWrapper(method, parameterWrappers);
+        MethodWrapper methodWrapper = getMethodWrapper(method, parameterWrappers);
         registerClass(method);
         setParameterWrappers(parameterWrappers);
-        Mail mail = new Mail(mTimeStamp, mObject, mMethod, mParameters);
+        Mail mail = new Mail(mTimeStamp, mObject, methodWrapper, mParameters);
+        mMethod = methodWrapper;
         return CHANNEL.send(mService, mail);
     }
 
