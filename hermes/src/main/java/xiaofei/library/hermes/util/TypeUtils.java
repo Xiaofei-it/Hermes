@@ -48,7 +48,7 @@ public class TypeUtils {
     private static final HashSet<Class<?>> CONTEXT_CLASSES = new HashSet<Class<?>>() {
         {
             add(Context.class);
-            add(ActionBarActivity.class);
+//            add(ActionBarActivity.class);
             add(Activity.class);
             add(AppCompatActivity.class);
             add(Application.class);
