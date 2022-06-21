@@ -9,7 +9,7 @@ Hermes的demo请点击[https://github.com/Xiaofei-it/Hermes-IPC-Demo](https://gi
 
 可能读者会觉得Hermes还是有点难用。我已经完成了基本功能并且做了许多性能优化。我下一步会简化使用步骤，使Hermes变得更简单可用，到时候发布0.7.0版。
 
-##特色
+## 特色
 
 1. 使得进程间通信像调用本地函数一样方便简单。
 
@@ -20,7 +20,7 @@ Hermes的demo请点击[https://github.com/Xiaofei-it/Hermes-IPC-Demo](https://gi
 4. 自带内存优化。Hermes内置两个垃圾回收器，本地进程在远端进程创建的实例和本地进程传给远端进程的回调接口会被自动回收。（为什么用中文说得这么啰嗦？？？）
 
 
-##基本原理
+## 基本原理
 
 IPC的主要目的是调用其他进程的函数，Hermes让你方便地调用其他进程函数，调用语句和本地进程函数调用一模一样。
 
@@ -112,11 +112,13 @@ dependencies {
 </dependency>
 ```
 
-##使用方法
+## 使用方法
+
+我们假设提供函数调用的进程叫**主进程**、或**进程A**、或应用A，调用主进程的进程叫**子进程**、或**进程B**、或应用B。
 
 接下来的部分将告诉你如何在其他进程调用主进程的函数。Hermes支持任意进程之间的函数调用，想要知道如何调用非主进程的函数，请看[这里](https://github.com/Xiaofei-it/Hermes/blob/master/AdvancedTutorial.md)。
 
-###AndroidManifest.xml
+### 主进程注册HermesService0到AndroidManifest.xml
 
 在AndroidManifest.xml中加入如下声明，你可以加上其他属性。
 
@@ -125,17 +127,25 @@ dependencies {
 </service>
 ```
 
-###主进程初始化Hermes
+### 主进程初始化
 
-在给其他进程提供函数的进程中，使用Hermes.init(Context)初始化。
+主进程中，使用Hermes.init(Context)初始化。
 
-###子进程连接Hermes
+### 主进程注册
 
-经常地，一个app有一个主进程。给这个主进程命名为进程A。
+主进程中被子进程调用的类需要事先注册。有两种注册类的API：Hermes.register(Class<?>)和Hermes.register(Object)。Hermes.register(object)等价于Hermes.register(object.getClass())。
 
-假设有一个进程B，想要调用进程A的函数。那么进程B应该连接Hermes。连接后才可以使用Hermes的服务。
+但是如果类上面没有加上注解，那么注册就不是必须的，Hermes会通过类名进行反射查找相应的类。详见“注意事项”的第3点。
 
-你可以在进程B的Application.OnCreate()或者Activity.OnCreate()中对Hermes初始化。相应的API是Hermes.connect(Context)。
+### 子进程连接Hermes
+
+子进程连接主进程后才可以使用Hermes的服务。
+
+相应的API是：
+  1. Hermes.connect(Context)，进程的包名相同时调用；
+  2. 或Hermes.connectApp(Context context, String packageName, Class<? extends HermesService> service)，进程包名不同时调用。
+
+你可以在进程B的Application.OnCreate()或者Activity.OnCreate()中对Hermes初始化。
 
 ```
 Hermes.connect(getApplicationContext());
@@ -143,19 +153,13 @@ Hermes.connect(getApplicationContext());
 
 你可以调用Hermes.isConnected()来查看通信的进程是否还活着。
 
-###注册
-
-进程A中，被进程B调用的类需要事先注册。有两种注册类的API：Hermes.register(Class<?>)和Hermes.register(Object)。Hermes.register(object)等价于Hermes.register(object.getClass())。
-
-但是如果类上面没有加上注解，那么注册就不是必须的，Hermes会通过类名进行反射查找相应的类。详见“注意事项”的第3点。
-
-###创建实例
+### 子进程创建或获取实例
 
 进程B中，创建进程A中的实例有三种方法：Hermes.newInstance()、Hermes.getInstance()和Hermes.getUtilityClass()。
 
 1. Hermes.newInstance(Class<T>, Object...)
 
-   这个函数在进程A中创建指定类的实例，并将引用返回给进程B。函数的第二个参数将传给指定类的对应的构造器。
+   这个函数在进程A中创建指定类的实例，会调用到类的构造函数，并将引用返回给进程B。函数的第二个参数将传给指定类的对应的构造器。
    ```
    @ClassId(“LoadingTask”)
    public class LoadingTask {
@@ -180,7 +184,8 @@ Hermes.connect(getApplicationContext());
 
 2. Hermes.getInstance(Class<T>, Object...)
 
-   这个函数在进程A中通过指定类的getInstance方法创建实例，并将引用返回给进程B。第二个参数将传给对应的getInstance方法。
+   这个函数在进程A中通过指定类的getInstance方法创建实例，并将引用返回给进程B，因此指定的类必须要有静态公共方法getInstance，如果获取实例方法名字并非getInstance，则必须由注解@GetInstance指定。
+   第二个参数将传给对应的getInstance方法。
 
    这个函数特别适合获取单例，这样进程A和进程B就使用同一个单例。
 
@@ -254,13 +259,13 @@ Hermes.connect(getApplicationContext());
    int diff = maths.minus(3, 5);
    ```
 
-##注意事项
+## 注意事项
 
-1. 事实上，如果两个进程属于两个不同的app（分别叫App A和App B），App A想访问App B的一个类，并且App A的接口和App B的对应类有相同的包名和类名，那么就没有必要在类和接口上加@ClassId注解。但是要注意使用ProGuard后类名和包名仍要保持一致。
+1. 事实上，如果两个进程属于两个不同的app（分别叫App A和App B），App B想访问App A的一个类，并且App B的接口和App A的对应类有相同的包名和类名，那么就没有必要在类和接口上加@ClassId注解。但是要注意使用ProGuard后类名和包名仍要保持一致。
 
 2. 如果接口和类里面对应的方法的名字相同，那么也没有必要在方法上加上@MethodId注解，同样注意ProGuard的使用后接口内的方法名字必须仍然和类内的对应方法名字相同。
 
-3. 如果进程A的一个类上面有一个@ClassId注解，这个类在进程B中对应的接口上有一个相同的@ClassId注解，那么进程A在进程B访问这个类之前必须注册这个类。否则进程B使用Hermes.newInstance()、Hermes.getInstance()或Hermes.getUtilityClass()时，Hermes在进程A中找不到匹配的类。类可以在构造器或者Application.OnCreate()中注册。
+3. 如果进程A的一个类上面有一个@ClassId注解，这个类在进程B中对应的接口上有一个相同的@ClassId注解，那么在进程B访问这个类之前进程A必须注册这个类。否则进程B使用Hermes.newInstance()、Hermes.getInstance()或Hermes.getUtilityClass()时，Hermes在进程A中找不到匹配的类。类可以在构造器或者Application.OnCreate()中注册。
 
    但是，如果类和对应的接口上面没有@ClassId注解，但有相同的包名和类名，那么就不需要注册类。Hermes通过包名和类名匹配类和接口。
 

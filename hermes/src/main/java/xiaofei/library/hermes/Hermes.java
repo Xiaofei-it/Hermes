@@ -187,6 +187,10 @@ public class Hermes {
         return getProxy(service, object);
     }
 
+    /**
+     * Connect to service HermesService0 in the same package.
+     * @param context Application context.
+     */
     public static void connect(Context context) {
         connectApp(context, null, HermesService.HermesService0.class);
     }
@@ -201,6 +205,12 @@ public class Hermes {
         connectApp(context, packageName, HermesService.HermesService0.class);
     }
 
+    /**
+     * Connect to the HermesService in specified app packageName.
+     * @param context       Application context.
+     * @param packageName   Target app id.
+     * @param service       Target HermesService.
+     */
     public static void connectApp(Context context, String packageName, Class<? extends HermesService> service) {
         init(context);
         CHANNEL.bind(context.getApplicationContext(), packageName, service);
